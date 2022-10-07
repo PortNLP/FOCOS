@@ -20,7 +20,7 @@ class model(Model):
         else:
             # Get results for self.interventions[-1]
             # return run_inference()
-            return [1,2,3,4,5]
+            return [1,2,3,4,5] # dummy output for now
 
     def input_intervention(self, intervention, value):
         """

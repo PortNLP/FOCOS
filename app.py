@@ -21,7 +21,7 @@ def index():
     entries = [dict(name=principle, value=effect) for principle, effect in zip (principles, effects)]
     return render_template('index.html', entries=entries)
 
-@app.route('/data', methods=['POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
     """
     Accepts POST requests, and processes the form;

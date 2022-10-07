@@ -1,1 +1,1 @@
-# FOCOS
+# FOCOS (Fuzzy Operational Cognition of Safety Culture)

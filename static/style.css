@@ -1,2 +1,25 @@
-body       { font-family: "Helvetica", sans-serif; font-size: 20px; color: #000; }
-a, h1, h2  { color: #00008F; }
+.homePage{
+  padding-top: 20px;
+}
+
+
+.elementsMainArea{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0 15px;
+  grid-template-areas:
+    ". . . . .";
+}
+
+.forEachColumn {
+  display: grid;
+  grid-auto-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: fit-content(8ch) fit-content(8ch) 1fr;
+  gap: 15px 0;
+
+}
+
+.elementName {
+  background-color: gray;
+}

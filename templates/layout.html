@@ -1,8 +1,120 @@
 <!doctype html>
-<html>
-<title>My Visitors</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-    {% block content %}{% endblock %}
-</div>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+	<title>FOCOS</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<a routerLink="/" class="navbar-brand" href="#">FOCOS</a>
+	<ul class="navbar-nav ml-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="home">Home</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="history">History</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="signout">Sign out</a>
+		</li>
+	</ul>
+</nav>
+
+<section class="homePage container-fluid">
+	<div class="elementsMainArea">
+		<div class="forEachColumn">
+			<form>
+				<div class="elementName">
+					Reframing Work Design
+				</div>
+
+				<div class="form-group">
+					<label for="Authorty">Stop-Work Authorty</label>
+					<input type="range" class="form-control-range" id="Authorty"
+					       onInput="$('#rangeval1').html($(this).val())">
+					<span id="rangeval1">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Ambivalence">Institutionalization Emotional Ambivalence</label>
+					<input type="range" class="form-control-range" id="Ambivalence"
+					       onInput="$('#rangeval2').html($(this).val())">
+					<span id="rangeval2">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Drift">Managing Reliability Drift</label>
+					<input type="range" class="form-control-range" id="Drift"
+					       onInput="$('#rangeval3').html($(this).val())">
+					<span id="rangeval3">50<!-- Default value --></span>
+				</div>
+			</form>
+		</div>
+
+		<div class="forEachColumn">Two</div>
+		<div class="forEachColumn">Three</div>
+		<div class="forEachColumn">Four</div>
+		<div class="forEachColumn">Five</div>
+	</div>
+
+	{#	<div class="container">#}
+	{#		<form>#}
+	{#			<div class="form-group">#}
+	{#				<label for="formControlRange">Stop-Work Authorty</label>#}
+	{#				<input type="range" class="form-control-range" id="formControlRange"#}
+	{#				       onInput="$('#rangeval').html($(this).val())">#}
+	{#				<span id="rangeval">50<!-- Default value --></span>#}
+	{#			</div>#}
+	{##}
+	{#			<div class="form-group">#}
+	{#				<label for="formControlRange">Institutionalization Emotional Ambivalence</label>#}
+	{#				<input type="range" class="form-control-range" id="formControlRange"#}
+	{#				       onInput="$('#rangeval').html($(this).val())">#}
+	{#				<span id="rangeval">50<!-- Default value --></span>#}
+	{#			</div>#}
+	{##}
+	{#		</form>#}
+	{#	</div>#}
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	        crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	        crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	        crossorigin="anonymous"></script>
+
+
+	<div class="justify-content-center">
+		<h2>Interventions</h2>
+		<form action="{{ url_for('submit') }}" method=post>
+			<p class="body">Stop-Work-Authority (enter percent change): <input type=number name=value> %
+			<p><input type=submit value=Submit></p>
+		</form>
+
+		<h2>Results</h2>
+		{% for entry in entries %}
+			<p class=entry>
+				{{ entry.name }} <br> {{ entry.value }}
+			</p>
+		{% endfor %}
+	</div>
+</section>
+
+</body>
+
 </html>

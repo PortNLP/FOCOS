@@ -9,17 +9,18 @@ app = Flask(__name__)
 model = model()
 
 """
-Function decorator === app.route('/',index())
+Function decorator === app.route('/',layout())
 """
 @app.route('/')
-@app.route('/index.html')
-def index():
+@app.route('/layout.html')
+def layout():
 
     principles=["PREOCCUPATION WITH FAILURE", "RELUCTANCE TO SIMPLIFY","COMMITMENT TO RESILIENCE",
-      "DEFERENCE TO EXPERTISE","ORGANIZATIONAL RELIABILITY","SENSITIVITY TO OPERATION"]
+      "DEFERENCE TO EXPERTISE", "SENSITIVITY TO OPERATION"] # TODO: tie this to the principles variable in model_pylist.py
+
     effects = model.get_results()
     entries = [dict(name=principle, value=effect) for principle, effect in zip (principles, effects)]
-    return render_template('index.html', entries=entries)
+    return render_template('layout.html', entries=entries)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -27,8 +28,9 @@ def submit():
     Accepts POST requests, and processes the form;
     Redirect to index when completed.
     """
+    print(request.form)
     model.input_intervention('Stop-Work-Authority', request.form['value'])
-    return redirect(url_for('index'))
+    return redirect(url_for('layout'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

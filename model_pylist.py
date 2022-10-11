@@ -3,6 +3,7 @@ Data is stored in a Python list
 """
 from datetime import date
 from Model import Model
+from fcm import run_inference
 
 class model(Model):
     def __init__(self):
@@ -14,21 +15,27 @@ class model(Model):
          in response to the latest intervention
         :return: List
         """
-        
+
+        principles=["PREOCCUPATION WITH FAILURE", "RELUCTANCE TO SIMPLIFY","COMMITMENT TO RESILIENCE",
+      "DEFERENCE TO EXPERTISE", "SENSITIVITY TO OPERATION"]
+
         if not self.interventions: # no interventions
             return [0,0,0,0,0]
         else:
-            # Get results for self.interventions[-1]
-            # return run_inference()
-            return [1,2,3,4,5] # dummy output for now
+            # Get results for the latest intervention
+            intervention = self.interventions[-1]
+            print(intervention)
+            return run_inference(intervention, principles)
 
-    def input_intervention(self, intervention, value):
+    def input_intervention(self, name, value):
         """
         Intervention
-        :param intervention: String
+        :param name: String
         :param value: Integer
         :return: none
         """
-        params = [intervention, value]
-        self.interventions.append(params)
+
+        value = float(value)*0.01 # Convert from percent
+        intervention = dict(name=name, value=value)
+        self.interventions.append(intervention)
         return True

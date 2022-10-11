@@ -8,10 +8,10 @@ class Model():
         """
         pass
 
-    def input_intervention(self, intervention, value):
+    def input_intervention(self, name, value):
         """
         Intervention
-        :param intervention: String
+        :param name: String
         :param value: Integer
         :return: none
         """

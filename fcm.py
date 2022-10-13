@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-import math
 
 def run_inference(intervention, principles):
     """
     Run FCM inference for a single isolated intervention
+    (TODO: handle multiple interventions)
     :param intervention: Dict
     :param principles: List
     :return: List
@@ -21,18 +21,18 @@ def run_inference(intervention, principles):
     activation_vec = np.ones(n_concepts)
 
     # remove the edges with a weight less than a specific number (e.g. 0.1) 
-    Noise_Threshold = 0 # use full FCM without removing noises 
+    noise_threshold = 0 # use full FCM without removing noises 
     for i in range (n_concepts):
         for j in range (n_concepts):
-            if abs(df.iat[i,j])<=Noise_Threshold:
+            if abs(df.iat[i,j])<=noise_threshold:
                 Adj_matrix[i,j]=0
             else:
                 Adj_matrix[i,j]=df.iat[i,j]
 
-    function_type = "sig" # Sigmoid
+    function_type = "tanh" # Hyperbolic tangent 
     infer_rule = "k" # Kosko
     intervention_index = df.columns.get_loc(intervention_name)
-    # infer_scenario can handle multiple scenarios, but we deal with single isolated interventions right now
+    # infer_scenario() can handle multiple interventions, but run_inference() deals with single isolated interventions right now
     intervention_indexes = [intervention_index] 
     vals = [intervention_value]
 
@@ -103,12 +103,8 @@ def TransformFunc (x, n, f_type,lamda=2):
         x_new= 1.0/(1.0+np.exp(-lamda*x))
         return x_new 
 
-    # The three functions below can probably be optimized more if needed
     if f_type == "tanh":
-        x_new = np.zeros(n)
-        for i in range (n):
-            x_new[i]= math.tanh(lamda*x[i])
-        
+        x_new= np.tanh(lamda*x)
         return x_new
     
     if f_type == "bivalent":

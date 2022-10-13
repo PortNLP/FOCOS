@@ -41,6 +41,7 @@ def run_inference(intervention, principles):
     scenario_state = infer_scenario(intervention_indexes = intervention_indexes, vals = vals, init_vec = activation_vec, AdjmT = Adj_matrix.T, 
                                 n = n_concepts, f_type = function_type, infer_rule = infer_rule)
     changes = scenario_state - steady_state
+    # steady_state is 0?
 
     principle_indexes = []
     for name in principles:
@@ -49,7 +50,7 @@ def run_inference(intervention, principles):
 
     return changes[principle_indexes]
 
-def infer_steady(init_vec, AdjmT, n, f_type="sig", infer_rule="k"):
+def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k"):
     act_vec_old= init_vec
     
     resid = 1
@@ -71,7 +72,7 @@ def infer_steady(init_vec, AdjmT, n, f_type="sig", infer_rule="k"):
         act_vec_old = act_vec_new
     return act_vec_new
 
-def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="sig", infer_rule="k"):
+def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="tanh", infer_rule="k"):
     act_vec_old= init_vec
     
     resid = 1
@@ -88,6 +89,8 @@ def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="sig",
             x = (2*act_vec_old-np.ones(n)) + np.matmul(AdjmT, (2*act_vec_old-np.ones(n)))
             
         act_vec_new = TransformFunc (x ,n, f_type)
+
+        # reset the interventions because they are stable nodes (in-degree = 0)
         for scen, c in enumerate(intervention_indexes):
             act_vec_new[c] = vals[scen] # 1 for full activation
         

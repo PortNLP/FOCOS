@@ -1,4 +1,4 @@
-class Model():
+class Model:
 
     def get_results(self):
         """

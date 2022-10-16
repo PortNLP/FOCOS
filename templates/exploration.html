@@ -10,6 +10,18 @@
 	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	        crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	        crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	        crossorigin="anonymous"></script>
+
 	<title>FOCOS</title>
 </head>
 
@@ -25,12 +37,21 @@
 			<a class="nav-link" href="history">History</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="signout">Sign out</a>
+			<div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </button>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">Account</a>
+					<a class="dropdown-item" href="#">Sign out</a>
+				</div>
+			</div>
 		</li>
 	</ul>
 </nav>
 
 <section class="homePage container-fluid">
+<h2>Interventions</h2>
 	<div class="elementsMainArea">
 		<div class="forEachColumn">
 			<form>
@@ -40,63 +61,150 @@
 
 				<div class="form-group">
 					<label for="Authorty">Stop-Work Authorty</label>
-					<input type="range" class="form-control-range" id="Authorty"
-					       onInput="$('#rangeval1').html($(this).val())">
-					<span id="rangeval1">50<!-- Default value --></span>
+					<label for="customRange1" class="form-label">Example range</label>
+					<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="testslider" id="customRange1">
+					<p><span id="demo">0</span></p>
 				</div>
+
+				<script>
+            const Http = new XMLHttpRequest();
+            var rangeslider = document.getElementById("customRange1");
+            var output = document.getElementById("demo");
+            var current;
+
+            rangeslider.oninput = function() {
+                current = this.value;
+                output.innerHTML = this.value
+
+                // I've added this call to the server, which send 'current' value
+                {#Http.open('POST', '/slider_update')#}
+                Http.send(current)
+            }
+        </script>
 
 				<div class="form-group">
 					<label for="Ambivalence">Institutionalization Emotional Ambivalence</label>
-					<input type="range" class="form-control-range" id="Ambivalence"
-					       onInput="$('#rangeval2').html($(this).val())">
-					<span id="rangeval2">50<!-- Default value --></span>
+					<input type="range" class="form-control-range" value="0" id="Ambivalence"
+					       onInput="$('#AmbivalenceValue').html($(this).val())">
+					<span id="AmbivalenceValue">0<!-- Default value --></span>
 				</div>
 
 				<div class="form-group">
 					<label for="Drift">Managing Reliability Drift</label>
-					<input type="range" class="form-control-range" id="Drift"
-					       onInput="$('#rangeval3').html($(this).val())">
-					<span id="rangeval3">50<!-- Default value --></span>
+					<input type="range" class="form-control-range" value="0" id="Drift"
+					       onInput="$('#DriftValue').html($(this).val())">
+					<span id="DriftValue">0<!-- Default value --></span>
 				</div>
 			</form>
 		</div>
 
-		<div class="forEachColumn">Two</div>
-		<div class="forEachColumn">Three</div>
-		<div class="forEachColumn">Four</div>
-		<div class="forEachColumn">Five</div>
+		<div class="forEachColumn">
+			<form>
+				<div class="elementName">
+					Reframing Relating Colleagues Peers
+				</div>
+
+				<div class="form-group">
+					<label for="Motivation">Institutionalize Precocial Motivation</label>
+					<input type="range" class="form-control-range" id="Motivation"
+					       onInput="$('#MotivationValue').html($(this).val())">
+					<span id="MotivationValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Respect">Fostering Social Ties and Mutual Respect</label>
+					<input type="range" class="form-control-range" id="Respect"
+					       onInput="$('#RespectValue').html($(this).val())">
+					<span id="RespectValue">50<!-- Default value --></span>
+				</div>
+			</form>
+		</div>
+
+
+		<div class="forEachColumn">
+			<form>
+				<div class="elementName">
+					Reframing How the Work Should Be Done
+				</div>
+
+				<div class="form-group">
+					<label for="Mindfulness">Practicing Individual Mindfulness</label>
+					<input type="range" class="form-control-range" id="Mindfulness"
+					       onInput="$('#MindfulnessValue').html($(this).val())">
+					<span id="MindfulnessValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Accountability">Fostering Sense of Accountability</label>
+					<input type="range" class="form-control-range" id="Accountability"
+					       onInput="$('#AccountabilityValue').html($(this).val())">
+					<span id="AccountabilityValue">50<!-- Default value --></span>
+				</div>
+			</form>
+		</div>
+
+
+		<div class="forEachColumn">
+			<form>
+				<div class="elementName">
+					Reframing Work Communication
+				</div>
+
+				<div class="form-group">
+					<label for="Huddle">Implementing Safety Huddle</label>
+					<input type="range" class="form-control-range" id="Huddle"
+					       onInput="$('#HuddleValue').html($(this).val())">
+					<span id="HuddleValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Incidents">Reporting Near-Misses/Incidents</label>
+					<input type="range" class="form-control-range" id="Incidents"
+					       onInput="$('#IncidentsValue').html($(this).val())">
+					<span id="IncidentsValue">50<!-- Default value --></span>
+				</div>
+			</form>
+		</div>
+
+
+		<div class="forEachColumn">
+			<form>
+				<div class="elementName">
+					Reframing Work Training
+				</div>
+
+				<div class="form-group">
+					<label for="Drills">Emergency Drills</label>
+					<input type="range" class="form-control-range" id="Drills"
+					       onInput="$('#DrillsValue').html($(this).val())">
+					<span id="DrillsValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Exercise">Tabletop Exercise</label>
+					<input type="range" class="form-control-range" id="Exercise"
+					       onInput="$('#ExerciseValue').html($(this).val())">
+					<span id="ExerciseValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Learning">Just-In-Time-Learning</label>
+					<input type="range" class="form-control-range" id="Learning"
+					       onInput="$('#LearningValue').html($(this).val())">
+					<span id="LearningValue">50<!-- Default value --></span>
+				</div>
+
+				<div class="form-group">
+					<label for="Debriefings">Post-Events Debriefings</label>
+					<input type="range" class="form-control-range" id="Debriefings"
+					       onInput="$('#DebriefingsValue').html($(this).val())">
+					<span id="DebriefingsValue">50<!-- Default value --></span>
+				</div>
+			</form>
+		</div>
 	</div>
 
-	{#	<div class="container">#}
-	{#		<form>#}
-	{#			<div class="form-group">#}
-	{#				<label for="formControlRange">Stop-Work Authorty</label>#}
-	{#				<input type="range" class="form-control-range" id="formControlRange"#}
-	{#				       onInput="$('#rangeval').html($(this).val())">#}
-	{#				<span id="rangeval">50<!-- Default value --></span>#}
-	{#			</div>#}
-	{##}
-	{#			<div class="form-group">#}
-	{#				<label for="formControlRange">Institutionalization Emotional Ambivalence</label>#}
-	{#				<input type="range" class="form-control-range" id="formControlRange"#}
-	{#				       onInput="$('#rangeval').html($(this).val())">#}
-	{#				<span id="rangeval">50<!-- Default value --></span>#}
-	{#			</div>#}
-	{##}
-	{#		</form>#}
-	{#	</div>#}
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	        crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	        crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	        crossorigin="anonymous"></script>
 
 
 	<div class="justify-content-center">

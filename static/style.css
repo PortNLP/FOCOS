@@ -6,20 +6,48 @@
 .elementsMainArea{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 5fr;
   gap: 0 15px;
+  background-color: #dbdbdb;
+  border-radius: 10px;
   grid-template-areas:
     ". . . . .";
+  margin: 10px 50px;
+  padding: 10px 20px;
 }
 
 .forEachColumn {
-  display: grid;
-  grid-auto-rows: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-columns: fit-content(8ch) fit-content(8ch) 1fr;
-  gap: 15px 0;
+  /*display: grid;*/
+  /*grid-auto-flow: column;*/
+  /*grid-auto-rows: 2fr 1fr 1fr 1fr 1fr;*/
+  /*grid-template-columns: fit-content(8ch) fit-content(8ch) 1fr;*/
+  gap: 100px 0;
 
 }
 
 .elementName {
   background-color: gray;
+  height: 90px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+  border: 3px solid #fff;
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
+
+.form-group{
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: middle;
+  border: 3px solid #fff;
+}
+
+.form-range {
+  display: inline;
+  float: left;
+  width: 70%;
+  margin-top: 2%;
+  margin-left: 5%;
+}
+

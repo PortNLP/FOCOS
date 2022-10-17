@@ -1,18 +1,15 @@
 import pandas as pd
 import numpy as np
 
-def run_inference(intervention, principles):
+def run_inference(interventions, principles):
     """
-    Run FCM inference for a single isolated intervention
-    (TODO: handle multiple interventions)
+    Run FCM inference for a set of interventions (changes in practices)
     :param intervention: Dict
     :param principles: List
     :return: List
     """
-    intervention_name = intervention["name"]
-    intervention_value = intervention["value"]
 
-    file_name = "FCM-HROT_InterventionsIncluded.csv"
+    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # relative to app.py
     df = pd.read_csv(file_name,index_col=0)
 
     n_concepts = df.shape[0]
@@ -31,10 +28,8 @@ def run_inference(intervention, principles):
 
     function_type = "tanh" # Hyperbolic tangent 
     infer_rule = "k" # Kosko
-    intervention_index = df.columns.get_loc(intervention_name)
-    # infer_scenario() can handle multiple interventions, but run_inference() deals with single isolated interventions right now
-    intervention_indexes = [intervention_index] 
-    vals = [intervention_value]
+    intervention_indexes = [df.columns.get_loc(intervention["name"]) for intervention in interventions]
+    vals = [intervention["value"] for intervention in interventions]
 
     steady_state = infer_steady(init_vec = activation_vec, AdjmT = Adj_matrix.T, 
                                 n = n_concepts, f_type = function_type , infer_rule = infer_rule)
@@ -50,11 +45,11 @@ def run_inference(intervention, principles):
 
     return changes[principle_indexes]
 
-def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k"):
+def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k", epsilon=0.00001):
     act_vec_old= init_vec
     
     resid = 1
-    while resid > 0.00001:
+    while resid > epsilon:
         act_vec_new = np.zeros(n)
         x = np.zeros(n)
         
@@ -72,11 +67,11 @@ def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k"):
         act_vec_old = act_vec_new
     return act_vec_new
 
-def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="tanh", infer_rule="k"):
+def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="tanh", infer_rule="k", epsilon=0.00001):
     act_vec_old= init_vec
     
     resid = 1
-    while resid > 0.00001:
+    while resid > epsilon:
         act_vec_new = np.zeros(n)
         x = np.zeros(n)
 
@@ -91,8 +86,8 @@ def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="tanh"
         act_vec_new = TransformFunc (x ,n, f_type)
 
         # reset the interventions because they are stable nodes (in-degree = 0)
-        for scen, c in enumerate(intervention_indexes):
-            act_vec_new[c] = vals[scen] # 1 for full activation
+        for idx, intervention_row in enumerate(intervention_indexes):
+            act_vec_new[intervention_row] = vals[idx] # 1 for full activation
         
         resid = max(abs(act_vec_new - act_vec_old))
         

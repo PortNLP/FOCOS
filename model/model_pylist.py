@@ -24,7 +24,7 @@ class model(Model):
       return [0, 0, 0, 0, 0]
     else:
       # Get results for the latest intervention
-      intervention = self.interventions[-1]
+      intervention = [self.interventions[-1]]
       print(intervention)
       return run_inference(intervention, principles)
 

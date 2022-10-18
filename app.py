@@ -15,30 +15,20 @@ Function decorator === app.route('/',exploration())
 @app.route('/')
 @app.route('/exploration.html')
 def exploration():
-  principles = ["PREOCCUPATION WITH FAILURE", "RELUCTANCE TO SIMPLIFY", "COMMITMENT TO RESILIENCE",
+    principles = ["PREOCCUPATION WITH FAILURE", "RELUCTANCE TO SIMPLIFY", "COMMITMENT TO RESILIENCE",
                 "DEFERENCE TO EXPERTISE",
                 "SENSITIVITY TO OPERATION"]  # TODO: tie this to the principles variable in model_pylist.py
 
-  effects = model.get_results()
-  entries = [dict(name=principle, value=effect) for principle, effect in zip(principles, effects)]
-  return render_template('exploration.html', entries=entries)
+    effects = model.get_results()
+    entries = [dict(name=principle, value=effect) for principle, effect in zip(principles, effects)]
+    return render_template('exploration.html', entries=entries)
 
 
-@app.route('/submit', methods=['POST'])
-def submit():
-  """
-    Accepts POST requests, and processes the form;
-    Redirect to index when completed.
-    """
-  print(request.form)
-  model.input_intervention('Stop-Work-Authority', request.form['value'])
-  return redirect(url_for('exploration'))
-
-
+@app.route('/slider', methods=['POST'])
 def slider():
-    received_data = request.data
-    print(received_data)
-    return received_data
+    intervention_sliders = request.form.to_dict(flat=True)
+    model.input_intervention(intervention_sliders)
+    return redirect(url_for('exploration'))
 
 
 if __name__ == '__main__':

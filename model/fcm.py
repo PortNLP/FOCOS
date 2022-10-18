@@ -4,9 +4,9 @@ import numpy as np
 def run_inference(interventions, principles):
     """
     Run FCM inference for a set of interventions (changes in practices)
-    :param intervention: Dict
-    :param principles: List
-    :return: List
+    :param interventions: Dict {intervention_name : value}
+    :param principles: List of Strings
+    :return: List of Floats
     """
 
     file_name = "model/FCM-HROT_InterventionsIncluded.csv" # relative to app.py
@@ -28,8 +28,12 @@ def run_inference(interventions, principles):
 
     function_type = "tanh" # Hyperbolic tangent 
     infer_rule = "k" # Kosko
-    intervention_indexes = [df.columns.get_loc(intervention["name"]) for intervention in interventions]
-    vals = [intervention["value"] for intervention in interventions]
+
+    intervention_indexes = []
+    vals = []
+    for key, val in interventions.items():
+        intervention_indexes.append(df.columns.get_loc(key))
+        vals.append(val)
 
     steady_state = infer_steady(init_vec = activation_vec, AdjmT = Adj_matrix.T, 
                                 n = n_concepts, f_type = function_type , infer_rule = infer_rule)

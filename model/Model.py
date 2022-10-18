@@ -3,16 +3,15 @@ class Model:
     def get_results(self):
         """
         Gets the 5 degrees to which the HRO principles change
-         in response to the latest intervention
+         in response to the latest strategy
         :return: List
         """
         pass
 
-    def input_intervention(self, name, value):
+    def input_intervention(self, intervention_sliders):
         """
         Intervention
-        :param name: String
-        :param value: Integer
+        :param intervention_sliders: Dict
         :return: none
         """
         pass

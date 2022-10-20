@@ -15,13 +15,9 @@ Function decorator === app.route('/',exploration())
 @app.route('/')
 @app.route('/exploration.html')
 def exploration():
-    principles = ["PREOCCUPATION WITH FAILURE", "RELUCTANCE TO SIMPLIFY", "COMMITMENT TO RESILIENCE",
-                "DEFERENCE TO EXPERTISE",
-                "SENSITIVITY TO OPERATION"]  # TODO: tie this to the principles variable in model_pylist.py
 
-    effects = model.get_results()
-    entries = [dict(name=principle, value=effect) for principle, effect in zip(principles, effects)]
-    return render_template('exploration.html', entries=entries)
+    effects, principles = model.get_results()
+    return render_template('exploration.html', effects=effects, principles=principles)
 
 
 @app.route('/slider', methods=['POST'])

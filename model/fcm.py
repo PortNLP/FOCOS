@@ -47,7 +47,10 @@ def run_inference(interventions, principles):
         pi = df.columns.get_loc(name)
         principle_indexes.append(pi)
 
-    return changes[principle_indexes]
+
+    effects = changes[principle_indexes] * 100 # Convert to percent
+    effects = list(effects.astype(float)) # Convert to list of 64 bit floats so it's serializable
+    return effects
 
 def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k", epsilon=0.00001):
     act_vec_old= init_vec

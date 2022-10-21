@@ -71,7 +71,7 @@ class model(Model):
 
         interventions = {}
         for key, val in intervention_sliders.items():
-            value = float(val) * 0.01   # Convert from percent; TODO: keep rToounded to two decimal places
+            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
             name = intervention_dict[key]
             interventions.update({name : value})
         self.strategies.append(interventions)

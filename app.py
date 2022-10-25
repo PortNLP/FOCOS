@@ -2,22 +2,22 @@
 FOCOS Flask app
 """
 from flask import Flask, redirect, request, url_for, render_template
-from model.exploration_model import model
+from model.planning_model import model
 
 app = Flask(__name__)
 model = model()
 
 """
-Function decorator === app.route('/',exploration())
+Function decorator === app.route('/',planning())
 """
 
 
 @app.route('/')
-@app.route('/exploration.html')
-def exploration():
+@app.route('/planning.html')
+def planning():
 
     effects, principles = model.get_results()
-    return render_template('exploration.html', effects=effects, principles=principles)
+    return render_template('planning.html', effects=effects, principles=principles)
 
 @app.route('/slider', methods=['POST'])
 def slider():
@@ -27,8 +27,10 @@ def slider():
     if request.form.get("Submit"):
         model.input_interventions(intervention_sliders)
     elif request.form.get("Save"):
-        model.save_strategy(intervention_sliders)
-    return redirect(url_for('exploration'))
+        name = request.form.get("Name")
+        comment = request.form.get("Comment")
+        model.save_strategy(intervention_sliders, name, comment)
+    return redirect(url_for('planning'))
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True)

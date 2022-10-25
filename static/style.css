@@ -46,8 +46,9 @@
     margin-left: 5%;
 }
 
-.resultsMainArea {
-
+.boxInput{
+    border-style:solid;
+    background-color: #eee;
 }
 
 .result-area{

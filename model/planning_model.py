@@ -36,12 +36,13 @@ class model():
         cursor = connection.cursor()
         # Check if our database exists
         try: 
-            cursor.execute("select count(rowid) from strategies")
+            cursor.execute("SELECT COUNT(rowid) FROM strategies")
         except sqlite3.OperationalError:
-            definition = ""
+            definition = "CREATE TABLE strategies (name text, comment text"
             for intervention in self.intervention_names:
-                definition += ", " + intervention + " real"
-            cursor.execute("create table strategies (name text, comment text" + definition + ")")
+                definition += ", " + intervention + " real" # TODO: Integer should be fine
+            definition = definition + ")"
+            cursor.execute(definition)
         cursor.close()
 
     def get_results(self):
@@ -82,14 +83,22 @@ class model():
         self.current_strategy = interventions
         return True
 
-    def save_strategy(self, intervention_sliders):
+    def save_strategy(self, intervention_sliders, name, comment):
         """
         Save Current Strategy
         :param intervention_sliders: Dict {slider_name : value}
+        :param name: String
+        :param comment: String
         :return: none
         """
-
-        # TODO: Actually add code here
-        print(intervention_sliders)
+        
+        intervention_values = [intervention_sliders[k] for k in self.intervention_names]
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO strategies VALUES (?,?" +",?"*len(self.intervention_names)+")", (name, comment) + tuple(intervention_values))
+        cursor.execute("SELECT * FROM strategies")
+        print(cursor.fetchall())
+        connection.commit()
+        cursor.close()
         return True
 

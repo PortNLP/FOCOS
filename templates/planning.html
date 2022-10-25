@@ -209,11 +209,15 @@
 						<p><span id="DebriefingsValue">0</span></p>
 					</div>
 				</div>
-				<div class="mt-4 flex justify-content-around">
+				<div class="d-flex justify-content-around">
 					<input type="reset" value="Reset">
 					<input type="submit" value="Submit" name="Submit">
-					<input type="submit" value="Save" name="Save">
 				</div>
+			</div>
+			<div class="d-flex flex-column justify-content-around">
+				Name: <input type="text" name="Name" class="boxInput" >
+				Comment: <textarea rows="5" cols="5" name="Comment" spellcheck="false" class="boxInput" ></textarea>
+				<input type="submit" value="Save" name="Save">
 			</div>
 		</form>
 		<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
@@ -232,8 +236,6 @@
 				</div>
 
 				<script>
-            console.log({{ principles|tojson }})
-            console.log({{ effects|tojson }})
 
             // setup
             const data = {

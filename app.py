@@ -13,11 +13,17 @@ Function decorator === app.route('/',planning())
 
 
 @app.route('/')
+
 @app.route('/planning.html')
 def planning():
-
     effects, principles = model.get_results()
     return render_template('planning.html', effects=effects, principles=principles)
+
+# route to the about page
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
 
 @app.route('/slider', methods=['POST'])
 def slider():

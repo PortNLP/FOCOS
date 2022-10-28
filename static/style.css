@@ -2,6 +2,18 @@
     padding-top: 20px;
 }
 
+.container{
+    background-color: rgb(245, 245, 245);
+}
+
+.result-area{
+    background-color: rgb(252, 252, 252);
+}
+
+.navbar {
+    background-color: rgb(219, 219, 219);
+}
+
 .container {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -18,6 +30,7 @@
 
 .forEachColumn {
     gap: 100px 0;
+    padding: 10px 20px;
 }
 
 .elementName {
@@ -26,16 +39,27 @@
     height: auto;
     text-align: left;
     vertical-align: middle;
-    border: 3px solid #fff;
-    margin-bottom: 2px;
+    margin-bottom: 10px;
+    ;
+}
+
+.divider{
+/*    style="height:1.5px;width:95%;border-width:0;color:gray;background-color:gray" center position*/
+    height: 1.5px;
+    width: 95%;
+    border-width: 0;
+    color: gray;
+    background-color: gray;
+    position: center;
+    margin: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .form-group {
-    border-radius: 10px;
     text-align: center;
     vertical-align: middle;
-    border: 3px solid #fff;
-    background-color: #d3d3d3;
+    background-color: rgb(237, 237, 237);
 }
 
 .form-range {
@@ -51,20 +75,37 @@
     background-color: #eee;
 }
 
-.result-area{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+
 
 .chartCard {
+    display: grid;
+    /*grif has 2 rows 1 column*/
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "."
+    ".";
+    justify-items: center;
     width: 100%;
+    height: fit-content;
 }
 
-.chartBox {
-    width: 70%;
-    padding: 20px;
-    border-radius: 20px;
-    border: solid 3px rgba(255, 26, 104, 1);
+.BarchartBox {
+    width: 80%;
+    margin: 20px;
+    border: solid 1px rgb(199, 199, 199);
     background: white;
+}
+
+.radarChartCard{
+    display: flex;
+    width: 90%;
+    margin: 20px;
+    border: solid 1px rgb(199, 199, 199);
+    background: white;
+    justify-content: space-evenly;
+}
+
+.radarChartBox{
+    width: 60%;
 }

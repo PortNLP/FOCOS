@@ -74,6 +74,7 @@ def infer_steady(init_vec, AdjmT, n, f_type="tanh", infer_rule="k", epsilon=0.00
         act_vec_old = act_vec_new
     return act_vec_new
 
+
 def infer_scenario(intervention_indexes, vals, init_vec, AdjmT, n, f_type="tanh", infer_rule="k", epsilon=0.00001):
     act_vec_old= init_vec
     

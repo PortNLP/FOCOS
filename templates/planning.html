@@ -24,53 +24,53 @@
 <div class="flex flex-no-wrap">
 	<!-- Sidebar starts -->
 	<!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-	<div class="min-h-screen w-64 absolute sm:relative bg-gray-800 shadow md:h-full flex-col justify-between flex">
+	<div class="navbar min-h-screen h-full w-58 absolute sm:relative shadow md:h-full flex-col justify-between flex">
 		<div class="px-8 h-full flex flex-col flex-grow">
-			<div class="h-16 text-white w-full flex items-center font-black text-3xl">
+			<div class="h-16 text-black w-full flex items-center font-black text-3xl">
 				FOCOS
 			</div>
 			<ul class="mt-12">
-				<li class="flex w-full justify-between text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-view-dashboard-outline"></i>
-						<span class="text-xl ml-2">Model</span>
+						<span class="text-2xl ml-2">Model</span>
 					</a>
 				</li>
-				<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-puzzle-outline"></i>
-						<span class="text-xl ml-2">Plan</span>
+						<span class="text-2xl ml-2" href="/planning">Plan</span>
 					</a>
 				</li>
-				<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-compass-outline"></i>
-						<span class="text-xl ml-2">Critique</span>
+						<span class="text-2xl ml-2">Critique</span>
 					</a>
 				</li>
-				<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-tag"></i>
-						<span class="text-xl ml-2">Strategies</span>
+						<span class="text-2xl ml-2" href="Strategies">Strategies</span>
 					</a>
 				</li>
-				<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-note"></i>
-						<span class="text-xl ml-2">Compare</span>
+						<span class="text-2xl ml-2" href="Compare">Compare</span>
 					</a>
 				</li>
-				<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-note"></i>
-						<span class="text-xl ml-2">About</span>
+						<span class="text-2xl ml-2" href="About">About</span>
 					</a>
 				</li>
 			</ul>
 
 			<div class="flex justify-center mt-auto mb-4 w-full">
 				<div class="relative">
-					<li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
+					<li class="flex w-full justify-between text-balck hover:text-gray-300 cursor-pointer items-center mb-6">
 						<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 							<i class="mdi mdi-note"></i>
 							<span class="text-xl ml-2">Log Out</span>
@@ -84,13 +84,16 @@
 	<!-- Remove class [ h-64 ] when adding a card block -->
 
 
-	<div class="container mx-auto py-10 md:w-4/5 w-11/12 px-6">
+	<div class="container mx-auto py-0 md:w-4/5 w-11/12 px-0">
 		<form action="{{ url_for('slider') }}" method=post>
-			<h2 class="text-3xl font-weight-bold ml-2">Interventions</h2>
+			<h2 class="text-4xl font-weight-bold ml-2 pt-5">Interventions</h2>
+
+			<hr class="divider">
+
 			<div class="elementsMainArea">
 				<div class="forEachColumn">
 					<div class="elementName">
-						Reframing Work Design
+						<i>Reframing Work Design</i>
 					</div>
 					<div class="form-group">
 						<label for="Authority" class="form-label">Stop-Work Authority</label>
@@ -117,7 +120,7 @@
 
 				<div class="forEachColumn">
 					<div class="elementName">
-						Reframing Relating Colleagues Peers
+						<i>Reframing Relating Colleagues Peers</i>
 					</div>
 
 					<div class="form-group">
@@ -138,7 +141,7 @@
 
 				<div class="forEachColumn">
 					<div class="elementName">
-						Reframing How the Work Should Be Done
+						<i>Reframing How the Work Should Be Done</i>
 					</div>
 
 					<div class="form-group">
@@ -160,7 +163,7 @@
 
 				<div class="forEachColumn">
 					<div class="elementName">
-						Reframing Work Communication
+						<i>Reframing Work Communication</i>
 					</div>
 
 					<div class="form-group">
@@ -181,7 +184,7 @@
 
 				<div class="forEachColumn">
 					<div class="elementName">
-						Reframing Work Training
+						<i>Reframing Work Training</i>
 					</div>
 
 					<div class="form-group">
@@ -210,28 +213,41 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-around">
-					<input type="reset" value="Reset">
-					<input type="submit" value="Submit" name="Submit">
+					<div class="d-flex flex-column justify-content-around">
+						Name: <input type="text" name="Name" class="boxInput" >
+						Comment: <textarea rows="5" cols="5" name="Comment" spellcheck="false" class="boxInput" ></textarea>
+						<input type="submit" value="Save" name="Save">
+					</div>
 				</div>
-			</div>
-			<div class="d-flex flex-column justify-content-around">
-				Name: <input type="text" name="Name" class="boxInput" >
-				Comment: <textarea rows="5" cols="5" name="Comment" spellcheck="false" class="boxInput" ></textarea>
-				<input type="submit" value="Save" name="Save">
 			</div>
 		</form>
 		<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-		<div class="w-full h-full rounded border-dashed border-2 border-gray-300 p-4">
-			<section class="homePage result-area">
+		<div class="result-area w-full h-full p-4">
+			<section class="homePage">
 				<h2 class="text-3xl font-weight-bold">Results</h2>
+				<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
 
 				<div class="chartCard">
-					<div class="chartBox">
+					<div class="BarchartBox">
 						<canvas id="barChart"></canvas>
 					</div>
 
-					<div class="chartBox">
-						<canvas id="radarChart"></canvas>
+					<div class="radarChartCard">
+						<form>
+							<!-- a form that takes tow inputs: Strategy name and Description, with a save button and reset button -->
+							<div class="d-flex justify-content-around">
+								<div class="d-flex flex-column justify-content-around">
+									Strategy Name: <input type="text" name="StrategyName" class="boxInput" >
+									Description: <textarea rows="5" cols="5" name="Description" spellcheck="false" class="boxInput" ></textarea>
+									<!-- blue submit button -->
+									<input type="submit" value="Save" name="Save">
+									<input type="reset" value="Reset" name="Reset">
+								</div>
+							</div>
+						</form>
+						<div class="radarChartBox">
+							<canvas id="radarChart"></canvas>
+						</div>
 					</div>
 				</div>
 

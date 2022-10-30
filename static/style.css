@@ -1,6 +1,8 @@
 .homePage {
     padding-top: 20px;
+    background-color: rgb(252, 252, 252);
 }
+
 
 .container{
     background-color: rgb(245, 245, 245);
@@ -66,7 +68,7 @@
     display: inline;
     float: left;
     width: 70%;
-    margin-top: 2%;
+    margin-top: 2.5%;
     margin-left: 5%;
 }
 

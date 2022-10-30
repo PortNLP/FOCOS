@@ -1,6 +1,8 @@
 from model.fcm import run_inference
 import sqlite3
+from datetime import date
 DB_FILE = 'entries.db'    # file for our Database
+FCM_MODEL = "V1"
 
 class model():
     def __init__(self):
@@ -38,12 +40,27 @@ class model():
         try: 
             cursor.execute("SELECT COUNT(rowid) FROM strategies")
         except sqlite3.OperationalError:
-            definition = "CREATE TABLE strategies (name text, comment text"
+            definition = "CREATE TABLE strategies (model text, day text, name text, comment text"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " real" # TODO: Integer should be fine
             definition = definition + ")"
             cursor.execute(definition)
         cursor.close()
+
+    def input_interventions(self, intervention_sliders):
+        """
+        Input Interventions
+        :param intervention_sliders: Dict {slider_name : value}
+        :return: none
+        """
+
+        interventions = {}
+        for key, val in intervention_sliders.items():
+            name = self.intervention_dict[key]
+            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
+            interventions.update({name : value})
+        self.current_strategy = interventions
+        return True
 
     def get_results(self):
         """
@@ -63,25 +80,10 @@ class model():
         else:
             # Get results for the latest strategy
             intervention = self.current_strategy
-            print(intervention)
+            #print(intervention)
             effects = run_inference(intervention, fcm_principle_names)
 
         return effects, output_principle_names
-
-    def input_interventions(self, intervention_sliders):
-        """
-        Input Interventions
-        :param intervention_sliders: Dict {slider_name : value}
-        :return: none
-        """
-
-        interventions = {}
-        for key, val in intervention_sliders.items():
-            name = self.intervention_dict[key]
-            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
-            interventions.update({name : value})
-        self.current_strategy = interventions
-        return True
 
     def save_strategy(self, intervention_sliders, name, comment):
         """
@@ -93,12 +95,30 @@ class model():
         """
         
         intervention_values = [intervention_sliders[k] for k in self.intervention_names]
+        day = date.today()
+        model = FCM_MODEL
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO strategies VALUES (?,?" +",?"*len(self.intervention_names)+")", (name, comment) + tuple(intervention_values))
+        cursor.execute("INSERT INTO strategies VALUES (?,?,?,?" +",?"*len(self.intervention_names)+")", (model, day, name, comment) + tuple(intervention_values))
         cursor.execute("SELECT * FROM strategies")
         print(cursor.fetchall())
         connection.commit()
         cursor.close()
         return True
 
+    def select_all(self):
+        connection = sqlite3.connect("test.db") # TODO: DB_FILE
+        connection.row_factory = make_dicts
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM strategies")
+        rows = cursor.fetchall()
+        print(rows)
+        cursor.close()
+        
+        return rows
+
+def make_dicts(cursor, row):
+    return dict((cursor.description[idx][0], value)
+                for idx, value in enumerate(row))
+
+# reset select edit delete

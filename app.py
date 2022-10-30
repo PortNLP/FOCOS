@@ -28,7 +28,7 @@ def about():
 @app.route('/slider', methods=['POST'])
 def slider():
     form_input = request.form.to_dict(flat=True)
-    print(form_input)
+    #print(form_input)
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     if request.form.get("Submit"):
         model.input_interventions(intervention_sliders)
@@ -37,6 +37,18 @@ def slider():
         comment = request.form.get("Comment")
         model.save_strategy(intervention_sliders, name, comment)
     return redirect(url_for('planning'))
+
+@app.route('/strategies.html')
+def strategies():
+    entries = model.select_all()
+    effects, principles = model.get_results()
+    description = ""
+    return render_template('strategies.html', entries=entries, description=description, effects=effects, principles=principles)
+
+@app.route('/select_strategy', methods=['POST'])
+def select_strategy():
+    request.form.get("name")
+    return redirect(url_for('strategies'))
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True)

@@ -84,7 +84,7 @@
 }
 
 .boxInput{
-    border-style:solid;
+    /*border-style:solid;*/
     background-color: rgb(252, 252, 252);
 }
 
@@ -106,16 +106,16 @@
 .BarchartBox {
     width: 80%;
     margin: 20px;
-    border: solid 1px rgb(199, 199, 199);
-    background: white;
+    /*border: solid 1px rgb(199, 199, 199);*/
+    /*background: white;*/
 }
 
 .radarChartCard{
     display: flex;
     width: 90%;
     margin: 20px;
-    border: solid 1px rgb(199, 199, 199);
-    background: white;
+    /*border: solid 1px rgb(199, 199, 199);*/
+    /*background: white;*/
     justify-content: space-evenly;
 }
 

@@ -2,7 +2,7 @@
 FOCOS Flask app
 """
 from flask import Flask, redirect, request, url_for, render_template
-from model.planning_model import model
+from model.model import model
 
 app = Flask(__name__)
 model = model()
@@ -35,7 +35,9 @@ def slider():
     elif request.form.get("Save"):
         name = request.form.get("Name")
         comment = request.form.get("Comment")
-        model.save_strategy(intervention_sliders, name, comment)
+        #model.save_strategy(intervention_sliders, name, comment)
+    elif request.form.get("Reset"):
+        model.reset_interventions()
     return redirect(url_for('planning'))
 
 @app.route('/strategies.html')
@@ -47,7 +49,11 @@ def strategies():
 
 @app.route('/select_strategy', methods=['POST'])
 def select_strategy():
-    request.form.get("name")
+    name = request.form.get("name")
+    print(name)
+    strategy = model.select_strategy(name)
+    intervention_sliders = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
+    model.input_interventions(intervention_sliders)
     return redirect(url_for('strategies'))
 
 if __name__ == '__main__':

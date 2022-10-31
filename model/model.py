@@ -85,6 +85,14 @@ class model():
 
         return effects, output_principle_names
 
+    def reset_interventions(self):
+        """
+        Reset Interventions
+        :return: none
+        """  
+        self.current_strategy = {}
+        return True    
+
     def save_strategy(self, intervention_sliders, name, comment):
         """
         Save Current Strategy
@@ -107,16 +115,38 @@ class model():
         return True
 
     def select_all(self):
+        """
+        Select all rows
+        :return: List of Dicts
+        """
         connection = sqlite3.connect("test.db") # TODO: DB_FILE
         connection.row_factory = make_dicts
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM strategies")
         rows = cursor.fetchall()
-        print(rows)
+        #print(rows)
         cursor.close()
         
         return rows
 
+    def select_strategy(self, name):
+        """
+        Select a certain strategy based on name
+        :param name: String
+        :return: Dict
+        """
+        connection = sqlite3.connect("test.db") # TODO: DB_FILE
+        connection.row_factory = make_dicts
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM strategies WHERE name = ?", (name,))
+        row = cursor.fetchall()[0]
+        print(row)
+        cursor.close()
+        
+        return row
+
+
+# results from the database are returned as dictionaries instead of tuples
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
                 for idx, value in enumerate(row))

@@ -23,6 +23,8 @@
     ". .";
 }
 
+
+
 .elementsMainArea {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -83,7 +85,7 @@
 
 .boxInput{
     border-style:solid;
-    background-color: #eee;
+    background-color: rgb(252, 252, 252);
 }
 
 

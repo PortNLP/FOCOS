@@ -3,6 +3,7 @@ FOCOS Flask app
 """
 from flask import Flask, redirect, request, url_for, render_template
 from model.model import model
+import time
 
 app = Flask(__name__)
 model = model()
@@ -29,8 +30,8 @@ def about():
 @app.route('/slider', methods=['POST'])
 def slider():
     form_input = request.form.to_dict(flat=True)
-    print(form_input)
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
+    print(form_input)
     if request.form.get("Submit"):
         model.input_interventions(intervention_sliders)
     elif request.form.get("Save"):
@@ -39,6 +40,8 @@ def slider():
         #model.save_strategy(intervention_sliders, name, comment)
     elif request.form.get("Reset"):
         model.reset_interventions()
+    print(model.current_strategy)
+    time.sleep(.3)
     return redirect(url_for('planning'))
 
 @app.route('/strategies.html')

@@ -58,4 +58,4 @@ def select_strategy():
     return redirect(url_for('strategies'))
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
+  app.run(host='0.0.0.0', debug=True, threaded=False)

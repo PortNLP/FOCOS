@@ -71,6 +71,7 @@ class model():
 
         output_principle_names = []
         fcm_principle_names = []
+        print(self.current_strategy)
         for key, val in self.principle_dict.items():
             output_principle_names.append(key)
             fcm_principle_names.append(val)

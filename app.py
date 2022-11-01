@@ -17,6 +17,7 @@ Function decorator === app.route('/',planning())
 @app.route('/planning.html')
 def planning():
     effects, principles = model.get_results()
+    print(effects)
     return render_template('planning.html', effects=effects, principles=principles)
 
 # route to the about page
@@ -28,7 +29,7 @@ def about():
 @app.route('/slider', methods=['POST'])
 def slider():
     form_input = request.form.to_dict(flat=True)
-    #print(form_input)
+    print(form_input)
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     if request.form.get("Submit"):
         model.input_interventions(intervention_sliders)

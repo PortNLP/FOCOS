@@ -7,6 +7,7 @@ import time
 
 app = Flask(__name__)
 model = model()
+print("App started")
 
 """
 Function decorator === app.route('/',planning())
@@ -41,7 +42,6 @@ def slider():
     elif request.form.get("Reset"):
         model.reset_interventions()
     print(model.current_strategy)
-    time.sleep(.3)
     return redirect(url_for('planning'))
 
 @app.route('/strategies.html')

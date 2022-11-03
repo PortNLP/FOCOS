@@ -72,19 +72,21 @@ class model():
 
         output_principle_names = []
         fcm_principle_names = []
-        interventions = {}
-        for key, val in intervention_sliders.items():
-            name = self.intervention_dict[key]
-            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
-            interventions.update({name : value})
-        print(interventions)
         for key, val in self.principle_dict.items(): #TODO: make these variables global
             output_principle_names.append(key)
             fcm_principle_names.append(val)
 
-        if not interventions:  # no strategies
+
+        if not intervention_sliders:  # no intervention
             effects = [0, 0, 0, 0, 0]
         else:
+            interventions = {}
+            for key, val in intervention_sliders.items():
+                name = self.intervention_dict[key]
+                value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
+                interventions.update({name : value})
+            print(interventions)
+
             # Get results for the latest strategy
             effects = run_inference(interventions, fcm_principle_names)
 

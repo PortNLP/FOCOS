@@ -6,7 +6,7 @@ FCM_MODEL = "V1"
 
 class model():
     def __init__(self):
-
+        print("Created model")
         # Dict {fcm_principle_name : output_principle_name}
         self.principle_dict = {
             "Deference to Expertise" :      "DEFERENCE TO EXPERTISE",  
@@ -34,6 +34,7 @@ class model():
         }
         self.intervention_names = [k for (k,v) in self.intervention_dict.items()]
         self.current_strategy = {} # A strategy is a collection of interventions
+
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         # Check if our database exists
@@ -62,7 +63,7 @@ class model():
         self.current_strategy = interventions
         return True
 
-    def get_results(self):
+    def get_results(self, intervention_sliders):
         """
         Gets the 5 degrees to which the HRO principles change
          in response to the latest strategy. Also returns the principle names
@@ -71,18 +72,21 @@ class model():
 
         output_principle_names = []
         fcm_principle_names = []
-        print(self.current_strategy)
-        for key, val in self.principle_dict.items():
+        interventions = {}
+        for key, val in intervention_sliders.items():
+            name = self.intervention_dict[key]
+            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
+            interventions.update({name : value})
+        print(interventions)
+        for key, val in self.principle_dict.items(): #TODO: make these variables global
             output_principle_names.append(key)
             fcm_principle_names.append(val)
 
-        if not self.current_strategy:  # no strategies
+        if not interventions:  # no strategies
             effects = [0, 0, 0, 0, 0]
         else:
             # Get results for the latest strategy
-            intervention = self.current_strategy
-            #print(intervention)
-            effects = run_inference(intervention, fcm_principle_names)
+            effects = run_inference(interventions, fcm_principle_names)
 
         return effects, output_principle_names
 

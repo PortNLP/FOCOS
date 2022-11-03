@@ -6,7 +6,7 @@ FCM_MODEL = "V1"
 
 class model():
     def __init__(self):
-
+        print("Created model")
         # Dict {fcm_principle_name : output_principle_name}
         self.principle_dict = {
             "Deference to Expertise" :      "DEFERENCE TO EXPERTISE",  
@@ -33,7 +33,7 @@ class model():
             "LearningSlider" :        "Adopting Just-In-Time Learning"
         }
         self.intervention_names = [k for (k,v) in self.intervention_dict.items()]
-        self.current_strategy = {} # A strategy is a collection of interventions
+
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         # Check if our database exists
@@ -47,22 +47,7 @@ class model():
             cursor.execute(definition)
         cursor.close()
 
-    def input_interventions(self, intervention_sliders):
-        """
-        Input Interventions
-        :param intervention_sliders: Dict {slider_name : value}
-        :return: none
-        """
-
-        interventions = {}
-        for key, val in intervention_sliders.items():
-            name = self.intervention_dict[key]
-            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
-            interventions.update({name : value})
-        self.current_strategy = interventions
-        return True
-
-    def get_results(self):
+    def get_results(self, intervention_sliders):
         """
         Gets the 5 degrees to which the HRO principles change
          in response to the latest strategy. Also returns the principle names
@@ -71,17 +56,23 @@ class model():
 
         output_principle_names = []
         fcm_principle_names = []
-        for key, val in self.principle_dict.items():
+        for key, val in self.principle_dict.items(): #TODO: make these variables global
             output_principle_names.append(key)
             fcm_principle_names.append(val)
 
-        if not self.current_strategy:  # no strategies
+
+        if not intervention_sliders:  # no intervention
             effects = [0, 0, 0, 0, 0]
         else:
+            interventions = {}
+            for key, val in intervention_sliders.items():
+                name = self.intervention_dict[key]
+                value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
+                interventions.update({name : value})
+            print(interventions)
+
             # Get results for the latest strategy
-            intervention = self.current_strategy
-            #print(intervention)
-            effects = run_inference(intervention, fcm_principle_names)
+            effects = run_inference(interventions, fcm_principle_names)
 
         return effects, output_principle_names
 
@@ -107,16 +98,38 @@ class model():
         return True
 
     def select_all(self):
+        """
+        Select all rows
+        :return: List of Dicts
+        """
         connection = sqlite3.connect("test.db") # TODO: DB_FILE
         connection.row_factory = make_dicts
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM strategies")
         rows = cursor.fetchall()
-        print(rows)
+        #print(rows)
         cursor.close()
         
         return rows
 
+    def select_strategy(self, name):
+        """
+        Select a certain strategy based on name
+        :param name: String
+        :return: Dict
+        """
+        connection = sqlite3.connect("test.db") # TODO: DB_FILE
+        connection.row_factory = make_dicts
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM strategies WHERE name = ?", (name,))
+        row = cursor.fetchall()[0]
+        print(row)
+        cursor.close()
+        
+        return row
+
+
+# results from the database are returned as dictionaries instead of tuples
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
                 for idx, value in enumerate(row))

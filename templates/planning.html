@@ -90,8 +90,8 @@
 	<!-- Sidebar ends -->
 	<!-- Remove class [ h-64 ] when adding a card block -->
 
-	<form action="{{ url_for('slider') }}" method=post>
-		<grid class="container min-h-screen mx-auto py-0 md:w-12/12 px-0">
+	<form action="{{ url_for('slider') }}" method=post id="practices">
+		<div class="container min-h-screen mx-auto py-0 md:w-12/12 px-0">
 			<div class="elementsMainArea max-h-screen">
 				<div class="sec-name flex-sm-column">
 					<h2 class="text-4xl font-weight-bold ml-4 pt-4">Safety Practices</h2>
@@ -227,7 +227,7 @@
 
 			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
 			<div class="result-area max-h-screen w-full h-full p-4">
-				<section class="homePage max-h-screen">
+				<section class="homePage max-h-screen" id="result-area">
 					<h2 class="text-3xl font-weight-bold">Output / Results</h2>
 					<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
 
@@ -243,7 +243,8 @@
 
 							<div class="d-flex flex-column justify-content-around pt-6 pb-6">
 								Strategy Name: <input type="text" name="Name" class="boxInput">
-								Description: <textarea rows="5" cols="5" name="Description" spellcheck="true" class="boxInput"></textarea>
+								Description: <textarea rows="5" cols="5" name="Description" spellcheck="true"
+								                       class="boxInput"></textarea>
 								<input type="submit" class="btn bg-primary" value="Save Strategy" name="Save">
 								<input type="reset" class="btn bg-secondary" value="Reset" name="Reset">
 							</div>
@@ -362,8 +363,25 @@
 					</script>
 				</section>
 			</div>
-		</grid>
+		</div>
 	</form>
+
+	<script>
+      //do not refresh page when click "submit" to submit form with id="practices and only refresh the div with id="result-area"
+      $(document).ready(function () {
+          $("#practices").submit(function (e) {
+              e.preventDefault();
+              $.ajax({
+                  type: "POST",
+                  url: "/",
+                  data: $("#practices").serialize(),
+                  success: function (response) {
+                      $("#result-area").html(response);
+                  }
+              });
+          });
+      });
+	</script>
 </div>
 
 

@@ -33,7 +33,6 @@ class model():
             "LearningSlider" :        "Adopting Just-In-Time Learning"
         }
         self.intervention_names = [k for (k,v) in self.intervention_dict.items()]
-        self.current_strategy = {} # A strategy is a collection of interventions
 
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
@@ -47,21 +46,6 @@ class model():
             definition = definition + ")"
             cursor.execute(definition)
         cursor.close()
-
-    def input_interventions(self, intervention_sliders):
-        """
-        Input Interventions
-        :param intervention_sliders: Dict {slider_name : value}
-        :return: none
-        """
-
-        interventions = {}
-        for key, val in intervention_sliders.items():
-            name = self.intervention_dict[key]
-            value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
-            interventions.update({name : value})
-        self.current_strategy = interventions
-        return True
 
     def get_results(self, intervention_sliders):
         """
@@ -91,14 +75,6 @@ class model():
             effects = run_inference(interventions, fcm_principle_names)
 
         return effects, output_principle_names
-
-    def reset_interventions(self):
-        """
-        Reset Interventions
-        :return: none
-        """  
-        self.current_strategy = {}
-        return True    
 
     def save_strategy(self, intervention_sliders, name, comment):
         """

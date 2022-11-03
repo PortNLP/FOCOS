@@ -36,16 +36,13 @@ def slider():
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     print(form_input)
     if request.form.get("Submit"):
-        #model.input_interventions(intervention_sliders)
         session["interventions"] = intervention_sliders
     elif request.form.get("Save"):
         name = request.form.get("Name")
         comment = request.form.get("Comment")
         #model.save_strategy(intervention_sliders, name, comment)
     elif request.form.get("Reset"):
-        model.reset_interventions()
         session["interventions"] = {}
-    print(model.current_strategy)
     return redirect(url_for('planning'))
 
 @app.route('/strategies.html')

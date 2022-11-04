@@ -35,7 +35,7 @@ def slider():
     form_input = request.form.to_dict(flat=True)
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     print(form_input)
-    if request.form.get("Submit"):
+    if request.form.get("Submit"): # This value isn't added to the form when submit is clicked
         session["interventions"] = intervention_sliders
     elif request.form.get("Save"):
         name = request.form.get("Name")
@@ -47,8 +47,9 @@ def slider():
 
 @app.route('/strategies.html')
 def strategies():
+    interventions = session.get("interventions")
     entries = model.select_all()
-    effects, principles = model.get_results(session.get("interventions"))
+    effects, principles = model.get_results(interventions)
     description = ""
     return render_template('strategies.html', entries=entries, description=description, effects=effects, principles=principles)
 
@@ -58,7 +59,7 @@ def select_strategy():
     print(name)
     strategy = model.select_strategy(name)
     intervention_sliders = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
-    model.input_interventions(intervention_sliders)
+    session["interventions"] = intervention_sliders
     return redirect(url_for('strategies'))
 
 if __name__ == '__main__':

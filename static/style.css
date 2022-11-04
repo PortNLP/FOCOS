@@ -91,6 +91,7 @@
     /*add a greay thick border*/
     border: 2px solid #f6f6f6;
     background-color: white;
+    resize: none;
 }
 
 .saveForm{
@@ -142,5 +143,22 @@ h6 {
 }
 
 .btn {
-    width: 100%;
+    width: 100%;;
 }
+
+.btn-primary{
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+.btn-secondary{
+    background-color: #6c757d !important;;
+    border-color: #6c757d !important;;
+    width: 50%;
+}
+

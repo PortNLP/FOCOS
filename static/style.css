@@ -3,29 +3,25 @@
     background-color: rgb(252, 252, 252);
 }
 
-
-.container{
-    background-color: rgb(245, 245, 245);
-}
-
-.result-area{
-    background-color: rgb(252, 252, 252);
-}
-
 .navbar {
     background-color: rgb(219, 219, 219);
 }
 
-.container {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    grid-template-areas:
-    ". .";
+
+.rightScreen {
+    display: flex;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    /*display: grid;*/
+    /*grid-template-columns: 2fr 3fr;*/
+    /*grid-template-areas:*/
+    /*". .";*/
+    /*justify-content: space-around;*/
 }
 
-
-
 .elementsMainArea {
+    width: 33%;
+    min-width: 600px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
@@ -35,7 +31,19 @@
     "element3 element4"
     "element5 element6"
     "element7 element8";
+}
 
+.result-area{
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-grow: 1;
+    width: 77%;
+    flex-direction: column;
+}
+
+.outputText{
+/*    change text color to blue*/
+    color: #467fd7;
 }
 
 .sec-name{
@@ -76,18 +84,23 @@
 }
 
 .form-range {
-    display: inline;
-    float: left;
     width: 70%;
-    margin-top: 2.5%;
-    margin-left: 5%;
 }
 
 .boxInput{
-    /*border-style:solid;*/
-    background-color: rgb(252, 252, 252);
+    /*add a greay thick border*/
+    border: 2px solid #f6f6f6;
+    background-color: white;
 }
 
+.saveForm{
+    width: 30%;
+}
+
+/*make h3 tag bold text*/
+h6 {
+    font-weight: bolder;
+}
 
 
 .chartCard {
@@ -98,27 +111,36 @@
     grid-template-areas:
     "."
     ".";
-    justify-items: center;
     width: 100%;
     height: fit-content;
+/*    center items in cell*/
+    justify-items: center;
+    align-items: center;
 }
 
 .BarchartBox {
+    display: flex;
     width: 80%;
     margin: 20px;
-    /*border: solid 1px rgb(199, 199, 199);*/
-    /*background: white;*/
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
 }
 
 .radarChartCard{
     display: flex;
-    width: 90%;
-    margin: 20px;
-    /*border: solid 1px rgb(199, 199, 199);*/
-    /*background: white;*/
+    padding-top: 10px;
+    width: 80%;
+    margin: 10px;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
     justify-content: space-evenly;
+
 }
 
 .radarChartBox{
-    width: 60%;
+    width: 40%;
+}
+
+.btn {
+    width: 100%;
 }

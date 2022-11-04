@@ -16,6 +16,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>FOCOS</title>
 </head>
 
@@ -25,13 +26,14 @@
 	<!-- Sidebar starts -->
 	<div class="navbar absolute min-h-screen w-65 sm:relative shadow md:h-full flex-col justify-between flex">
 		<div class="px-8 h-full flex flex-col flex-grow">
-			<div class="h-16 text-black w-full flex items-center font-black text-3xl">
+			<div class="h-16 text-black w-full flex items-center font-black text-3xl pt-4">
 				FOCOS
 			</div>
 			<ul class="mt-12">
 				<li class="flex w-full justify-between text-black cursor-pointer items-center mb-6">
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-view-dashboard-outline"></i>
+						<img src="../assets/icons/start.png" alt="Start">
 						<span class="text-2xl ml-2">Start</span>
 					</a>
 				</li>
@@ -48,7 +50,7 @@
 					</a>
 				</li>
 				<li class="flex w-full justify-between text-black hover:text-gray-300 cursor-pointer items-center mb-6">
-					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+					<a href="../templates/strategies.html" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-compass-outline"></i>
 						<span class="text-2xl ml-2">Strategies</span>
 					</a>
@@ -67,12 +69,14 @@
 				</li>
 			</ul>
 
+
 			<div class="flex flex-sm-column justify-center mt-auto mb-4 w-full">
 				<div class="relative">
+					<hr class="ml-0 mr-0">
 					<li class="flex w-full justify-between text-balck hover:text-gray-300 cursor-pointer items-center mb-6">
 						<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 							<i class="mdi mdi-note"></i>
-							<span class="text-l ml-2">Test User Name</span>
+							<span class="text-l ml-2">Test User</span>
 						</a>
 					</li>
 				</div>
@@ -89,12 +93,11 @@
 	</div>
 	<!-- Sidebar ends -->
 	<!-- Remove class [ h-64 ] when adding a card block -->
-
-	<form action="{{ url_for('slider') }}" method=post>
-		<grid class="container min-h-screen mx-auto py-0 md:w-12/12 px-0">
-			<div class="elementsMainArea max-h-screen">
+	<form action="{{ url_for('slider') }}" method=post id="practices">
+		<div class="rightScreen">
+			<div class="elementsMainArea max-h-screen min-h-screen min-w-600">
 				<div class="sec-name flex-sm-column">
-					<h2 class="text-4xl font-weight-bold ml-4 pt-4">Safety Practices</h2>
+					<h1 class="text-4xl font-weight-bold ml-4 pt-4">Safety Practices</h1>
 					<hr class="divider">
 				</div>
 
@@ -104,24 +107,30 @@
 					</div>
 					<div class="form-group">
 						<label for="Authority" class="form-label">Stop-Work Authority</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="AuthoritySlider"
-						       id="Authority" onInput="$('#AuthorityValue').html($(this).val())">
-						<p><span id="AuthorityValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="AuthoritySlider"
+							       id="Authority" onInput="$('#AuthorityValue').html($(this).val())">
+							<p><span id="AuthorityValue">0</span></p>
+						</div>
 					</div>
 
 
 					<div class="form-group">
 						<label for="Ambivalence" class="form-label">Institutionalizating Emotional Ambivalence</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="AmbivalenceSlider"
-						       id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val())">
-						<p><span id="AmbivalenceValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="AmbivalenceSlider"
+							       id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val())">
+							<p><span id="AmbivalenceValue">0</span></p>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="Drift" class="form-label">Managing Reliability Drift</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DriftSlider"
-						       id="Drift" onInput="$('#DriftValue').html($(this).val())">
-						<p><span id="DriftValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DriftSlider"
+							       id="Drift" onInput="$('#DriftValue').html($(this).val())">
+							<p><span id="DriftValue">0</span></p>
+						</div>
 					</div>
 				</div>
 
@@ -132,16 +141,20 @@
 
 					<div class="form-group">
 						<label for="Motivation" class="form-label">Institutionalizing Prosocial Motivation</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="MotivationSlider"
-						       id="Motivation" onInput="$('#MotivationValue').html($(this).val())">
-						<p><span id="MotivationValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="MotivationSlider"
+							       id="Motivation" onInput="$('#MotivationValue').html($(this).val())">
+							<p><span id="MotivationValue">0</span></p>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="Respect" class="form-label">Fostering Social Ties and Mutual Respect</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="RespectSlider"
-						       id="Respect" onInput="$('#RespectValue').html($(this).val())">
-						<p><span id="RespectValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="RespectSlider"
+							       id="Respect" onInput="$('#RespectValue').html($(this).val())">
+							<p><span id="RespectValue">0</span></p>
+						</div>
 					</div>
 				</div>
 
@@ -153,17 +166,21 @@
 
 					<div class="form-group">
 						<label for="Mindfulness" class="form-label">Practicing Individual Mindfulness</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="MindfulnessSlider"
-						       id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val())">
-						<p><span id="MindfulnessValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="MindfulnessSlider"
+							       id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val())">
+							<p><span id="MindfulnessValue">0</span></p>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="Accountability" class="form-label">Fostering Sense of Accountability</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-						       name="AccountabilitySlider"
-						       id="Accountability" onInput="$('#AccountabilityValue').html($(this).val())">
-						<p><span id="AccountabilityValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1"
+							       name="AccountabilitySlider"
+							       id="Accountability" onInput="$('#AccountabilityValue').html($(this).val())">
+							<p><span id="AccountabilityValue">0</span></p>
+						</div>
 					</div>
 				</div>
 
@@ -175,16 +192,20 @@
 
 					<div class="form-group">
 						<label for="Huddle" class="form-label">Implementing Safety Huddles</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="HuddleSlider"
-						       id="Huddle" onInput="$('#HuddleValue').html($(this).val())">
-						<p><span id="HuddleValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="HuddleSlider"
+							       id="Huddle" onInput="$('#HuddleValue').html($(this).val())">
+							<p><span id="HuddleValue">0</span></p>
+						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="Incidents" class="form-label">Reporting Near-Misses/Incidents</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="IncidentsSlider"
-						       id="Incidents" onInput="$('#IncidentsValue').html($(this).val())">
-						<p><span id="IncidentsValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="IncidentsSlider"
+							       id="Incidents" onInput="$('#IncidentsValue').html($(this).val())">
+							<p><span id="IncidentsValue">0</span></p>
+						</div>
 					</div>
 				</div>
 
@@ -196,54 +217,69 @@
 
 					<div class="form-group">
 						<label for="Drills" class="form-label">Emergency Drills</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DrillsSlider"
-						       id="Drills" onInput="$('#DrillsValue').html($(this).val())">
-						<p><span id="DrillsValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DrillsSlider"
+							       id="Drills" onInput="$('#DrillsValue').html($(this).val())">
+							<p><span id="DrillsValue">0</span></p>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="Exercise" class="form-label">Tabletop Exercises</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="ExerciseSlider"
-						       id="Exercise" onInput="$('#ExerciseValue').html($(this).val())">
-						<p><span id="ExerciseValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="ExerciseSlider"
+							       id="Exercise" onInput="$('#ExerciseValue').html($(this).val())">
+							<p><span id="ExerciseValue">0</span></p>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="Learning" class="form-label">Just-In-Time-Learning</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="LearningSlider"
-						       id="Learning" onInput="$('#LearningValue').html($(this).val())">
-						<p><span id="LearningValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="LearningSlider"
+							       id="Learning" onInput="$('#LearningValue').html($(this).val())">
+							<p><span id="LearningValue">0</span></p>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="Debriefings" class="form-label">Post-Event Debriefings</label>
-						<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DebriefingsSlider"
-						       id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val())">
-						<p><span id="DebriefingsValue">0</span></p>
+						<div class="d-flex justify-content-center gap-5">
+							<input type="range" class="form-range" min="0" max="100" value="0" step="1" name="DebriefingsSlider"
+							       id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val())">
+							<p><span id="DebriefingsValue">0</span></p>
+						</div>
 					</div>
 				</div>
+
 				<div class="d-flex justify-content-around">
-					<input type="submit" value="Reset" name="Reset">
+					{#					<input type="submit" value="Reset" name="Reset">#}
 					<input type="submit" value="Submit" name="Submit">
 				</div>
 			</div>
 
 			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-			<div class="result-area max-h-screen w-full h-full p-4">
-				<section class="homePage max-h-screen">
-					<h2 class="text-3xl font-weight-bold">Output / Results</h2>
+			<div class="result-area max-h-screen min-w-600">
+				<div class="sec-name flex-sm-column pt-4 pl-4">
+					<h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
 					<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+				</div>
 
-					<div class="chartCard">
-						<div class="BarchartBox">
-							<canvas id="barChart"></canvas>
+
+				<div class="chartCard">
+					<div class="BarchartBox">
+						<canvas id="barChart"></canvas>
+					</div>
+
+
+					<div class="radarChartCard">
+						<div class="radarChartBox">
+							<canvas id="radarChart"></canvas>
 						</div>
 
-						<div class="radarChartCard">
-							<div class="radarChartBox">
-								<canvas id="radarChart"></canvas>
-							</div>
-
-							<div class="d-flex flex-column justify-content-around pt-6 pb-6">
-								Strategy Name: <input type="text" name="Name" class="boxInput">
-								Description: <textarea rows="5" cols="5" name="Description" spellcheck="true" class="boxInput"></textarea>
+						<div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
+							<h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput" placeholder="Strategy/test one">
+							<h6>Description:</h6> <textarea rows="3" cols="5" name="Description" spellcheck="true"
+							                                class="boxInput" placeholder="Enter a description here..."></textarea>
+							{#							display save button and reset button on the same line#}
+							<div class="d-flex justify-content-between gap-10">
 								<input type="submit" class="btn bg-primary" value="Save Strategy" name="Save">
 								<input type="submit" class="btn bg-secondary" value="Reset" name="Reset">
 							</div>
@@ -283,7 +319,7 @@
                   type: 'bar',
                   data,
                   options: {
-                      y: {
+                      x: {
                           min: -100,
                           max: 100,
                       },
@@ -335,6 +371,13 @@
                   type: 'radar',
                   data: data1,
                   options: {
+                      scales: {
+                          r: {
+                              pointLabels: {
+                                  display: false // Hides the labels around the radar chart
+                              }
+                          }
+                      },
                       scale: {
                           min: -100,
                           max: 100,
@@ -360,10 +403,25 @@
                   config1
               );
 					</script>
-				</section>
+				</div>
 			</div>
-		</grid>
 	</form>
+	<script>
+      $(function () {
+          $('#Authority').slider({
+              range: true,
+              min: 0,
+              max: 100,
+              values: [90, 290],
+              slide: function (event, ui) {
+                  $('#Value').val(ui.values[1]);
+              },
+              stop: function (event, ui) {
+                  $('form').submit();
+              },
+          });
+      });
+	</script>
 </div>
 
 

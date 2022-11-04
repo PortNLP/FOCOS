@@ -48,7 +48,7 @@ def slider():
 @app.route('/strategies.html')
 def strategies():
     entries = model.select_all()
-    effects, principles = model.get_results()
+    effects, principles = model.get_results(session.get("interventions"))
     description = ""
     return render_template('strategies.html', entries=entries, description=description, effects=effects, principles=principles)
 

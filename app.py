@@ -47,8 +47,9 @@ def slider():
 
 @app.route('/strategies.html')
 def strategies():
+    interventions = session.get("interventions")
     entries = model.select_all()
-    effects, principles = model.get_results()
+    effects, principles = model.get_results(interventions)
     description = ""
     return render_template('strategies.html', entries=entries, description=description, effects=effects, principles=principles)
 
@@ -58,7 +59,7 @@ def select_strategy():
     print(name)
     strategy = model.select_strategy(name)
     intervention_sliders = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
-    model.input_interventions(intervention_sliders)
+    session["interventions"] = intervention_sliders
     return redirect(url_for('strategies'))
 
 if __name__ == '__main__':

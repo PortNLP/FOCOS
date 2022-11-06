@@ -35,7 +35,7 @@ def slider():
     form_input = request.form.to_dict(flat=True)
     intervention_sliders = {k:v for (k,v) in form_input.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     print(form_input)
-    if request.form.get("Submit"): # This value isn't added to the form when submit is clicked
+    if request.form.get("Submit"):
         session["interventions"] = intervention_sliders
     elif request.form.get("Save"):
         name = request.form.get("Name")

@@ -297,8 +297,12 @@
 
 					<script>
               // setup
-              var data = {
-                  labels: {{ principles|tojson }},
+			  var principles = {{ principles|tojson }}
+			  for (let idx = 0; idx < principles.length; idx++){
+				principles[idx] = "P" + (idx+1).toString() + ": " + principles[idx]
+			  }
+              const data = {
+                  labels: principles,
                   datasets: [{
                       label: 'Change of Intervention',
                       data: {{ effects|tojson }},
@@ -347,9 +351,15 @@
                   config
               );
 					</script>
+
+
 					<script>
-              var data1 = {
-                  labels: {{ principles|tojson }},
+			  var principles = {{ principles|tojson }}
+			  for (let idx = 0; idx < principles.length; idx++){
+				principles[idx] = "P" + (idx+1).toString()// + ": " + principles[idx]
+			  }
+              const data1 = {
+                  labels: principles,
                   datasets: [{
                       label: 'My First Dataset',
                       data: {{ effects|tojson }},
@@ -370,7 +380,7 @@
                       scales: {
                           r: {
                               pointLabels: {
-                                  display: false // Hides the labels around the radar chart
+                                  display: true // don't hide the labels around the radar chart
                               }
                           }
                       },
@@ -435,7 +445,6 @@
 		  });
 	  });
     </script>
-
 </div>
 
 

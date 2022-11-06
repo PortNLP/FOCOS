@@ -36,8 +36,8 @@
 .result-area{
     background-color: rgb(250, 250, 250);
     display: flex;
-    min-width: 900px;
     flex-grow: 1;
+    width: 77%;
     flex-direction: column;
 }
 

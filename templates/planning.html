@@ -10,7 +10,9 @@
 	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
-	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	        crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdn.tailwindcss.com"></script>
@@ -70,7 +72,7 @@
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-note"></i>
 						<i class="bi bi-toggles2"></i>
-						<span class="text-2xl ml-2" href="Critique">Critique</span>
+						<span class="text-2xl ml-2" href="About">Critique</span>
 					</a>
 				</li>
 			</ul>
@@ -262,7 +264,7 @@
 			</div>
 
 			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-			<div class="result-area max-h-screen">
+			<div class="result-area max-h-screen min-w-600">
 				<div class="sec-name flex-sm-column pt-4 pl-4">
 					<h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
 					<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
@@ -293,7 +295,6 @@
 							</div>
 						</div>
 					</div>
-
 
 					<script>
               // setup
@@ -327,7 +328,7 @@
               };
 
               // config
-              var config = {
+              const config = {
                   type: 'bar',
                   data,
                   options: {
@@ -346,7 +347,7 @@
               };
 
               // render init block
-              var myChart = new Chart(
+              const myChart = new Chart(
                   document.getElementById('barChart'),
                   config
               );
@@ -373,7 +374,7 @@
                   }]
               };
 
-              var config1 = {
+              const config1 = {
                   type: 'radar',
                   data: data1,
                   options: {
@@ -404,7 +405,7 @@
               };
 
               // render init block
-              var myChart1 = new Chart(
+              const myChart1 = new Chart(
                   document.getElementById('radarChart'),
                   config1
               );
@@ -423,28 +424,25 @@
     </script>
 
 
-	<script>
-      //stop refreshing page when click "submit" and only refresh div with id "result"
-      $(document).ready(function () {
-		$('#submit').click(function (e) {
-          //jQuery('#practices').submit(function (e) {
-              e.preventDefault();
-			  values = $("#practices").serialize()
-			  values += "&Submit=Submit";
-			  console.log(values)
-              $.ajax({
-                  type: "POST",
-                  url: "/slider",
-                  data: values,
-                  success: function (response) {
-					//var result = $('<div />').append(response).find('#result-here').html();
-					$('#result-here').html($('#result-here',response).html());
-					console.log({{ effects|tojson }})	//These aren't changed
-				  }
-              });
-		  });
-	  });
-    </script>
+
+{#	<script>#}
+{#      //stop refreshing page when click "submit" and only refresh div with id "result"#}
+{#      $(document).ready(function () {#}
+{#          $('#practices').submit(function (e) {#}
+{#              e.preventDefault();#}
+{#              $.ajax({#}
+{#                  type: "POST",#}
+{#                  url: "/slider",#}
+{#                  data: $("#practices").serialize(),#}
+{#                  success: function (response) {#}
+                      {#myChart();#}
+                      {#myChart1();#}
+{#		                  $("#result-here").html(response);#}
+{#                  }#}
+{#              });#}
+{#          });#}
+{#      });#}
+{#	</script>#}
 </div>
 
 

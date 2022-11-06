@@ -70,7 +70,7 @@
 					<a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
 						<i class="mdi mdi-note"></i>
 						<i class="bi bi-toggles2"></i>
-						<span class="text-2xl ml-2" href="About">Critique</span>
+						<span class="text-2xl ml-2" href="Critique">Critique</span>
 					</a>
 				</li>
 			</ul>
@@ -262,7 +262,7 @@
 			</div>
 
 			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-			<div class="result-area max-h-screen min-w-600">
+			<div class="result-area max-h-screen">
 				<div class="sec-name flex-sm-column pt-4 pl-4">
 					<h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
 					<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
@@ -293,6 +293,7 @@
 							</div>
 						</div>
 					</div>
+
 
 					<script>
               // setup
@@ -346,8 +347,6 @@
                   config
               );
 					</script>
-
-
 					<script>
               var data1 = {
                   labels: {{ principles|tojson }},
@@ -429,7 +428,7 @@
                   data: values,
                   success: function (response) {
 					//var result = $('<div />').append(response).find('#result-here').html();
-					$('#result-here').html($('#result-here',response).html());	
+					$('#result-here').html($('#result-here',response).html());
 					console.log({{ effects|tojson }})	//These aren't changed
 				  }
               });

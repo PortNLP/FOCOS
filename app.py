@@ -53,6 +53,11 @@ def strategies():
     description = ""
     return render_template('strategies.html', entries=entries, description=description, effects=effects, principles=principles)
 
+# route to compare.html
+@app.route('/compare.html')
+def compare():
+    return render_template('compare.html')
+
 @app.route('/select_strategy', methods=['POST'])
 def select_strategy():
     name = request.form.get("name")

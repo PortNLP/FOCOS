@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='strategies.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='roundRangeSlider.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -18,7 +19,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <script type="text/javascript" src="../js/methods.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
     <title>FOCOS</title>
 </head>
 
@@ -104,13 +110,14 @@
                 <div class="list-group pt-6">
                     {% for entry in entries %}
                         <a href="#" class="list-group-item list-group-item-action">
-                            <h3 class="mb-2" style="font-weight: bold;">Name: Click the name to show for now:  --><input type="submit" value="{{ entry.name }}" name="name" ></h3>
+                            <h3 class="mb-2" style="font-weight: bold;">Name: Click the name to show for now: --><input
+                                    type="submit" value="{{ entry.name }}" name="name"></h3>
                             <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
                             <h3 class="mb-2">Model: {{ entry.model }}</h3>
 
-{#                            <input type="submit" value="{{ entry.name }}" name="name">#}
-{#                            {{ entry.day }}#}
-{#                            {{ entry.model }}#}
+                            {#                            <input type="submit" value="{{ entry.name }}" name="name">#}
+                            {#                            {{ entry.day }}#}
+                            {#                            {{ entry.model }}#}
                         </a>
                     {% endfor %}
                 </div>
@@ -151,20 +158,17 @@
 
 
             <div class="chartCard">
-                <div class="BarchartBox">
-                    <canvas id="barChart"></canvas>
-                </div>
-
                 <div class="radarChartCard">
                     <form>
-                        <!-- a form that takes tow inputs: Strategy name and Description, with a save button and reset button -->
+                        <!-- a form that takes two inputs: Strategy name and Description, with a save button and reset button -->
                         <div class="d-flex justify-content-around">
-                            <div class="d-flex flex-column justify-content-around">
-                                Edit Strategy Description: <textarea rows="5" cols="5" name="Description"
-                                                                     spellcheck="false"
-                                                                     class="boxInput"></textarea>
-                                <!-- blue submit button -->
-                                <input type="submit" value="Save" name="Save">
+                            <div class="list-group">
+                                <h3 class="text-2xl pb-4">Preoccupation with Failure</h3>
+                                <div id="slider1"></div>
+                                <h3 class="text-2xl pb-4">Reluctance to Simplify</h3>
+                                <h3 class="text-2xl pb-4">Commitment to Resilience</h3>
+                                <h3 class="text-2xl pb-4">Deference to Expertise</h3>
+                                <h3 class="text-2xl pb-4">Sensitivity to Operations</h3>
                             </div>
                         </div>
                     </form>
@@ -174,59 +178,7 @@
                 </div>
             </div>
 
-            <script>
 
-                // setup
-                const data = {
-                    labels: {{ principles|tojson }},
-                    datasets: [{
-                        label: 'Change of Intervention',
-                        data: {{ effects|tojson }},
-                        backgroundColor: [
-                            'rgba(255, 26, 104, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(0, 0, 0, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 26, 104, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(0, 0, 0, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                };
-
-                // config
-                const config = {
-                    type: 'bar',
-                    data,
-                    options: {
-                        y: {
-                            min: -100,
-                            max: 100,
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        events: [],
-                        indexAxis: 'y',
-                    }
-                };
-
-                // render init block
-                const myChart = new Chart(
-                    document.getElementById('barChart'),
-                    config
-                );
-            </script>
             <script>
                 const data1 = {
                     labels: {{ principles|tojson }},
@@ -282,6 +234,20 @@
                     document.getElementById('radarChart'),
                     config1
                 );
+            </script>
+            <script>
+                $("#slider1").roundSlider({
+                    sliderType: "min-range",
+                    handleShape: "round",
+                    width: "5",
+                    radius: "20",
+                    value: 0,
+                    handleSize: "+1",
+                    min: "-100",
+                    max: "100",
+                    editableTooltip: false,
+                    sliderType: "min-range"
+                });
             </script>
         </div>
     </div>

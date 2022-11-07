@@ -22,7 +22,7 @@
 }
 
 .elementsMainArea {
-    width: 33%;
+    width: 100%;
     min-width: 600px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -38,7 +38,7 @@
     background-color: rgb(250, 250, 250);
     display: flex;
     flex-grow: 1;
-    width: 66%;
+    width: 100%;
     min-width: 900px;
     flex-direction: column;
 }

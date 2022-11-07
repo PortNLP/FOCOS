@@ -32,7 +32,7 @@ body{
 }
 
 .elementsMainArea {
-    width: 33%;
+    width: 100%;
     min-width: 600px;
     display: flex;
     flex-direction: column;
@@ -95,7 +95,7 @@ body{
 }
 
 .saveForm {
-    width: 30%;
+    width: 90%;
 }
 
 /*make h3 tag bold text*/
@@ -142,6 +142,7 @@ h6 {
 .btn-primary {
     background-color: #007bff !important;
     border-color: #007bff !important;
+    width: 20%;
 }
 
 .btn:focus, .btn:active {
@@ -149,10 +150,11 @@ h6 {
     box-shadow: none;
 }
 
+
 .btn-secondary {
     background-color: #6c757d !important;;
     border-color: #6c757d !important;;
-    width: 50%;
+    width: 20%;
 }
 
 @media screen and (min-width: 1930px) {

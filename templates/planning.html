@@ -93,9 +93,9 @@
         </div>
     </div>
 
-    <div class="rightScreen">
-        <form action="{{ url_for('slider') }}" method=post id="practices">
 
+    <form action="{{ url_for('slider') }}" method=post id="practices">
+        <div class="rightScreen">
             <div class="elementsMainArea max-h-screen min-h-screen min-w-600">
                 <div class="sec-name flex-sm-column">
                     <h1 class="text-4xl font-weight-bold ml-4 pt-4">Safety Practices</h1>
@@ -424,9 +424,9 @@
                     </script>
                 </div>
             </div>
+        </div>
+    </form>
 
-        </form>
-    </div>
 
     <script>
         $(document).ready(function () {

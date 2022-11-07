@@ -25,47 +25,42 @@
 <body>
 
 <div class="flex flex-no-wrap">
-    <div class="container-fluid navbar min-h-screen p-0 min-w-220">
+    <div class="navbar min-h-screen p-0">
         <div class="nav-content h-full flex flex-col flex-grow">
             <div class="h-16 text-black w-full flex items-center font-black text-3xl pt-4">
                 FOCOS
             </div>
             <ul class="mt-20">
-                <a href="javascript:void(0)" class="nav-link">
-                    <i class="mdi mdi-view-dashboard-outline"></i>
+                <a href="javascript:void(0)" class="nav-link mb-2">
                     <i class="bi bi-arrow-down-right-circle-fill"></i>
                     <span class="text-2xl ml-2">Start</span>
                 </a>
-                <a href="javascript:void(0)" class="nav-link">
-                    <i class="mdi mdi-view-dashboard-outline"></i>
+                <a href="javascript:void(0)" class="nav-link mb-2">
                     <i class="bi bi-x-circle-fill"></i>
                     <span class="text-2xl ml-2">Explore</span>
                 </a>
 
-                <a href="planning.html" class="nav-link">
+                <a href="planning.html" class="nav-link mb-2">
                     <i class="mdi mdi-puzzle-outline"></i>
                     <i class="bi bi-vector-pen"></i>
-                    <span class="text-2xl ml-2" href="/planning">Plan</span>
+                    <span class="text-2xl ml-2">Plan</span>
                 </a>
 
 
-                <a href="strategies.html" class="nav-link">
-                    <i class="mdi mdi-compass-outline"></i>
+                <a href="strategies.html" class="nav-link mb-2">
                     <i class="bi bi-ui-checks-grid"></i>
                     <span class="text-2xl ml-2">Strategies</span>
                 </a>
 
 
-                <a href="compare.html" class="nav-link">
-                    <i class="mdi mdi-note"></i>
+                <a href="compare.html" class="nav-link mb-2">
                     <i class="bi bi-terminal-split"></i>
-                    <span class="text-2xl ml-2" href="Compare">Compare</span>
+                    <span class="text-2xl ml-2">Compare</span>
                 </a>
 
-                <a href="javascript:void(0)" class="nav-link">
-                    <i class="mdi mdi-note"></i>
+                <a href="javascript:void(0)" class="nav-link mb-2">
                     <i class="bi bi-toggles2"></i>
-                    <span class="text-2xl ml-2" href="About">Critique</span>
+                    <span class="text-2xl ml-2">Critique</span>
                 </a>
 
             </ul>
@@ -102,12 +97,12 @@
                     <hr class="divider">
                 </div>
 
-                <div class="forEachColumn pr-4">
+                <div class="forEachColumn">
                     <div class="elementName">
                         <i>Reframing Work Design</i>
                     </div>
                     <div class="form-group">
-                        <label for="Authority" class="form-label py-2">Stop-Work Authority</label>
+                        <label for="Authority" class="form-label">Stop-Work Authority</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="AuthoritySlider"
@@ -118,7 +113,7 @@
 
 
                     <div class="form-group">
-                        <label for="Ambivalence" class="form-label py-2">Institutionalizating Emotional Ambivalence</label>
+                        <label for="Ambivalence" class="form-label">Institutionalizating Emotional Ambivalence</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="AmbivalenceSlider"
@@ -128,7 +123,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Drift" class="form-label py-2">Managing Reliability Drift</label>
+                        <label for="Drift" class="form-label">Managing Reliability Drift</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="DriftSlider"
@@ -138,13 +133,13 @@
                     </div>
                 </div>
 
-                <div class="forEachColumn  pr-4">
+                <div class="forEachColumn">
                     <div class="elementName">
                         <i>Reframing Relating Colleagues Peers</i>
                     </div>
 
                     <div class="form-group">
-                        <label for="Motivation" class="form-label py-2">Institutionalizing Prosocial Motivation</label>
+                        <label for="Motivation" class="form-label">Institutionalizing Prosocial Motivation</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="MotivationSlider"
@@ -154,7 +149,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Respect" class="form-label py-2">Fostering Social Ties and Mutual Respect</label>
+                        <label for="Respect" class="form-label">Fostering Social Ties and Mutual Respect</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="RespectSlider"
@@ -165,13 +160,13 @@
                 </div>
 
 
-                <div class="forEachColumn  pr-4">
+                <div class="forEachColumn">
                     <div class="elementName">
                         <i>Reframing How the Work Should Be Done</i>
                     </div>
 
                     <div class="form-group">
-                        <label for="Mindfulness" class="form-label py-2">Practicing Individual Mindfulness</label>
+                        <label for="Mindfulness" class="form-label">Practicing Individual Mindfulness</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="MindfulnessSlider"
@@ -181,7 +176,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Accountability" class="form-label py-2">Fostering Sense of Accountability</label>
+                        <label for="Accountability" class="form-label">Fostering Sense of Accountability</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="AccountabilitySlider"
@@ -192,13 +187,13 @@
                 </div>
 
 
-                <div class="forEachColumn pl-4">
+                <div class="forEachColumn">
                     <div class="elementName">
                         <i>Reframing Work Communication</i>
                     </div>
 
                     <div class="form-group">
-                        <label for="Huddle" class="form-label py-2">Implementing Safety Huddles</label>
+                        <label for="Huddle" class="form-label">Implementing Safety Huddles</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="HuddleSlider"
@@ -208,7 +203,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Incidents" class="form-label py-2">Reporting Near-Misses/Incidents</label>
+                        <label for="Incidents" class="form-label">Reporting Near-Misses/Incidents</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="IncidentsSlider"
@@ -219,13 +214,13 @@
                 </div>
 
 
-                <div class="forEachColumn  pl-4">
+                <div class="forEachColumn">
                     <div class="elementName">
                         <i>Reframing Work Training</i>
                     </div>
 
                     <div class="form-group">
-                        <label for="Drills" class="form-label py-2">Emergency Drills</label>
+                        <label for="Drills" class="form-label">Emergency Drills</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="DrillsSlider"
@@ -234,7 +229,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Exercise" class="form-label py-2">Tabletop Exercises</label>
+                        <label for="Exercise" class="form-label">Tabletop Exercises</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="ExerciseSlider"
@@ -243,7 +238,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Learning" class="form-label py-2">Just-In-Time-Learning</label>
+                        <label for="Learning" class="form-label">Just-In-Time-Learning</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="LearningSlider"
@@ -252,7 +247,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Debriefings" class="form-label py-2">Post-Event Debriefings</label>
+                        <label for="Debriefings" class="form-label">Post-Event Debriefings</label>
                         <div class="d-flex justify-content-center gap-5">
                             <input type="range" class="form-range" min="0" max="100" value="0" step="1"
                                    name="DebriefingsSlider"
@@ -274,7 +269,6 @@
                     <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
                     <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
                 </div>
-
 
                 <div class="chartCard" id="result-here">
                     <div class="BarchartBox">

@@ -13,15 +13,7 @@ print("App started")
 """
 Function decorator === app.route('/',planning())
 """
-
-
 @app.route('/')
-
-# route to the about page
-@app.route('/about.html')
-def about():
-    return render_template('about.html')
-
 @app.route('/planning.html')
 def planning():
     interventions = session.get("interventions")
@@ -43,6 +35,12 @@ def slider():
     elif request.form.get("Reset"):
         session["interventions"] = {}
     return redirect(url_for('planning'))
+
+
+# route to the about page
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/strategies.html')

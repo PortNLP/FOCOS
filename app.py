@@ -45,7 +45,7 @@ def about():
 
 @app.route('/strategies.html')
 def strategies():
-    interventions = session.get("interventions")
+    interventions = session.get("strategy_interventions")
     entries = model.select_all()
     effects, principles = model.get_results(interventions)
     description = session.get("description")
@@ -59,7 +59,7 @@ def select_strategy():
     print(name)
     strategy = model.select_strategy(name)
     intervention_sliders = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
-    session["interventions"] = intervention_sliders
+    session["strategy_interventions"] = intervention_sliders # session["interventions"] is for the planning page
     session["name"] = name
     session["description"] = strategy["comment"] #TODO: description and comment are the same thing?
     return redirect(url_for('strategies'))

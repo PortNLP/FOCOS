@@ -88,9 +88,10 @@ class model():
         intervention_values = [intervention_sliders[k] for k in self.intervention_names]
         day = date.today()
         model = FCM_MODEL
-        connection = sqlite3.connect(DB_FILE)
+        connection = get_db()
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO strategies VALUES (?,?,?,?" +",?"*len(self.intervention_names)+")", (model, day, name, comment) + tuple(intervention_values))
+        sql = "INSERT INTO strategies VALUES (?,?,?,?" + ",?"*len(self.intervention_names) + ")"
+        cursor.execute(sql, (model, day, name, comment) + tuple(intervention_values))
         cursor.execute("SELECT * FROM strategies")
         print(cursor.fetchall())
         connection.commit()
@@ -102,9 +103,7 @@ class model():
         Select all rows
         :return: List of Dicts
         """
-        connection = sqlite3.connect("test.db") # TODO: DB_FILE
-        connection.row_factory = make_dicts
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
         cursor.execute("SELECT * FROM strategies")
         rows = cursor.fetchall()
         #print(rows)
@@ -118,16 +117,39 @@ class model():
         :param name: String
         :return: Dict
         """
-        connection = sqlite3.connect("test.db") # TODO: DB_FILE
-        connection.row_factory = make_dicts
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM strategies WHERE name = ?", (name,))
+        cursor = get_db().cursor()
+        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
         row = cursor.fetchall()[0]
         print(row)
         cursor.close()
         
         return row
 
+    def update_description(self, name, comment):
+        """
+        Update a certain strategy based on name
+        :param name: String
+        :return: Dict
+        """
+        connection = get_db()
+        cursor = connection.cursor()
+        cursor.execute('''UPDATE strategies SET comment = ? WHERE name = ?''', (comment, name,))
+        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
+        row = cursor.fetchall()[0]
+        print(row)
+        connection.commit()
+        cursor.close()
+        
+        return row
+
+def get_db():
+    connection = None
+    try:
+        connection = sqlite3.connect("test.db") # TODO: DB_FILE
+        connection.row_factory = make_dicts
+    except Error as e:
+        print(e)
+    return connection
 
 # results from the database are returned as dictionaries instead of tuples
 def make_dicts(cursor, row):

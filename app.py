@@ -66,6 +66,10 @@ def select_strategy():
 
 @app.route('/update_strategy', methods=['POST'])
 def update_strategy():
+    comment = request.form.get("Description")
+    name = session.get("name")
+    strategy = model.update_description(name, comment)
+    session["description"] = strategy["comment"]
     return redirect(url_for('strategies'))
 
 

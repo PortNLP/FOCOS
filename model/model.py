@@ -1,7 +1,7 @@
 from model.fcm import run_inference
 import sqlite3
 from datetime import date
-DB_FILE = 'entries.db'    # file for our Database
+DB_FILE = 'focos.db'    # file for our Database
 FCM_MODEL = "V1"
 
 class model():

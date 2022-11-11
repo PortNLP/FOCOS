@@ -1,7 +1,7 @@
 """
 FOCOS Flask app
 """
-from flask import Flask, redirect, request, url_for, render_template, session
+from flask import Flask, redirect, request, url_for, render_template, session, flash
 from model.model import model
 import time
 
@@ -28,10 +28,14 @@ def slider():
     print(form_input)
     if request.form.get("Submit"):
         session["interventions"] = intervention_sliders
-    elif request.form.get("Save"):
+    elif request.form.get("SaveStrategy"):
         name = request.form.get("Name")
-        comment = request.form.get("Comment")
-        #model.save_strategy(intervention_sliders, name, comment)
+        description = request.form.get("Description")
+        if name:
+            success = model.save_strategy(intervention_sliders, name, description)
+            flash("Successfully saved strategy" if success else "Error: Name already taken")
+        else:
+            flash("Please enter a name")
     elif request.form.get("Reset"):
         session["interventions"] = {}
     return redirect(url_for('planning'))
@@ -61,15 +65,19 @@ def select_strategy():
     intervention_sliders = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} # Filter out non-slider input
     session["strategy_interventions"] = intervention_sliders # session["interventions"] is for the planning page
     session["name"] = name
-    session["description"] = strategy["comment"] #TODO: description and comment are the same thing?
+    session["description"] = strategy["description"]
     return redirect(url_for('strategies'))
 
 @app.route('/update_strategy', methods=['POST'])
 def update_strategy():
-    comment = request.form.get("Description")
     name = session.get("name")
-    strategy = model.update_description(name, comment)
-    session["description"] = strategy["comment"]
+    if request.form.get("EditStrategy"):
+        description = request.form.get("Description")
+        strategy = model.update_description(name, description)
+        session["description"] = strategy["description"]
+    elif request.form.get("Delete"):
+        model.delete_strategy(name)
+
     return redirect(url_for('strategies'))
 
 

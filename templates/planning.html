@@ -289,14 +289,23 @@
                                                             placeholder="Enter a description here..."></textarea>
                             {#							display save button and reset button on the same line#}
                             <div class="d-flex justify-content-between gap-5">
-                                <button id="save" type="submit" class="btn btn-primary" value="Save Strategy"
-                                        name="Save Strategy"
+                                <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
+                                        name="SaveStrategy"
                                         data-button-state="save">Save Strategy
                                 </button>
                                 <button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
                                     Reset
                                 </button>
                             </div>
+                            
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
                         </div>
                     </div>
 
@@ -421,11 +430,13 @@
 
 
     <script>
+    /*
       $(document).ready(function () {
           $('#save').click(function (e) {
               alert("Successfully saved strategy");
           });
       });
+    */
     </script>
 
 

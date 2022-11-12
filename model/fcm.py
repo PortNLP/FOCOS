@@ -35,12 +35,12 @@ def run_inference(interventions, principles):
         intervention_indexes.append(df.columns.get_loc(key))
         vals.append(val)
 
-    steady_state = infer_steady(init_vec = activation_vec, AdjmT = Adj_matrix.T, 
-                                n = n_concepts, f_type = function_type , infer_rule = infer_rule)
+    steady_state = np.zeros(n_concepts) # steady_state is 0 for this model
+    #steady_state = infer_steady(init_vec = activation_vec, AdjmT = Adj_matrix.T, 
+    #                            n = n_concepts, f_type = function_type , infer_rule = infer_rule)
     scenario_state = infer_scenario(intervention_indexes = intervention_indexes, vals = vals, init_vec = activation_vec, AdjmT = Adj_matrix.T, 
                                 n = n_concepts, f_type = function_type, infer_rule = infer_rule)
     changes = scenario_state - steady_state
-    # steady_state is 0?
 
     principle_indexes = []
     for name in principles:

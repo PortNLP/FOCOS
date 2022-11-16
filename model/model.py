@@ -1,7 +1,7 @@
 from model.fcm import run_inference
 import sqlite3
 from datetime import date
-DB_FILE = 'entries.db'    # file for our Database
+DB_FILE = 'focos.db'    # file for our Database
 FCM_MODEL = "V1"
 
 class model():
@@ -40,9 +40,9 @@ class model():
         try: 
             cursor.execute("SELECT COUNT(rowid) FROM strategies")
         except sqlite3.OperationalError:
-            definition = "CREATE TABLE strategies (model text, day text, name text, comment text"
+            definition = "CREATE TABLE strategies (model text, day text, name text NOT NULL PRIMARY KEY, description text"
             for intervention in self.intervention_names:
-                definition += ", " + intervention + " real" # TODO: Integer should be fine
+                definition += ", " + intervention + " INTEGER"
             definition = definition + ")"
             cursor.execute(definition)
         cursor.close()
@@ -76,21 +76,27 @@ class model():
 
         return effects, output_principle_names
 
-    def save_strategy(self, intervention_sliders, name, comment):
+    def save_strategy(self, intervention_sliders, name, description):
         """
         Save Current Strategy
         :param intervention_sliders: Dict {slider_name : value}
         :param name: String
-        :param comment: String
+        :param description: String
         :return: none
         """
         
         intervention_values = [intervention_sliders[k] for k in self.intervention_names]
         day = date.today()
         model = FCM_MODEL
-        connection = sqlite3.connect(DB_FILE)
+        connection = get_db()
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO strategies VALUES (?,?,?,?" +",?"*len(self.intervention_names)+")", (model, day, name, comment) + tuple(intervention_values))
+        sql = "INSERT INTO strategies VALUES (?,?,?,?" + ",?"*len(self.intervention_names) + ")"
+
+        try:
+            cursor.execute(sql, (model, day, name, description) + tuple(intervention_values))
+        except sqlite3.IntegrityError as e:
+            print(e)
+            return False
         cursor.execute("SELECT * FROM strategies")
         print(cursor.fetchall())
         connection.commit()
@@ -102,9 +108,7 @@ class model():
         Select all rows
         :return: List of Dicts
         """
-        connection = sqlite3.connect("test.db") # TODO: DB_FILE
-        connection.row_factory = make_dicts
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
         cursor.execute("SELECT * FROM strategies")
         rows = cursor.fetchall()
         #print(rows)
@@ -118,16 +122,53 @@ class model():
         :param name: String
         :return: Dict
         """
-        connection = sqlite3.connect("test.db") # TODO: DB_FILE
-        connection.row_factory = make_dicts
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM strategies WHERE name = ?", (name,))
+        cursor = get_db().cursor()
+        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
         row = cursor.fetchall()[0]
         print(row)
         cursor.close()
         
         return row
 
+    def update_description(self, name, description):
+        """
+        Update a certain strategy based on name
+        :param name: String
+        :return: Dict
+        """
+        connection = get_db()
+        cursor = connection.cursor()
+        cursor.execute('''UPDATE strategies SET description = ? WHERE name = ?''', (description, name,))
+        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
+        row = cursor.fetchall()[0]
+        print(row)
+        connection.commit()
+        cursor.close()
+        
+        return row
+
+    def delete_strategy(self, name):
+        """
+        Delete a certain strategy based on name
+        :param name: String
+        :return: None
+        """
+        connection = get_db()
+        cursor = connection.cursor()
+        cursor.execute('''DELETE FROM strategies WHERE name = ?''', (name,))
+        connection.commit()
+        cursor.close()
+
+        return True
+
+def get_db():
+    connection = None
+    try:
+        connection = sqlite3.connect(DB_FILE)
+        connection.row_factory = make_dicts
+    except Error as e:
+        print(e)
+    return connection
 
 # results from the database are returned as dictionaries instead of tuples
 def make_dicts(cursor, row):

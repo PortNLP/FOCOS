@@ -128,7 +128,7 @@
         <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
         <div class="result-area max-h-screen w-full h-full p-4 min-w-600">
             <div class="sec-name flex-sm-column pt-4 pl-4">
-                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                <h1 class="outputText text-3xl font-weight-bold mt-4">{{ strategy.name }}</h1>
                 <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
             </div>
 
@@ -203,81 +203,76 @@
                     </div>
                 </div>
 
-                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10 px-2">
+                <form class="saveForm d-flex flex-column justify-content-around pt-6 pb-10" action="{{ url_for('update_strategy') }}" method=post>
                     <h6 class="mb-4">Description:</h6> <textarea rows="10" cols="50" name="Description"
                                                                  spellcheck="true"
-                                                                 class="boxInput"
-                                                                 placeholder="Enter a description here..."></textarea>
+                                                                 class="boxInput">{{ strategy.description }}</textarea>
                     {#							display save button and reset button on the same line#}
                     <div class="d-flex justify-content-end gap-5 mt-5">
-                        <button id="save" type="submit" class="btn btn-primary" value="Edit Strategy"
-                                name="Edit Strategy"
-                                data-button-state="Edit">Edit Strategy
-                        </button>
+                        <button id="save" type="submit" class="btn btn-primary" value="EditStrategy"
+                                name="EditStrategy"
+                                data-button-state="Edit">Edit Strategy</button>
 
                         <button id="reset" type="submit" class="btn btn-secondary" value="Delete" name="Delete">
                             Delete
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
 
 
             <script>
-                const data1 = {
-                    labels: {{ principles|tojson }},
-                    datasets: [{
-                        label: 'My First Dataset',
-                        data: {{ effects|tojson }},
-                        fill: false,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
-                        {#
-                              }, {
-                                  label: 'My Second Dataset',
-                                  data: [28, 48, 40, 19, 96],
-                                  fill: false,
-                                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                  borderColor: 'rgb(54, 162, 235)',
-                                  pointBackgroundColor: 'rgb(54, 162, 235)',
-                                  pointBorderColor: '#fff',
-                                  pointHoverBackgroundColor: '#fff',
-                                  pointHoverBorderColor: 'rgb(54, 162, 235)'
-                              #}
-                    }]
-                };
+                var principles = {{ strategy.principles|tojson }}
+				var data1 = {
+					labels: principles,
+					datasets: [{
+						label: 'My First Dataset',
+						data: {{ strategy.effects|tojson }},
+						fill: false,
+						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						borderColor: 'rgb(255, 99, 132)',
+						pointBackgroundColor: 'rgb(255, 99, 132)',
+						pointBorderColor: '#fff',
+						pointHoverBackgroundColor: '#fff',
+						pointHoverBorderColor: 'rgb(255, 99, 132)'
+					}]
+				};
 
-                const config1 = {
-                    type: 'radar',
-                    data: data1,
-                    options: {
-                        scale: {
-                            min: -100,
-                            max: 100,
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        events: [],
-                        elements: {
-                            line: {
-                                borderWidth: 3
-                            }
-                        }
-                    },
-                };
+				var config1 = {
+					type: 'radar',
+					data: data1,
+					options: {
+						scales: {
+							r: {
+								pointLabels: {
+									display: true // don't hide the labels around the radar chart
+								}
+							}
+						},
+						scale: {
+							min: -100,
+							max: 100,
 
-                // render init block
-                const myChart1 = new Chart(
-                    document.getElementById('radarChart'),
-                    config1
-                );
+						},
+						plugins: {
+							legend: {
+								display: false
+							},
+						},
+						events: [],
+						elements: {
+							line: {
+								borderWidth: 3
+							}
+						}
+					},
+				};
+
+				// render init block
+				var myChart1 = new Chart(
+					document.getElementById('radarChart'),
+					config1
+				);
             </script>
             <script>
                 $("#slider1").roundSlider({

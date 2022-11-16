@@ -96,7 +96,7 @@
     </div>
 
     <div class="rightScreen">
-        <form class="elementsMainArea max-h-screen min-h-screen min-w-600" action="{{ url_for('select_strategy') }}"
+        <form class="elementsMainArea max-h-screen min-h-screen min-w-600" name="main-form" action="{{ url_for('select_strategy') }}"
               method=post>
             <div class="sec-name flex-sm-column">
                 <h1 class="text-4xl font-weight-bold ml-4 pt-4">Strategies</h1>
@@ -106,46 +106,25 @@
             <div class="forEachColumn">
                 <div class="list-group pt-6">
                     {% for entry in entries %}
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <h3 class="mb-2" style="font-weight: bold;">Name: Click the name to show for now: --><input
-                                    type="submit" value="{{ entry.name }}" name="name"></h3>
-                            <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
-                            <h3 class="mb-2">Model: {{ entry.model }}</h3>
+{#                       print the entry#}
+                        <a href="#" class="strategy-cell list-group-item list-group-item-action">
+                            <div class="strategy-records">
+                                <h3 class="mb-2" style="font-weight: bold;">Name: {{ entry.name }} </h3>
+                                <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
+                                <h3 class="mb-2">Model: {{ entry.model }}</h3>
+{#                                <input type="submit" value="{{ entry.name }}" name="name">#}
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary" name="name" value="{{ entry.name }}"> View Strategy</button>
+                            </div>
 
-                            {#                            <input type="submit" value="{{ entry.name }}" name="name">#}
-                            {#                            {{ entry.day }}#}
-                            {#                            {{ entry.model }}#}
                         </a>
+
                     {% endfor %}
                 </div>
             </div>
-
-            {#            <div class="forEachColumn">#}
-            {#                <div class="list-group pt-6">#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action disabled">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                </div>#}
-            {#            </div>#}
-
         </form>
+
         <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
         <div class="result-area max-h-screen w-full h-full p-4 min-w-600">
             <div class="sec-name flex-sm-column pt-4 pl-4">
@@ -156,25 +135,75 @@
 
             <div class="chartCard">
                 <div class="radarChartCard">
-                    <form>
+                    <form class="result-items px-4 py-2">
                         <!-- a form that takes two inputs: Strategy name and Description, with a save button and reset button -->
-                        <div class="d-flex justify-content-around">
-                            <div class="list-group">
-                                <h3 class="text-2xl pb-4">Preoccupation with Failure</h3>
-                                <div id="slider1"></div>
-                                <h3 class="text-2xl pb-4">Reluctance to Simplify</h3>
-                                <h3 class="text-2xl pb-4">Commitment to Resilience</h3>
-                                <h3 class="text-2xl pb-4">Deference to Expertise</h3>
-                                <h3 class="text-2xl pb-4">Sensitivity to Operations</h3>
+                        <div class="result-item">
+                                <h5 class="result-text text-xl pt-4">Preoccupation with Failure</h5>
+                                <div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <div class="progress-value">+90</div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="result-item">
+                                <h5 class="result-text  text-xl pt-4">Reluctance to Simplify</h5>
+                                <div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <div class="progress-value">+90</div>
+                                </div>
+                            </div>
+                            <div class="result-item">
+                                <h5 class="result-text text-xl pt-4">Commitment to Resilience</h5>
+                                <div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <div class="progress-value">+90</div>
+                                </div>
+                            </div>
+                            <div class="result-item">
+                                <h5 class="result-text text-xl pt-4">Deference to Expertise</h5>
+                                <div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <div class="progress-value">+90</div>
+                                </div>
+                            </div>
+                            <div class="result-item pb-2">
+                                <h5 class="result-text text-xl pt-4">Sensitivity to Operations</h5>
+                                <div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                    <div class="progress-value">+90</div>
+                                </div>
+                            </div>
                     </form>
                     <div class="radarChartBox">
                         <canvas id="radarChart"></canvas>
                     </div>
                 </div>
 
-                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
+                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10 px-2">
                     <h6 class="mb-4">Description:</h6> <textarea rows="10" cols="50" name="Description"
                                                                  spellcheck="true"
                                                                  class="boxInput"
@@ -183,7 +212,8 @@
                     <div class="d-flex justify-content-end gap-5 mt-5">
                         <button id="save" type="submit" class="btn btn-primary" value="Edit Strategy"
                                 name="Edit Strategy"
-                                data-button-state="Edit">Edit Strategy</button>
+                                data-button-state="Edit">Edit Strategy
+                        </button>
 
                         <button id="reset" type="submit" class="btn btn-secondary" value="Delete" name="Delete">
                             Delete

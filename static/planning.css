@@ -45,6 +45,8 @@
     max-height: min-content ;
 }
 
+
+
 .result-area {
     background-color: rgb(250, 250, 250);
     display: flex;
@@ -135,7 +137,6 @@ h6 {
 }
 
 .BarchartBox {
-    display: flex;
     width: 90%;
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);

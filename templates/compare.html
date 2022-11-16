@@ -90,21 +90,36 @@
     </div>
     <!-- Sidebar ends -->
     <!-- Remove class [ h-64 ] when adding a card block -->
-    <form action="{{ url_for('slider') }}" method=post id="practices">
-        <div class="rightScreen">
-            <div class="elementsMainArea max-h-screen min-h-screen min-w-600">
-
+    <div class="rightScreen">
+        <form class="elementsMainArea max-h-screen min-h-screen min-w-600" name="main-form" action="{{ url_for('compare_strategies') }}"
+              method=post>
+            <div class="sec-name flex-sm-column">
+                <h1 class="text-4xl font-weight-bold ml-4 pt-4">Compare Strategies</h1>
+                <hr class="divider">
             </div>
 
-            <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-            <div class="result-area max-h-screen min-w-600">
+            <div class="forEachColumn">
+                <div class="list-group pt-6">
+                    {% for idx in range(5) %}
+                        <label for="strategies{{ idx }}">h{{ idx }}</label>
+
+                        <select name="strategies{{ idx }}" id="strategies{{ idx }}">
+                            <option value="none" selected disabled hidden>Choose one option</option>
+                            {% for entry in entries %}
+                                <option value="{{ entry.name }}">{{ entry.name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endfor %}
+                    <div>
+                        <button type="submit" class="btn btn-primary" name="Compare" value="Compare">Compare</button>
+                    </div>
+                </div>
+            </div>                    
 
 
 
-            </div>
-        </div>
-    </form>
-
+        </form>
+    </div>
 
 
 </div>

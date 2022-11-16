@@ -77,6 +77,8 @@ def update_strategy():
         session["description"] = strategy["description"]
     elif request.form.get("Delete"):
         model.delete_strategy(name)
+        session["description"] = None
+        session["name"] = None
 
     return redirect(url_for('strategies'))
 
@@ -84,7 +86,20 @@ def update_strategy():
 # route to compare.html
 @app.route('/compare.html')
 def compare():
-    return render_template('compare.html')
+    interventions = session.get("strategies_compare")
+    entries = model.select_all()
+    effects, principles = model.get_results(interventions)
+    description = session.get("description")
+    name = session.get("name") if session.get("name") else "No Strategy Selected"
+    #strategy = {"name" : name, "description" : description, "effects" : effects, "principles" : principles}
+    strategies = []
+    return render_template('compare.html', entries=entries, strategies=strategies)
+
+@app.route('/compare_strategies', methods=['POST'])
+def compare_strategies():
+    form_input = request.form.to_dict(flat=True)
+    print(form_input)
+    return redirect(url_for('compare'))
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True, threaded=False)

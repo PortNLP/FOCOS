@@ -1,146 +1,153 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='planning.css') }}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='compare.css') }}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <script type="text/javascript" src="../js/methods.js"></script>
-    <title>FOCOS</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	        crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+	<script type="text/javascript" src="../js/methods.js"></script>
+	<title>FOCOS</title>
 </head>
 
 <body>
 
 <div class="flex flex-no-wrap">
-    <!-- Sidebar starts -->
-    <div class="navbar min-h-screen p-0">
-        <div class="nav-content h-full flex flex-col flex-grow">
-            <div class="h-16 text-black w-full flex items-center font-black text-3xl pt-4">
-                FOCOS
-            </div>
-            <ul class="mt-20">
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-arrow-down-right-circle-fill"></i>
-                    <span class="text-2xl ml-2">Start</span>
-                </a>
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-x-circle-fill"></i>
-                    <span class="text-2xl ml-2">Explore</span>
-                </a>
+	<!-- Sidebar starts -->
+	<div class="navbar min-h-screen p-0">
+		<div class="nav-content h-full flex flex-col flex-grow">
+			<div class="h-16 text-black w-full flex items-center font-black text-3xl pt-4">
+				FOCOS
+			</div>
+			<ul class="mt-20">
+				<a href="javascript:void(0)" class="nav-link mb-2">
+					<i class="bi bi-arrow-down-right-circle-fill"></i>
+					<span class="text-2xl ml-2">Start</span>
+				</a>
+				<a href="javascript:void(0)" class="nav-link mb-2">
+					<i class="bi bi-x-circle-fill"></i>
+					<span class="text-2xl ml-2">Explore</span>
+				</a>
 
-                <a href="planning.html" class="nav-link mb-2">
-                    <i class="mdi mdi-puzzle-outline"></i>
-                    <i class="bi bi-vector-pen"></i>
-                    <span class="text-2xl ml-2">Plan</span>
-                </a>
-
-
-                <a href="strategies.html" class="nav-link mb-2">
-                    <i class="bi bi-ui-checks-grid"></i>
-                    <span class="text-2xl ml-2">Strategies</span>
-                </a>
+				<a href="planning.html" class="nav-link mb-2">
+					<i class="mdi mdi-puzzle-outline"></i>
+					<i class="bi bi-vector-pen"></i>
+					<span class="text-2xl ml-2">Plan</span>
+				</a>
 
 
-                <a href="compare.html" class="nav-link mb-2">
-                    <i class="bi bi-terminal-split"></i>
-                    <span class="text-2xl ml-2">Compare</span>
-                </a>
-
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-toggles2"></i>
-                    <span class="text-2xl ml-2">Critique</span>
-                </a>
-
-            </ul>
+				<a href="strategies.html" class="nav-link mb-2">
+					<i class="bi bi-ui-checks-grid"></i>
+					<span class="text-2xl ml-2">Strategies</span>
+				</a>
 
 
-            <div class="flex flex-sm-column justify-center mt-auto mb-4 w-full">
-                <div class="relative">
-                    <hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
+				<a href="compare.html" class="nav-link mb-2">
+					<i class="bi bi-terminal-split"></i>
+					<span class="text-2xl ml-2">Compare</span>
+				</a>
 
-                    <a href="javascript:void(0)" class="nav-link">
-                        <i class="mdi mdi-note"></i>
-                        <span class="text-l ml-2">Test User</span>
-                    </a>
+				<a href="javascript:void(0)" class="nav-link mb-2">
+					<i class="bi bi-toggles2"></i>
+					<span class="text-2xl ml-2">Critique</span>
+				</a>
 
-                </div>
-                <div class="relative">
-
-                    <a href="javascript:void(0)" class="nav-link">
-                        <i class="mdi mdi-note"></i>
-                        <span class="text-xl ml-2">Log Out</span>
-                    </a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Sidebar ends -->
-    <!-- Remove class [ h-64 ] when adding a card block -->
-    <div class="rightScreen">
-        <form class="elementsMainArea max-h-screen min-h-screen min-w-600" name="main-form" action="{{ url_for('compare_strategies') }}"
-              method=post>
-            <div class="sec-name flex-sm-column">
-                <h1 class="text-4xl font-weight-bold ml-4 pt-4">Compare Strategies</h1>
-                <hr class="divider">
-            </div>
-
-            <div class="forEachColumn">
-                <div class="list-group pt-6">
-                    {% for idx in range(5) %}
-                        <label for="strategies{{ idx }}">h{{ idx }}</label>
-
-                        <select name="strategies{{ idx }}" id="strategies{{ idx }}">
-                            <option value="none" selected disabled hidden>Choose one option</option>
-                            {% for entry in entries %}
-                                <option value="{{ entry.name }}">{{ entry.name }}</option>
-                            {% endfor %}
-                        </select>
-                    {% endfor %}
-                    <div>
-                        <button type="submit" class="btn btn-primary" name="Compare" value="Compare">Compare</button>
-                    </div>
-                </div>
-            </div>                    
-        </form>
-
-        <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-        <div class="container-fluid result-area max-h-screen min-w-600">
-            <div class="sec-name flex-sm-column pt-4 pl-4">
-                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
-            </div>
-
-            <div class="chartCard" id="result-here">
-                <div class="BarchartBox">
-                    <canvas id="barChart"></canvas>
-                </div>
+			</ul>
 
 
-                <div class="radarChartCard">
-                    <div class="radarChartBox">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
+			<div class="flex flex-sm-column justify-center mt-auto mb-4 w-full">
+				<div class="relative">
+					<hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
 
-                <script>
+					<a href="javascript:void(0)" class="nav-link">
+						<i class="mdi mdi-note"></i>
+						<span class="text-l ml-2">Test User</span>
+					</a>
+
+				</div>
+				<div class="relative">
+
+					<a href="javascript:void(0)" class="nav-link">
+						<i class="mdi mdi-note"></i>
+						<span class="text-xl ml-2">Log Out</span>
+					</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sidebar ends -->
+	<!-- Remove class [ h-64 ] when adding a card block -->
+	<div class="rightScreen">
+		<form class="elementsMainArea max-h-screen min-h-screen min-w-600" name="main-form"
+		      action="{{ url_for('compare_strategies') }}"
+		      method=post>
+			<div class="sec-name flex-sm-column">
+				<h1 class="text-4xl font-weight-bold ml-4 pt-4">Compare Strategies</h1>
+				<hr class="divider">
+			</div>
+
+			{#			<div class="forEachColumn">#}
+			<div class="list-group p-6">
+				<div>
+					<h3 class="text-2xl font-weight-bold py-2">Select strategies to compare:</h3>
+					{% for idx in range(5) %}
+						<div class="drop-item">
+							{#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
+							<select class="form-select py-3 my-3 " style="max-width:90%; aria-label=".form-select example">
+								<option selected>Choose one option</option>
+								{% for entry in entries %}
+									<option value="{{ entry.name }}">{{ entry.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endfor %}
+				</div>
+
+				<div>
+					<button type="submit" class="btn btn-primary py-3" name="Compare" value="Compare">Compare</button>
+				</div>
+			</div>
+			{#			</div>#}
+		</form>
+
+		<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+		<div class="result-area max-h-screen min-w-600">
+			<div class="sec-name flex-sm-column pt-4 pl-4">
+				<h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+				<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+			</div>
+
+			<div class="chartCard" id="result-here">
+				<div class="BarchartBox">
+					<canvas id="barChart"></canvas>
+				</div>
+
+
+				<div class="radarChartCard">
+					<div class="radarChartBox">
+						<canvas id="radarChart"></canvas>
+					</div>
+				</div>
+
+				<script>
             // setup
-            var principles = {{ principles|tojson }}
-            for (let idx = 0; idx < principles.length; idx++){
-                principles[idx] = "P" + (idx+1).toString() + ": " + principles[idx]
+            var principles =
+            {{ principles|tojson }}
+            for (let idx = 0; idx < principles.length; idx++) {
+                principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
             }
             var data = {
                 labels: principles,
@@ -191,13 +198,14 @@
                 document.getElementById('barChart'),
                 config
             );
-                </script>
+				</script>
 
 
-                <script>
-            var principles = {{ principles|tojson }}
-            for (let idx = 0; idx < principles.length; idx++){
-                principles[idx] = "P" + (idx+1).toString() //+ ": " + principles[idx]
+				<script>
+            var principles =
+            {{ principles|tojson }}
+            for (let idx = 0; idx < principles.length; idx++) {
+                principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
             }
             var data1 = {
                 labels: principles,
@@ -249,11 +257,11 @@
                 document.getElementById('radarChart'),
                 config1
             );
-                </script>
-            </div>
-        </div>
+				</script>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
 
 </div>

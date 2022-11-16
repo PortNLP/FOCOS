@@ -7,7 +7,8 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(219, 219, 219);
-    width: 11.3%
+    width: 260px;
+    flex: 0 0 260px;
 }
 
 
@@ -23,16 +24,10 @@
 }
 
 .elementsMainArea {
-    width: 33%;
+    width: 100%;
     min-width: 600px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
-    overflow: hidden;
-    grid-template-areas:/*4 rows 2 clolumns, first row cells merged*/ "element1 element2"
-    "element3 element4"
-    "element5 element6"
-    "element7 element8";
+    display: flex;
+    flex-direction: column;
 }
 
 .result-area {
@@ -59,8 +54,24 @@
     gap: 20px 0;
     padding: 10px 20px;
 }
+.drop-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list-group{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
 
 
+.form-select option{
+    max-width: 200px;
+    width :200px;
+}
 
 .elementName {
     font-size: large;

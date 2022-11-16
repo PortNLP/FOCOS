@@ -89,11 +89,9 @@ def compare():
     interventions = session.get("strategies_compare")
     entries = model.select_all()
     effects, principles = model.get_results(interventions)
-    description = session.get("description")
-    name = session.get("name") if session.get("name") else "No Strategy Selected"
     #strategy = {"name" : name, "description" : description, "effects" : effects, "principles" : principles}
     strategies = []
-    return render_template('compare.html', entries=entries, strategies=strategies)
+    return render_template('compare.html', entries=entries, effects=effects, principles=principles)
 
 @app.route('/compare_strategies', methods=['POST'])
 def compare_strategies():

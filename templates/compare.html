@@ -115,10 +115,144 @@
                     </div>
                 </div>
             </div>                    
-
-
-
         </form>
+
+        <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+        <div class="container-fluid result-area max-h-screen min-w-600">
+            <div class="sec-name flex-sm-column pt-4 pl-4">
+                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+            </div>
+
+            <div class="chartCard" id="result-here">
+                <div class="BarchartBox">
+                    <canvas id="barChart"></canvas>
+                </div>
+
+
+                <div class="radarChartCard">
+                    <div class="radarChartBox">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <script>
+            // setup
+            var principles = {{ principles|tojson }}
+            for (let idx = 0; idx < principles.length; idx++){
+                principles[idx] = "P" + (idx+1).toString() + ": " + principles[idx]
+            }
+            var data = {
+                labels: principles,
+                datasets: [{
+                    label: 'Change of Intervention',
+                    data: {{ effects|tojson }},
+                    backgroundColor: [
+                        'rgba(255, 26, 104, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(0, 0, 0, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 26, 104, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(0, 0, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            // config
+            var config = {
+                type: 'bar',
+                data,
+                options: {
+                    x: {
+                        min: -100,
+                        max: 100,
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    events: [],
+                    indexAxis: 'y',
+                }
+            };
+
+            // render init block
+            var myChart = new Chart(
+                document.getElementById('barChart'),
+                config
+            );
+                </script>
+
+
+                <script>
+            var principles = {{ principles|tojson }}
+            for (let idx = 0; idx < principles.length; idx++){
+                principles[idx] = "P" + (idx+1).toString() //+ ": " + principles[idx]
+            }
+            var data1 = {
+                labels: principles,
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: {{ effects|tojson }},
+                    fill: false,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                }]
+            };
+
+            var config1 = {
+                type: 'radar',
+                data: data1,
+                options: {
+                    scales: {
+                        r: {
+                            pointLabels: {
+                                display: true // don't hide the labels around the radar chart
+                            }
+                        }
+                    },
+                    scale: {
+                        min: -100,
+                        max: 100,
+
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                    },
+                    events: [],
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    }
+                },
+            };
+
+            // render init block
+            var myChart1 = new Chart(
+                document.getElementById('radarChart'),
+                config1
+            );
+                </script>
+            </div>
+        </div>
+
     </div>
 
 

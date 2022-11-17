@@ -18,7 +18,7 @@ Function decorator === app.route('/',planning())
 def planning():
     interventions = session.get("interventions")
     effects, principles = model.get_results(interventions)
-    print(effects)
+    print(list(zip(principles,effects)))
     return render_template('planning.html', effects=effects, principles=principles)
 
 @app.route('/slider', methods=['POST'])
@@ -86,17 +86,37 @@ def update_strategy():
 # route to compare.html
 @app.route('/compare.html')
 def compare():
-    interventions = session.get("strategies_compare")
     entries = model.select_all()
-    effects, principles = model.get_results(interventions)
-    #strategy = {"name" : name, "description" : description, "effects" : effects, "principles" : principles}
-    strategies = []
-    return render_template('compare.html', entries=entries, effects=effects, principles=principles)
+    strategies_to_compare = session.get("strategies_to_compare")
+    effects, principles = model.get_results(None) #  get default values for effects
+    all_effects = [effects]
+    if strategies_to_compare:
+        all_effects = []
+        for name in strategies_to_compare:
+            strategy = model.select_strategy(name)
+            # Filter out non-slider input
+            interventions = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} 
+            print(interventions)
+            effects, _ = model.get_results(interventions)
+            all_effects.append(effects)
+    #print(all_effects)
+    #print(strategies_to_compare)
+    return render_template('compare.html', entries=entries, all_effects=all_effects, 
+                            principles=principles, names=strategies_to_compare)
 
 @app.route('/compare_strategies', methods=['POST'])
 def compare_strategies():
-    form_input = request.form.to_dict(flat=True)
-    print(form_input)
+    #form_input = request.form.to_dict(flat=True)
+    #print(form_input)
+    strategies_to_compare = [] # names
+    for idx in range(5):
+        strategy = request.form.get(f"strategies{idx}")
+        if strategy: # check if a strategy was selected
+            if strategy not in strategies_to_compare: # check for duplicate
+                strategies_to_compare.append(strategy)
+
+    print(strategies_to_compare)
+    session["strategies_to_compare"] = strategies_to_compare
     return redirect(url_for('compare'))
 
 if __name__ == '__main__':

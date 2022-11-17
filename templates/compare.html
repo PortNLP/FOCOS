@@ -106,8 +106,9 @@
 					{% for idx in range(5) %}
 						<div class="drop-item">
 							{#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
-							<select class="form-select py-3 my-3 " style="max-width:90%; aria-label=".form-select example">
-								<option selected>Choose one option</option>
+							<select class="form-select py-3 my-3 " style="max-width:90%; aria-label=".form-select example"
+                                    name="strategies{{ idx }}">
+                                <option value="none" selected disabled hidden>Choose one option</option>
 								{% for entry in entries %}
 									<option value="{{ entry.name }}">{{ entry.name }}</option>
 								{% endfor %}
@@ -144,16 +145,23 @@
 
 				<script>
             // setup
-            var principles =
-            {{ principles|tojson }}
+            var principles = {{ principles|tojson }}
             for (let idx = 0; idx < principles.length; idx++) {
                 principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
             }
-            var data = {
-                labels: principles,
-                datasets: [{
-                    label: 'Change of Intervention',
-                    data: {{ effects|tojson }},
+            
+            var datasets = []
+            var labels = {{ names|tojson }}
+            //console.log({{ names|tojson }})
+            //console.log({{all_effects}})
+            var all_effects = {{ all_effects }}
+            for (let idx = 0; idx < all_effects.length; idx++) {
+                var effects = all_effects[idx]
+                var label = labels[idx]
+                //console.log(label)
+                datasets.push({
+                    label: label,
+                    data: effects,
                     backgroundColor: [
                         'rgba(255, 26, 104, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -171,7 +179,12 @@
                         'rgba(0, 0, 0, 1)'
                     ],
                     borderWidth: 1
-                }]
+                })
+
+            } 
+            var data = {
+                labels: principles,
+                datasets: datasets
             };
 
             // config
@@ -185,7 +198,7 @@
                     },
                     plugins: {
                         legend: {
-                            display: false
+                            display: true
                         }
                     },
                     events: [],
@@ -207,11 +220,19 @@
             for (let idx = 0; idx < principles.length; idx++) {
                 principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
             }
-            var data1 = {
-                labels: principles,
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: {{ effects|tojson }},
+
+            var datasets1 = []
+            var labels = {{ names|tojson }}
+            //console.log({{ names|tojson }})
+            //console.log({{all_effects}})
+            var all_effects = {{ all_effects }}
+            for (let idx = 0; idx < all_effects.length; idx++) {
+                var effects = all_effects[idx]
+                var label = labels[idx]
+                //console.log(label)
+                datasets1.push({
+                    label: label,
+                    data: effects,
                     fill: false,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -219,7 +240,12 @@
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(255, 99, 132)'
-                }]
+                })
+
+            } 
+            var data1 = {
+                labels: principles,
+                datasets: datasets1
             };
 
             var config1 = {
@@ -240,7 +266,7 @@
                     },
                     plugins: {
                         legend: {
-                            display: false
+                            display: true
                         },
                     },
                     events: [],

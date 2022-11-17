@@ -144,6 +144,14 @@
 				</div>
 
 				<script>
+
+            const CHART_COLORS = [
+                'rgb(255, 99, 132)', //red
+                'rgb(54, 162, 235)', //blue,
+                'rgb(75, 192, 192)', //green
+                'rgb(255, 159, 64)', //orange
+                'rgb(255, 205, 86)' //yellow
+            ];
             // setup
             var principles = {{ principles|tojson }}
             for (let idx = 0; idx < principles.length; idx++) {
@@ -162,22 +170,8 @@
                 datasets.push({
                     label: label,
                     data: effects,
-                    backgroundColor: [
-                        'rgba(255, 26, 104, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(0, 0, 0, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 26, 104, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(0, 0, 0, 1)'
-                    ],
+                    backgroundColor: CHART_COLORS[idx],
+                    borderColor: CHART_COLORS[idx],
                     borderWidth: 1
                 })
 
@@ -234,10 +228,10 @@
                     label: label,
                     data: effects,
                     fill: false,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
+                    backgroundColor: CHART_COLORS[idx],
+                    borderColor: CHART_COLORS[idx],
+                    backgroundColor: CHART_COLORS[idx],
+                    borderColor: CHART_COLORS[idx],
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgb(255, 99, 132)'
                 })

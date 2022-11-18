@@ -1,0 +1,52 @@
+.text-black{
+    text-align: center;
+}
+
+.navbar {
+    padding: 0 0;
+    display: flex;
+    position: fixed;
+    height: 100%;
+    flex-direction: column;
+    background-color: rgb(219, 219, 219);
+    width: 260px;
+    justify-content: center;
+
+    /*flex: 0 0 260px;*/
+}
+
+.menu-list{
+    width: 100%;
+}
+.bi{
+    width: auto;
+}
+.nav-link{
+    padding: 0 0;
+    height: 34%;
+    line-height: 34%;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.active-link{
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.link-text{
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.user-info{
+    /*put two links in the center*/
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}

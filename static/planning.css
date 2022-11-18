@@ -1,60 +1,33 @@
-.homePage {
-    padding-top: 20px;
-    background-color: rgb(252, 252, 252);
+body {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
-
-.navbar {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(219, 219, 219);
-    width: 260px;
-    flex: 0 0 260px;
-}
-
 
 .rightScreen {
-    display: grid;
+    display: flex;
+    padding-left: 260px;
+    height: 100%;
+    min-height: 100vh;
+    flex-grow: 1;
     width: 100%;
     background-color: rgb(245, 245, 245);
-    grid-template-columns: 2fr 3fr;
-    grid-template-areas:
-    ". .";
     justify-content: space-around;
 }
 
 .elementsMainArea {
-    width: 100%;
     min-width: 600px;
+    height: max-content;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
-    overflow: hidden;
-    grid-template-areas:/*4 rows 2 clolumns, first row cells merged*/ "element1 element2"
+    grid-template-areas:
+    "element1 element2"
     "element3 element4"
     "element5 element6"
     "element7 element8";
 }
 
-.result-area1 {
-    background-color: rgb(250, 250, 250);
-    display: flex;
-    flex-grow: 1;
-    width: 100%;
-    min-width: 900px;
-    flex-direction: column;
-    max-height: min-content ;
-}
-
-
-
-.result-area {
-    background-color: rgb(250, 250, 250);
-    display: flex;
-    flex-grow: 1;
-    width: 100%;
-    min-width: 900px;
-    flex-direction: column;
-}
 
 .outputText {
     /*    change text color to blue*/
@@ -62,14 +35,15 @@
 }
 
 .sec-name {
+    width: 100%;
     grid-column: 1 / 3;
-    grid-row: 1 / 2;
+    /*grid-row: 1 / 2;*/
     height: fit-content;
 }
 
 .forEachColumn {
     gap: 15px 0;
-    padding: 10px 15px;
+    padding: 0 38px;
 }
 
 
@@ -94,6 +68,16 @@
     margin: 1.5rem auto auto;
 }
 
+
+.result-area {
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+}
+
 .form-group {
     text-align: center;
     vertical-align: middle;
@@ -104,17 +88,6 @@
     width: 70%;
 }
 
-.boxInput {
-    /*add a greay thick border*/
-    border: 2px solid #f6f6f6;
-    background-color: white;
-    resize: none;
-}
-
-.saveForm {
-    width: 30%;
-}
-
 /*make h3 tag bold text*/
 h6 {
     font-weight: bolder;
@@ -123,21 +96,22 @@ h6 {
 
 .chartCard {
     display: grid;
+    width: 100%;
     /*grif has 2 rows 1 column*/
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas:
     "."
     ".";
-    width: 100%;
-    height: fit-content;
+    height: 100%;
     /*    center items in cell*/
     justify-items: center;
     align-items: center;
 }
 
 .BarchartBox {
-    width: 90%;
+    width: 94%;
+    height: 90%;
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);
@@ -145,17 +119,26 @@ h6 {
 
 .radarChartCard {
     display: flex;
-    padding-top: 10px;
-    width: 90%;
-    margin: 10px;
-    border: solid 1px rgb(199, 199, 199);
-    background: rgb(251, 251, 251);
+    height: 90%;
+    width: 96%;
     justify-content: space-evenly;
 }
 
 .radarChartBox {
-    width: 40%;
+    margin: 1%;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
+    width: 50%;
 }
+
+.saveForm {
+    margin: 1%;
+    width: 50%;
+    padding: 0 20px;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
+}
+
 
 .btn {
     width: 100%;;
@@ -177,20 +160,21 @@ h6 {
     width: 50%;
 }
 
-@media screen and (min-width: 1930px) {
-    .navbar {
+@media screen and (max-width: 1543px) {
+    .result-form{
         display: flex;
         flex-direction: column;
-        background-color: rgb(219, 219, 219);
-        width: 260px;
+    }
+    .btn{
+        width: 100%;
     }
 }
-
-@media screen and (max-width: 1919px) {
-    .navbar {
+@media screen and (max-width: 1543px) {
+    .result-form{
         display: flex;
         flex-direction: column;
-        background-color: rgb(219, 219, 219);
-        width: 260px;
+    }
+    .btn{
+        width: 100%;
     }
 }

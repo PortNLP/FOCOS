@@ -80,6 +80,7 @@ def update_strategy():
         session["strategy_interventions"] = None
         session["description"] = None
         session["name"] = None
+        session["strategies_to_compare"] = None
 
     return redirect(url_for('strategies'))
 

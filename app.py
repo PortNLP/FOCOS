@@ -77,6 +77,7 @@ def update_strategy():
         session["description"] = strategy["description"]
     elif request.form.get("Delete"):
         model.delete_strategy(name)
+        session["strategy_interventions"] = None
         session["description"] = None
         session["name"] = None
 

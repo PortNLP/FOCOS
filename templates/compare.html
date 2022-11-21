@@ -25,7 +25,7 @@
 
 <body>
 
-<div class="container-fluid px-0 flex flex-no-wrap">
+<div class="main-page px-0 flex flex-no-wrap">
 	{#	<div class="navbar p-0">#}
 	<div class="navbar">
 		<div class="text-black w-full font-black text-3xl py-10">
@@ -99,7 +99,7 @@
 					{% for idx in range(5) %}
 						<div class="drop-item">
 							{#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
-							<select class="form-select py-3 my-3 " style="max-width:90%; aria-label=" .form-select example"
+							<select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
 							name="strategies{{ idx }}">
 							<option value="none" selected disabled hidden>Choose one option</option>
 							{% for entry in entries %}
@@ -201,13 +201,15 @@
               type: 'bar',
               data,
               options: {
+                  responsive: true,
+		              maintainAspectRatio: true,
                   x: {
                       min: -100,
                       max: 100,
                   },
                   plugins: {
                       legend: {
-                          display: true
+                          display: false
                       }
                   },
                   events: [],

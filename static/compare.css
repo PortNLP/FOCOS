@@ -1,19 +1,18 @@
-.homePage {
-    padding-top: 20px;
-    background-color: rgb(252, 252, 252);
-}
+/*.main-page{*/
+/*    max-width: 1080px;*/
+/*}*/
 
 
 
 .rightScreen {
     display: flex;
-    margin-left: 260px;
+    padding-left: 260px;
     height: 100%;
     min-height: 100vh;
     flex-grow: 1;
     width: 100%;
     background-color: rgb(245, 245, 245);
-    justify-content: space-around;
+    /*justify-content: space-around;*/
 }
 
 .elementsMainArea {
@@ -138,8 +137,10 @@ h6 {
 }
 
 .BarchartBox {
-    width: 94%;
-    height: 90%;
+    width: 90%;
+    position: relative;
+    /*box-sizing: border-box;*/
+    /*height: 90%;*/
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);

@@ -147,6 +147,7 @@ h6 {
 }
 
 .radarChartCard {
+    position: relative;
     display: flex;
     height: 90%;
     width: 96%;

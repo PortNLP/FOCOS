@@ -1,51 +1,54 @@
-.homePage {
-    padding-top: 20px;
-    background-color: rgb(252, 252, 252);
+body {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
-
-body{
-    padding: 0;
-}
-
-#round-slider-overrides body{
-    padding: 0;
-}
-
-.navbar {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(219, 219, 219);
-    width: 260px;
-    flex: 0 0 260px;
-}
-
 
 .rightScreen {
     display: flex;
+    margin-left: 260px;
+    height: 100%;
+    flex-grow: 1;
     width: 100%;
     background-color: rgb(245, 245, 245);
-    /*display: grid;*/
-    /*grid-template-columns: 2fr 3fr;*/
-    /*grid-template-areas:*/
-    /*". .";*/
-    /*justify-content: space-around;*/
+    justify-content: space-around;
 }
 
 .elementsMainArea {
-    width: 100%;
     min-width: 600px;
+    width: 860px;
+    height: max-content;
     display: flex;
     flex-direction: column;
+}
+
+.strategy-records{
+    width: 40%;
+}
+
+.strategy-cell{
+/*    make items space between and horizontal aligned*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.list-group{
+    width: 95%;
+/*    put item in center*/
+    margin: 0 auto;
+
 }
 
 
 .result-area {
     background-color: rgb(250, 250, 250);
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     width: 100%;
-    min-width: 900px;
-    flex-direction: column;
+    height: 100%;
 }
 
 .outputText {
@@ -57,22 +60,6 @@ body{
     grid-column: 1 / 3;
     grid-row: 1 / 2;
     height: fit-content;
-}
-
-.forEachColumn {
-    gap: 20px 0;
-    padding: 10px 20px;
-}
-
-
-
-.elementName {
-    font-size: large;
-    font-weight: bolder;
-    height: auto;
-    text-align: left;
-    vertical-align: middle;
-    margin-bottom: 10px;
 }
 
 .divider {
@@ -89,7 +76,7 @@ body{
 
 .boxInput {
     /*add a greay thick border*/
-    border: 2px solid #f6f6f6;
+    border: 2px solid #e3e3e3;
     background-color: white;
     resize: none;
 }
@@ -106,33 +93,68 @@ h6 {
 
 .chartCard {
     display: grid;
+    width: 100%;
     /*grif has 2 rows 1 column*/
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas:
     "."
     ".";
-    width: 100%;
-    height: fit-content;
+    min-height: 100%;
+    height: 100vh;
     /*    center items in cell*/
     justify-items: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 
 .radarChartCard {
     display: flex;
     padding-top: 10px;
-    width: 80%;
+    height: 95%;
+    width: 90%;
     margin: 10px;
+    /*border: solid 1px rgb(199, 199, 199);*/
+    /*background: rgb(237, 237, 237);*/
+    justify-content: space-evenly;
+}
+
+.result-items{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    margin: 10px 10px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);
     justify-content: space-evenly;
+}
 
+.radarChartBox{
+    display: flex;
+    width: 50%;
+    height: auto;
+    margin: 10px 10px;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
+    justify-content: center;
+}
+
+h5{
+    font-size: 10vw;
+}
+
+.result-text{
+    width: 60%;
+}
+
+.result-item{
+    display: flex;
+    justify-content: space-between;
 }
 
 .radarChartBox {
-    width: 40%;
+    width: 55%;
 }
 
 .btn {
@@ -142,7 +164,7 @@ h6 {
 .btn-primary {
     background-color: #007bff !important;
     border-color: #007bff !important;
-    width: 20%;
+    width: 100%;
 }
 
 .btn:focus, .btn:active {
@@ -154,7 +176,7 @@ h6 {
 .btn-secondary {
     background-color: #6c757d !important;;
     border-color: #6c757d !important;;
-    width: 20%;
+    width: 100%;
 }
 
 @media screen and (min-width: 1930px) {

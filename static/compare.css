@@ -1,47 +1,39 @@
-.homePage {
-    padding-top: 20px;
-    background-color: rgb(252, 252, 252);
-}
+/*.main-page{*/
+/*    max-width: 1080px;*/
+/*}*/
 
-.navbar {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(219, 219, 219);
-    width: 11.3%
-}
 
 
 .rightScreen {
     display: flex;
+    padding-left: 260px;
+    height: 100%;
+    min-height: 100vh;
+    flex-grow: 1;
     width: 100%;
     background-color: rgb(245, 245, 245);
-    /*display: grid;*/
-    /*grid-template-columns: 2fr 3fr;*/
-    /*grid-template-areas:*/
-    /*". .";*/
     /*justify-content: space-around;*/
 }
 
 .elementsMainArea {
-    width: 33%;
     min-width: 600px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
-    overflow: hidden;
-    grid-template-areas:/*4 rows 2 clolumns, first row cells merged*/ "element1 element2"
-    "element3 element4"
-    "element5 element6"
-    "element7 element8";
+    width: 860px;
+    /*height: max-content;*/
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height:100%;
+
 }
 
 .result-area {
     background-color: rgb(250, 250, 250);
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     width: 100%;
-    min-width: 900px;
-    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
 }
 
 .outputText {
@@ -59,8 +51,29 @@
     gap: 20px 0;
     padding: 10px 20px;
 }
+.drop-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.list-group{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+    justify-content: space-between;
+}
 
+.form-select{
+    width: 90%;
+}
+
+.form-select option{
+    max-width: 200px;
+    width :200px;
+}
 
 .elementName {
     font-size: large;
@@ -111,40 +124,53 @@ h6 {
 
 .chartCard {
     display: grid;
+    width: 100%;
     /*grif has 2 rows 1 column*/
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas:
     "."
     ".";
-    width: 100%;
-    height: fit-content;
-    /*    center items in cell*/
+    height: 100%;
     justify-items: center;
     align-items: center;
 }
 
 .BarchartBox {
-    display: flex;
-    width: 80%;
+    width: 90%;
+    position: relative;
+    /*box-sizing: border-box;*/
+    /*height: 90%;*/
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);
 }
 
 .radarChartCard {
+    position: relative;
     display: flex;
-    padding-top: 10px;
-    width: 80%;
-    margin: 10px;
-    border: solid 1px rgb(199, 199, 199);
-    background: rgb(251, 251, 251);
+    height: 90%;
+    width: 96%;
     justify-content: space-evenly;
-
 }
 
 .radarChartBox {
-    width: 40%;
+    margin: 1%;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
+    width: 50%;
+}
+
+.legend-info {
+    margin: 1%;
+    width: 50%;
+    padding: 0 20px;
+    border: solid 1px rgb(199, 199, 199);
+    background: rgb(251, 251, 251);
+}
+
+.result-text{
+    width: 60%;
 }
 
 .btn {

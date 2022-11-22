@@ -1,270 +1,291 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='roundRangeSlider.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='strategies.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='roundRangeSlider.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='strategies.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	        crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>
+	<link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>
 
-    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
-    <title>FOCOS</title>
+	<script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+	<title>FOCOS</title>
 </head>
 
 <body>
 
-<div class="flex flex-no-wrap">
-    <div class="navbar min-h-screen p-0">
-        <div class="nav-content h-full flex flex-col flex-grow">
-            <div class="h-16 text-black w-full flex items-center font-black text-3xl pt-4">
-                FOCOS
-            </div>
-            <ul class="mt-20">
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-arrow-down-right-circle-fill"></i>
-                    <span class="text-2xl ml-2">Start</span>
-                </a>
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-x-circle-fill"></i>
-                    <span class="text-2xl ml-2">Explore</span>
-                </a>
-
-                <a href="planning.html" class="nav-link mb-2">
-                    <i class="mdi mdi-puzzle-outline"></i>
-                    <i class="bi bi-vector-pen"></i>
-                    <span class="text-2xl ml-2">Plan</span>
-                </a>
-
-
-                <a href="strategies.html" class="nav-link mb-2">
-                    <i class="bi bi-ui-checks-grid"></i>
-                    <span class="text-2xl ml-2">Strategies</span>
-                </a>
-
-
-                <a href="compare.html" class="nav-link mb-2">
-                    <i class="bi bi-terminal-split"></i>
-                    <span class="text-2xl ml-2">Compare</span>
-                </a>
-
-                <a href="javascript:void(0)" class="nav-link mb-2">
-                    <i class="bi bi-toggles2"></i>
-                    <span class="text-2xl ml-2">Critique</span>
-                </a>
-
-            </ul>
-
-
-            <div class="flex flex-sm-column justify-center mt-auto mb-4 w-full">
-                <div class="relative">
-                    <hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
-
-                    <a href="javascript:void(0)" class="nav-link">
-                        <i class="mdi mdi-note"></i>
-                        <span class="text-l ml-2">Test User</span>
-                    </a>
-
-                </div>
-                <div class="relative">
-
-                    <a href="javascript:void(0)" class="nav-link">
-                        <i class="mdi mdi-note"></i>
-                        <span class="text-xl ml-2">Log Out</span>
-                    </a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="rightScreen">
-        <form class="elementsMainArea max-h-screen min-h-screen min-w-600" action="{{ url_for('select_strategy') }}"
-              method=post>
-            <div class="sec-name flex-sm-column">
-                <h1 class="text-4xl font-weight-bold ml-4 pt-4">Strategies</h1>
-                <hr class="divider">
-            </div>
-
-            <div class="forEachColumn">
-                <div class="list-group pt-6">
-                    {% for entry in entries %}
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <h3 class="mb-2" style="font-weight: bold;">Name: Click the name to show for now: --><input
-                                    type="submit" value="{{ entry.name }}" name="name"></h3>
-                            <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
-                            <h3 class="mb-2">Model: {{ entry.model }}</h3>
-
-                            {#                            <input type="submit" value="{{ entry.name }}" name="name">#}
-                            {#                            {{ entry.day }}#}
-                            {#                            {{ entry.model }}#}
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-
-            {#            <div class="forEachColumn">#}
-            {#                <div class="list-group pt-6">#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                    <a href="#" class="list-group-item list-group-item-action disabled">#}
-            {#                        <h3 class="mb-2" style="font-weight: bold;">Name: </h3>#}
-            {#                        <h3 class="mb-2">Last Modified: </h3>#}
-            {#                        <h3 class="mb-2">Model: </h3>#}
-            {#                    </a>#}
-            {#                </div>#}
-            {#            </div>#}
-
-        </form>
-        <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-        <div class="result-area max-h-screen w-full h-full p-4 min-w-600">
-            <div class="sec-name flex-sm-column pt-4 pl-4">
-                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
-            </div>
+<div class="container-fluid px-0 flex flex-no-wrap">
+	{#	<div class="navbar p-0">#}
+	<div class="navbar">
+		<div class="text-black w-full font-black text-3xl py-10">
+			FOCOS
+		</div>
+		<ul class="menu-list">
+			<a href="javascript:void(0)" class="nav-link">
+				<div>
+					<i class="bi bi-arrow-down-right-circle-fill"></i>
+					<span class="link-text text-2xl ml-2">Start</span>
+				</div>
+			</a>
+			<a href="javascript:void(0)" class="nav-link">
+				<div>
+					<i class="bi bi-x-circle-fill"></i>
+					<span class="link-text text-2xl ml-2">Explore</span>
+				</div>
+			</a>
+			<a href="planning.html" class="nav-link">
+				<div>
+					<i class="bi bi-vector-pen"></i>
+					<span class="link-text text-2xl ml-2">Plan</span>
+				</div>
+			</a>
+			<a href="strategies.html" class="nav-link active-link">
+				<div>
+					<i class="bi bi-ui-checks-grid"></i>
+					<span class="link-text text-2xl ml-2">Strategies</span>
+				</div>
+			</a>
+			<a href="compare.html" class="nav-link">
+				<div>
+					<i class="bi bi-terminal-split"></i>
+					<span class="link-text text-2xl ml-2">Compare</span>
+				</div>
+			</a>
+			<a href="javascript:void(0)" class="nav-link">
+				<div>
+					<i class="bi bi-toggles2"></i>
+					<span class="link-text text-2xl ml-2">Critique</span>
+				</div>
+			</a>
+		</ul>
 
 
-            <div class="chartCard">
-                <div class="radarChartCard">
-                    <form>
-                        <!-- a form that takes two inputs: Strategy name and Description, with a save button and reset button -->
-                        <div class="d-flex justify-content-around">
-                            <div class="list-group">
-                                <h3 class="text-2xl pb-4">Preoccupation with Failure</h3>
-                                <div id="slider1"></div>
-                                <h3 class="text-2xl pb-4">Reluctance to Simplify</h3>
-                                <h3 class="text-2xl pb-4">Commitment to Resilience</h3>
-                                <h3 class="text-2xl pb-4">Deference to Expertise</h3>
-                                <h3 class="text-2xl pb-4">Sensitivity to Operations</h3>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="radarChartBox">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
+		<div class="menu-bottom mt-auto w-full">
+			<div>
+				<hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
+			</div>
+			<div class="user-info pb-12 pt-8">
+				<a href="javascript:void(0)"><span class="text-l ml-2">Test User</span></a>
+				<a href="javascript:void(0)"><span class="text-xl ml-2">Log Out</span></a>
+			</div>
+		</div>
+	</div>
 
-                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
-                    <h6 class="mb-4">Description:</h6> <textarea rows="10" cols="50" name="Description"
-                                                                 spellcheck="true"
-                                                                 class="boxInput"
-                                                                 placeholder="Enter a description here..."></textarea>
-                    {#							display save button and reset button on the same line#}
-                    <div class="d-flex justify-content-end gap-5 mt-5">
-                        <button id="save" type="submit" class="btn btn-primary" value="Edit Strategy"
-                                name="Edit Strategy"
-                                data-button-state="Edit">Edit Strategy</button>
+	<div class="rightScreen">
+		<form class="elementsMainArea" name="main-form" action="{{ url_for('select_strategy') }}"
+		      method=post>
+			<div class="sec-name flex-sm-column">
+				<h1 class="text-4xl font-weight-bold ml-4 pt-4">My Strategies</h1>
+				<hr class="divider">
+			</div>
 
-                        <button id="reset" type="submit" class="btn btn-secondary" value="Delete" name="Delete">
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
+			<div class="forEachColumn">
+				<div class="list-group pt-6">
+					{% for entry in entries %}
+						{#                       print the entry#}
+						<a href="#" class="strategy-cell list-group-item list-group-item-action">
+							<div class="strategy-records">
+								<h3 class="mb-2" style="font-weight: bold;">Name: {{ entry.name }} </h3>
+								<h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
+								<h3 class="mb-2">Model: {{ entry.model }}</h3>
+								{#                                <input type="submit" value="{{ entry.name }}" name="name">#}
+							</div>
+							<div>
+								<button type="submit" class="btn btn-primary" name="name" value="{{ entry.name }}"> View Strategy
+								</button>
+							</div>
+
+						</a>
+
+					{% endfor %}
+				</div>
+			</div>
+		</form>
+
+		<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+		<div class="container-fluid result-area">
+			<div class="sec-name pt-4 pl-4">
+				<h1 class="outputText text-3xl font-weight-bold mt-4">{{ strategy.name }}</h1>
+				<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+			</div>
 
 
-            <script>
-                const data1 = {
-                    labels: {{ principles|tojson }},
-                    datasets: [{
-                        label: 'My First Dataset',
-                        data: {{ effects|tojson }},
-                        fill: false,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
-                        {#
-                              }, {
-                                  label: 'My Second Dataset',
-                                  data: [28, 48, 40, 19, 96],
-                                  fill: false,
-                                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                  borderColor: 'rgb(54, 162, 235)',
-                                  pointBackgroundColor: 'rgb(54, 162, 235)',
-                                  pointBorderColor: '#fff',
-                                  pointHoverBackgroundColor: '#fff',
-                                  pointHoverBorderColor: 'rgb(54, 162, 235)'
-                              #}
-                    }]
-                };
+			<div class="chartCard">
+				<div class="radarChartCard">
+					<form class="result-items px-4 py-2">
+						<!-- a form that takes two inputs: Strategy name and Description, with a save button and reset button -->
+						<div class="result-item">
+							<h5 class="result-text pt-4" style="font-size:1vw">Preoccupation with Failure</h5>
+							<div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<div class="progress-value">+90</div>
+							</div>
+						</div>
+						<div class="result-item">
+							<h5 class="result-text pt-4" style="font-size:1vw">Reluctance to Simplify</h5>
+							<div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<div class="progress-value">+90</div>
+							</div>
+						</div>
+						<div class="result-item">
+							<h5 class="result-text pt-4" style="font-size:1vw">Commitment to Resilience</h5>
+							<div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<div class="progress-value">+90</div>
+							</div>
+						</div>
+						<div class="result-item">
+							<h5 class="result-text pt-4" style="font-size:1vw">Deference to Expertise</h5>
+							<div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<div class="progress-value">+90</div>
+							</div>
+						</div>
+						<div class="result-item pb-2">
+							<h5 class="result-text pt-4" style="font-size:1vw">Sensitivity to Operations</h5>
+							<div class="progress blue mt-4">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+								<div class="progress-value">+90</div>
+							</div>
+						</div>
+					</form>
+					<div class="radarChartBox">
+						<canvas id="radarChart"></canvas>
+					</div>
+				</div>
 
-                const config1 = {
-                    type: 'radar',
-                    data: data1,
-                    options: {
-                        scale: {
-                            min: -100,
-                            max: 100,
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        events: [],
-                        elements: {
-                            line: {
-                                borderWidth: 3
-                            }
-                        }
-                    },
-                };
+				<form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>
+					<textarea rows="10" cols="50" name="Description" spellcheck="true"
+					          class="boxInput">{{ strategy.description }}</textarea>
+					{#							display save button and reset button on the same line#}
+					<div class="d-flex justify-content-end gap-5 mt-5">
+						<button id="save" type="submit" class="btn btn-primary" value="EditStrategy"
+						        name="EditStrategy"
+						        data-button-state="Edit">Edit Strategy
+						</button>
 
-                // render init block
-                const myChart1 = new Chart(
-                    document.getElementById('radarChart'),
-                    config1
-                );
-            </script>
-            <script>
-                $("#slider1").roundSlider({
-                    sliderType: "min-range",
-                    handleShape: "round",
-                    width: "5",
-                    radius: "20",
-                    value: 0,
-                    handleSize: "+1",
-                    min: "-100",
-                    max: "100",
-                    editableTooltip: false,
-                    sliderType: "min-range"
-                });
-            </script>
-        </div>
-    </div>
+						<button id="reset" type="submit" class="btn btn-secondary" value="Delete" name="Delete">
+							Delete
+						</button>
+					</div>
+				</form>
+			</div>
+
+
+			<script>
+          var principles =
+          {{ strategy.principles|tojson }}
+          var data1 = {
+              labels: principles,
+              datasets: [{
+                  label: 'My First Dataset',
+                  data: {{ strategy.effects|tojson }},
+                  fill: false,
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgb(255, 99, 132)',
+                  pointBackgroundColor: 'rgb(255, 99, 132)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgb(255, 99, 132)'
+              }]
+          };
+
+          var config1 = {
+              type: 'radar',
+              data: data1,
+              options: {
+                  scales: {
+                      r: {
+                          pointLabels: {
+                              display: false // don't hide the labels around the radar chart
+                          }
+                      }
+                  },
+                  scale: {
+                      min: -100,
+                      max: 100,
+
+                  },
+                  plugins: {
+                      legend: {
+                          display: false
+                      },
+                  },
+                  events: [],
+                  elements: {
+                      line: {
+                          borderWidth: 3
+                      }
+                  }
+              },
+          };
+
+          // render init block
+          var myChart1 = new Chart(
+              document.getElementById('radarChart'),
+              config1
+          );
+			</script>
+			<script>
+          $("#slider1").roundSlider({
+              sliderType: "min-range",
+              handleShape: "round",
+              width: "5",
+              radius: "20",
+              value: 0,
+              handleSize: "+1",
+              min: "-100",
+              max: "100",
+              editableTooltip: false,
+              sliderType: "min-range"
+          });
+			</script>
+		</div>
+	</div>
 </div>
 
 

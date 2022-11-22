@@ -121,5 +121,10 @@ def compare_strategies():
     session["strategies_to_compare"] = strategies_to_compare
     return redirect(url_for('compare'))
 
+@app.route('/compare_reset', methods=['POST'])
+def compare_reset():
+    session["strategies_to_compare"] = None
+    return redirect(url_for('compare'))
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True, threaded=False)

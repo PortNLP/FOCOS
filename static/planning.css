@@ -74,7 +74,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 100%;
+    width: 90vh;
     height: 100%;
 }
 
@@ -119,8 +119,9 @@ h6 {
 }
 
 .radarChartCard {
+    position: relative;
     display: flex;
-    height: 40vh;
+    height: 35vh;
     width: 90%;
     justify-content: space-between;
 }

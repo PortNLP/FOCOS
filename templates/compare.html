@@ -135,20 +135,7 @@
 					</div>
 
 					<div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
-						<h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
-						                               placeholder="Strategy/test one">
-						<h6>Description:</h6> <textarea rows="3" cols="5" name="Description" spellcheck="true"
-						                                class="boxInput"
-						                                placeholder="Enter a description here..."></textarea>
-						{#							display save button and reset button on the same line#}
-						<div class="result-form d-flex justify-content-between gap-5">
-							<button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
-							        name="SaveStrategy"
-							        data-button-state="save">Save Strategy
-							</button>
-							<button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
-								Reset
-							</button>
+						<h6>Lengends will be here:</h6>
 						</div>
 
 					</div>
@@ -201,8 +188,8 @@
               type: 'bar',
               data,
               options: {
-                  responsive: true,
-                  maintainAspectRatio: true,
+                  {#responsive: true,#}
+                  maintainAspectRatio: false,
                   x: {
                       min: -100,
                       max: 100,
@@ -265,8 +252,8 @@
               type: 'radar',
               data: data1,
               options: {
-                  responsive: true,
-                  maintainAspectRatio: true,
+                  {#responsive: true,#}
+                  maintainAspectRatio: false,
                   scales: {
                       r: {
                           pointLabels: {

@@ -140,7 +140,7 @@ h6 {
     width: 90%;
     position: relative;
     /*box-sizing: border-box;*/
-    /*height: 90%;*/
+    height: 40vh;
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);
@@ -149,9 +149,9 @@ h6 {
 .radarChartCard {
     position: relative;
     display: flex;
-    height: 90%;
-    width: 96%;
-    justify-content: space-evenly;
+    height: 40vh;
+    width: 90%;
+    justify-content: space-between;
 }
 
 .radarChartBox {

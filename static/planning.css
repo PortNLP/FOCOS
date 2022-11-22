@@ -74,7 +74,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 100%;
+    width: 90vh;
     height: 100%;
 }
 
@@ -104,27 +104,30 @@ h6 {
     "."
     ".";
     height: 100%;
-    /*    center items in cell*/
     justify-items: center;
     align-items: center;
 }
 
 .BarchartBox {
-    width: 94%;
-    height: 90%;
+    width: 90%;
+    position: relative;
+    /*box-sizing: border-box;*/
+    height: 40vh;
     margin: 20px;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);
 }
 
 .radarChartCard {
+    position: relative;
     display: flex;
-    height: 90%;
-    width: 96%;
-    justify-content: space-evenly;
+    height: 35vh;
+    width: 90%;
+    justify-content: space-between;
 }
 
 .radarChartBox {
+    position: relative;
     margin: 1%;
     border: solid 1px rgb(199, 199, 199);
     background: rgb(251, 251, 251);

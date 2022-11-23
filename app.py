@@ -52,6 +52,8 @@ def strategies():
     interventions = session.get("strategy_interventions")
     entries = model.select_all()
     effects, principles = model.get_results(interventions)
+    # change each element in effect from float to int
+    effects = [int(effect) for effect in effects]
     description = session.get("description")
     name = session.get("name") if session.get("name") else "No Strategy Selected"
     strategy = {"name" : name, "description" : description, "effects" : effects, "principles" : principles}

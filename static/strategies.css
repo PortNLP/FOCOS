@@ -151,7 +151,8 @@ h5{
 
 .result-item{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .radarChartBox {
@@ -187,4 +188,8 @@ h5{
         background-color: rgb(219, 219, 219);
         width: 260px;
     }
+}
+
+.progress{
+    font-weight: bold;
 }

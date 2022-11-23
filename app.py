@@ -73,7 +73,9 @@ def select_strategy():
 @app.route('/update_strategy', methods=['POST'])
 def update_strategy():
     name = session.get("name")
-    if request.form.get("EditStrategy"):
+    if not name:
+        return redirect(url_for('strategies'))
+    elif request.form.get("EditStrategy"):
         description = request.form.get("Description")
         strategy = model.update_description(name, description)
         session["description"] = strategy["description"]

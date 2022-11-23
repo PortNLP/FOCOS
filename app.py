@@ -52,6 +52,8 @@ def strategies():
     interventions = session.get("strategy_interventions")
     entries = model.select_all()
     effects, principles = model.get_results(interventions)
+    # change each element in effect from float to int
+    effects = [int(effect) for effect in effects]
     description = session.get("description")
     name = session.get("name") if session.get("name") else "No Strategy Selected"
     strategy = {"name" : name, "description" : description, "effects" : effects, "principles" : principles}
@@ -119,6 +121,11 @@ def compare_strategies():
 
     print(strategies_to_compare)
     session["strategies_to_compare"] = strategies_to_compare
+    return redirect(url_for('compare'))
+
+@app.route('/compare_reset', methods=['POST'])
+def compare_reset():
+    session["strategies_to_compare"] = None
     return redirect(url_for('compare'))
 
 if __name__ == '__main__':

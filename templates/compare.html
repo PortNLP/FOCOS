@@ -86,7 +86,8 @@
 	<div class="rightScreen">
 		<form class="elementsMainArea" name="main-form"
 		      action="{{ url_for('compare_strategies') }}"
-		      method=post>
+		      method=post
+              id=strategies_to_compare>
 			<div class="sec-name flex-sm-column">
 				<h1 class="text-4xl font-weight-bold ml-4 pt-4">Compare Strategies</h1>
 				<hr class="divider">
@@ -111,7 +112,7 @@
 				</div>
 
 				<div>
-					<button type="submit" class="btn btn-primary py-3" name="Compare" value="Compare">Compare</button>
+					<button id="compare" type="submit" class="btn btn-primary py-3" name="Compare" value="Compare">Compare</button>
 				</div>
 			</div>
 			{#			</div>#}
@@ -134,17 +135,15 @@
 						<canvas id="radarChart"></canvas>
 					</div>
 
-					<div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
-						<h6>Lengends will be here:</h6>
-						</div>
-
-					</div>
+					<form class="saveForm d-flex flex-column justify-content-around pt-6 pb-10" action="{{ url_for('compare_reset') }}" method=post>
+						<button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
+							Reset
+						</button>
+				    </form>
 				</div>
-			</div>
 
-			<script>
-
-          const CHART_COLORS = [
+			    <script>
+          var CHART_COLORS = [
               'rgb(255, 99, 132)', //red
               'rgb(54, 162, 235)', //blue,
               'rgb(75, 192, 192)', //green
@@ -161,6 +160,8 @@
           var datasets = []
           var labels =
           {{ names|tojson }}
+          if(labels === null)
+                labels = ""
           //console.log({{ names|tojson }})
           //console.log({{all_effects}})
           var all_effects =
@@ -222,6 +223,8 @@
           var datasets1 = []
           var labels =
           {{ names|tojson }}
+          if(labels === null)
+                labels = ""
           //console.log({{ names|tojson }})
           //console.log({{all_effects}})
           var all_effects =
@@ -285,14 +288,36 @@
               document.getElementById('radarChart'),
               config1
           );
-			</script>
-		</div>
-	</div>
+			    </script>
 
+			</div>
+	    </div>
+    </div>
+	<script>
+      //stop refreshing page when click "submit" and only refresh div with id "result"
+      $(document).ready(function () {
+          $('#compare').click(function (e) {
+              //jQuery('#practices').submit(function (e) {
+              e.preventDefault();
+              values = $("#strategies_to_compare").serialize()
+              values += "&Submit=Submit";
+              console.log(values)
+              $.ajax({
+                  type: "POST",
+                  url: "/compare_strategies",
+                  data: values,
+                  success: function (response) {
+                      //var result = $('<div />').append(response).find('#result-here').html();
+                      $('#result-here').html($('#result-here', response).html());
+                      console.log({{ all_effects|tojson }})	//These aren't changed
+                  }
+              });
+          });
+      });
+	</script>
 </div>
 
 
-</div>
 
 
 </body>

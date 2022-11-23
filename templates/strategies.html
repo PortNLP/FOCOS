@@ -164,13 +164,14 @@
                 </div>
 
                 <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>
-					<textarea rows="10" cols="50" name="Description" spellcheck="true"
+					<h6>Edit Description:</h6>
+                    <textarea rows="10" cols="50" name="Description" spellcheck="true"
                               class="boxInput">{{ strategy.description }}</textarea>
                     {#							display save button and reset button on the same line#}
                     <div class="d-flex justify-content-end gap-5 mt-5">
                         <button id="save" type="submit" class="btn btn-primary" value="EditStrategy"
                                 name="EditStrategy"
-                                data-button-state="Edit">Edit Strategy
+                                data-button-state="Edit">Save Edit
                         </button>
 
                         <button id="reset" type="submit" class="btn btn-secondary" value="Delete" name="Delete">

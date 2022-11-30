@@ -4,9 +4,11 @@ FOCOS Flask app
 from flask import Flask, redirect, request, url_for, render_template, session, flash
 from model.model import model
 import time
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH' # python -c 'import os; print(os.urandom(16))'
+app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
 model = model()
 print("App started")
 

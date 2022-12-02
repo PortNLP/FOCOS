@@ -8,7 +8,7 @@
     position: fixed;
     height: 100%;
     flex-direction: column;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(42, 45, 52);
     width: 260px;
     justify-content: center;
 
@@ -30,15 +30,34 @@
     flex-direction: column;
     justify-content: center;
 }
-.active-link{
-    background-color: #f5f5f5;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+
+.bi {
+/*    white color*/
+    color: #fff;
+    font-size: 1.5rem;
 }
 
 .link-text{
     padding-left: 5%;
     padding-top: 5%;
+    /*text color white*/
+    color: #fff;
+}
+
+.active-link{
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+/*    make text color to #2A2D34*/
+
+}
+
+.active-text, .active-bi{
+    color: #2A2D34;
+}
+
+.user-text{
+    color: #dbdbdb;
 }
 
 .user-info{
@@ -48,5 +67,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: #fff;
 
 }

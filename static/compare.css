@@ -177,9 +177,15 @@ h6 {
     width: 100%;;
 }
 
-.btn-primary {
-    background-color: #007bff !important;
-    border-color: #007bff !important;
+.btn-success[disabled]{
+    background-color: #b7bcc4 !important;
+    border-color: #b7bcc4 !important;
+    color: white;
+}
+
+.btn-primary, .btn-success {
+    background-color: #00B800 !important;
+    border-color: #00B800 !important;
 }
 
 .btn:focus, .btn:active {
@@ -188,9 +194,11 @@ h6 {
 }
 
 .btn-secondary {
-    background-color: #6c757d !important;;
-    border-color: #6c757d !important;;
+    /*background-color: #6c757d !important;;*/
+    border-color: #2A2D34 !important;;
     width: 50%;
+    color: #2A2D34;
+
 }
 
 @media screen and (min-width: 1930px) {

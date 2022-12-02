@@ -46,8 +46,8 @@
             </a>
             <a href="planning.html" class="nav-link active-link">
                 <div>
-                    <i class="bi bi-vector-pen"></i>
-                    <span class="link-text text-2xl ml-2">Plan</span>
+                    <i class="bi active-bi bi-vector-pen"></i>
+                    <span class="link-text active-text text-2xl ml-2">Plan</span>
                 </div>
             </a>
             <a href="strategies.html" class="nav-link">
@@ -76,15 +76,15 @@
                 <hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
             </div>
             <div class="user-info pb-12 pt-8">
-                <a href="javascript:void(0)"><span class="text-l ml-2">Test User</span></a>
-                <a href="javascript:void(0)"><span class="text-xl ml-2">Log Out</span></a>
+                <a href="javascript:void(0)"><span class="user-text text-l ml-2">Test User</span></a>
+                <a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
             </div>
         </div>
     </div>
     {#	</div>#}
 
 
-    <form action="{{ url_for('slider') }}" method=post id="practices">
+    <form action="{{ url_for('slider') }}" method=post id="practices" class="practices">
         <div class="rightScreen">
             <div class="elementsMainArea">
                 <div class="sec-name flex-sm-column">
@@ -258,8 +258,24 @@
                     </div>
                     <div class="d-flex justify-content-around">
                         {#					<input type="submit" value="Reset" name="Reset">#}
-                        <button id="submit" class="btn btn-success py-3" type="submit" name="Submit">Submit</button>
+                        <button type="button" id="submit" class="btn btn-success py-3" disabled>Submit</button>
                     </div>
+                    <script>
+                        let input = document.querySelector(".practices");
+                        let button = document.querySelector(".btn");
+
+                        button.disabled = true; //setting button state to disabled
+
+                        input.addEventListener("change", stateHandle);
+
+                        function stateHandle() {
+                            if (document.querySelector(".practices").value === "") {
+                                button.disabled = true; //button remains disabled
+                            } else {
+                                button.disabled = false; //button is enabled
+                            }
+                        }
+                    </script>
                 </div>
             </div>
 

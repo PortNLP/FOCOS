@@ -58,8 +58,8 @@
             </a>
             <a href="compare.html" class="nav-link active-link">
                 <div>
-                    <i class="bi bi-terminal-split"></i>
-                    <span class="link-text text-2xl ml-2">Compare</span>
+                    <i class="bi active-bi bi-terminal-split"></i>
+                    <span class="link-text active-text text-2xl ml-2">Compare</span>
                 </div>
             </a>
             <a href="javascript:void(0)" class="nav-link">
@@ -112,13 +112,29 @@
                 </div>
 
                 <div>
-                    <button id="compare" type="submit" class="btn btn-primary py-3" name="Compare" value="Compare">
+                    <button id="compare" type="submit" class="btn btn-success py-3" name="Compare" value="Compare">
                         Compare
                     </button>
                 </div>
             </div>
             {#			</div>#}
         </form>
+        <script>
+            let input = document.querySelector(".elementsMainArea");
+            let button = document.querySelector(".btn");
+
+            button.disabled = true; //setting button state to disabled
+
+            input.addEventListener("change", stateHandle);
+
+            function stateHandle() {
+                if (document.querySelector(".elementsMainArea").value === "") {
+                    button.disabled = true; //button remains disabled
+                } else {
+                    button.disabled = false; //button is enabled
+                }
+            }
+        </script>
 
         <div class="container-fluid result-area">
             <div class="sec-name pt-4 pl-4">

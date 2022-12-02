@@ -163,9 +163,20 @@ h5{
     width: 100%;;
 }
 
+.btn-primary, .btn-success {
+    background-color: #00B800 !important;
+    border-color: #00B800 !important;
+}
+
 .btn-primary {
     background-color: #007bff !important;
     border-color: #007bff !important;
+    width: 100%;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
     width: 100%;
 }
 

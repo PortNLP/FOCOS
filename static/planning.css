@@ -17,9 +17,18 @@ body {
 
 .elementsMainArea {
     min-width: 600px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+}
+
+.slider-submit-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding-bottom: 20px;
 }
 
 .slider-menu{

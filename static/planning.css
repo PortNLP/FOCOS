@@ -17,7 +17,12 @@ body {
 
 .elementsMainArea {
     min-width: 600px;
-    height: max-content;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-menu{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
@@ -79,6 +84,8 @@ body {
 }
 
 .form-group {
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     vertical-align: middle;
     background-color: rgb(237, 237, 237);
@@ -147,9 +154,13 @@ h6 {
     width: 100%;;
 }
 
-.btn-primary {
-    background-color: #007bff !important;
-    border-color: #007bff !important;
+.btn-success{
+    width: 90%;
+}
+
+.btn-primary, .btn-success {
+    background-color: #28a644 !important;
+    border-color: #28a644 !important;
 }
 
 .btn:focus, .btn:active {

@@ -20,6 +20,7 @@ Function decorator === app.route('/',planning())
 def planning():
     interventions = session.get("interventions")
     effects, principles = model.get_results(interventions)
+    effects = [int(effect) for effect in effects]
     print(list(zip(principles,effects)))
     return render_template('planning.html', effects=effects, principles=principles)
 
@@ -97,6 +98,7 @@ def compare():
     entries = model.select_all()
     strategies_to_compare = session.get("strategies_to_compare")
     effects, principles = model.get_results(None) #  get default values for effects
+
     all_effects = [effects]
     if strategies_to_compare:
         all_effects = []
@@ -106,6 +108,7 @@ def compare():
             interventions = {k:v for (k,v) in strategy.items() if k in model.intervention_dict.keys()} 
             print(interventions)
             effects, _ = model.get_results(interventions)
+            effects = [int(effect) for effect in effects]
             all_effects.append(effects)
     #print(all_effects)
     #print(strategies_to_compare)

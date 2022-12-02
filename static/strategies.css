@@ -96,7 +96,7 @@ h6 {
     width: 100%;
     /*grif has 2 rows 1 column*/
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 1.2fr;
     grid-template-areas:
     "."
     ".";

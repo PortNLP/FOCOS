@@ -1,4 +1,4 @@
-from model.fcm import run_inference
+from model.fcm import run_inference, get_connections
 import sqlite3
 from datetime import date
 DB_FILE = 'focos.db'    # file for our Database

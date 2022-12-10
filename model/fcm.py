@@ -1,6 +1,22 @@
 import pandas as pd
 import numpy as np
 
+def get_connections(practice):
+    """
+     get the connections/edges for a specific practice
+    :param principle: String
+    :return connections: Dict {practice_name : value}
+    """
+
+    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
+    df = pd.read_csv(file_name,index_col=0)
+
+    connections = df.loc[practice]
+    connections = connections.to_dict() # Dict {String : Float}
+    connections = {k:v for (k,v) in connections.items() if v > 0} # Filter out zero values
+
+    return connections
+
 def run_inference(interventions, principles):
     """
     Run FCM inference for a set of interventions (changes in practices)
@@ -9,7 +25,7 @@ def run_inference(interventions, principles):
     :return: List of Floats
     """
 
-    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # relative to app.py
+    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
     df = pd.read_csv(file_name,index_col=0)
 
     n_concepts = df.shape[0]
@@ -19,12 +35,15 @@ def run_inference(interventions, principles):
 
     # remove the edges with a weight less than a specific number (e.g. 0.1) 
     noise_threshold = 0 # use full FCM without removing noises 
-    for i in range (n_concepts):
-        for j in range (n_concepts):
-            if abs(df.iat[i,j])<=noise_threshold:
-                Adj_matrix[i,j]=0
-            else:
-                Adj_matrix[i,j]=df.iat[i,j]
+    if noise_threshold == 0:
+        Adj_matrix = df.to_numpy()
+    else:
+        for i in range (n_concepts):
+            for j in range (n_concepts):
+                if abs(df.iat[i,j])<=noise_threshold:
+                    Adj_matrix[i,j]=0
+                else:
+                    Adj_matrix[i,j]=df.iat[i,j]
 
     function_type = "tanh" # Hyperbolic tangent 
     infer_rule = "k" # Kosko

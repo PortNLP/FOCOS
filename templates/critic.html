@@ -84,50 +84,59 @@
     {#	</div>#}
 
     <div class="rightScreen">
-        <form class="elementsMainArea" name="main-form"
-              action="{{ url_for('compare_strategies') }}"
-              method=post
-              id=strategies_to_compare>
-            <div class="sec-name flex-sm-column">
-                <h1 class="text-4xl font-weight-bold ml-4 pt-4">Critique Mode</h1>
-                <hr class="divider">
-            </div>
+        <div class="sec-name flex-sm-column">
+            <h1 class="text-4xl font-weight-bold ml-4 pt-4">Critique Mode</h1>
+            <hr class="divider">
+        </div>
 
-            {#			<div class="forEachColumn">#}
-            <div class="list-group p-6">
-                <div>
+        {#			<div class="forEachColumn">#}
+        <div class="list-group p-6">
+            <div>
+                <form action="{{ url_for('critique_strategy') }}"
+                    method=post>
                     <h3 class="option-name text-2xl py-2 pl-4">Strategy Name:</h3>
                     <div class="drop-item">
                         {#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
                         <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
-                                name="strategies{{ idx }}">
+                                name=strategy_to_critique onchange="this.form.submit()">
                             <option value="none" selected disabled hidden>Choose a Strategy</option>
                             {% for entry in entries %}
                                 <option value="{{ entry.name }}">{{ entry.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
+                </form>
+                <form action="{{ url_for('critique_practice') }}"
+                    method=post>
                     <h3 class="option-name text-2xl py-2 pl-4">Select a PRACTICE to critique:</h3>
                     <div class="drop-item">
                         {#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
                         <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
-                                name="strategies{{ idx }}">
+                                name=practice_to_critique onchange="this.form.submit()">
                             <option value="none" selected disabled hidden>Choose a practice</option>
-                            {% for entry in entries %}
-                                <option value="{{ entry.name }}">{{ entry.name }}</option>
+                            {% for practice in practices %}
+                                <option value="{{ practice }}">{{ practice }}</option>
                             {% endfor %}
                         </select>
                     </div>
+                </form>
+                <div>
+                    <h3>Connections:</h3>
+                    <p>
+                        {% for connection in connections %}
+                            {{ connection.name }} : {{ connection.value }} <br />
+                        {% endfor %}
+                    </p>
                 </div>
+            </div>
 
                 <div>
                     <button id="compare" type="submit" class="btn btn-success py-3" name="Compare" value="Compare">
                         Compare
                     </button>
                 </div>
-            </div>
+        </div>
             {#			</div>#}
-        </form>
         <script>
             let input = document.querySelector(".elementsMainArea");
             let button = document.querySelector(".btn");

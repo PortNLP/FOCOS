@@ -4,8 +4,8 @@ import numpy as np
 def get_connections(practice):
     """
      get the connections/edges for a specific practice
-    :param principle: String
-    :return connections: Dict {practice_name : value}
+    :param practice: String
+    :return: Dict {practice_name : value}
     """
 
     file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
@@ -13,7 +13,7 @@ def get_connections(practice):
 
     connections = df.loc[practice]
     connections = connections.to_dict() # Dict {String : Float}
-    connections = {k:v for (k,v) in connections.items() if v > 0} # Filter out zero values
+    connections = {k:v for (k,v) in connections.items() if v != 0} # Filter out zero values
 
     return connections
 

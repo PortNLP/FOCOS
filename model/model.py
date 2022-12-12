@@ -51,6 +51,7 @@ class model():
         """
         Gets the 5 degrees to which the HRO principles change
          in response to the latest strategy. Also returns the principle names
+        :param intervention_sliders: Dict {slider_name : value}
         :return: List of Floats, List of Strings
         """
 
@@ -75,6 +76,15 @@ class model():
             effects = run_inference(interventions, fcm_principle_names)
 
         return effects, output_principle_names
+
+    def get_practice_connections(self, practice_slider_name):
+        """
+        Get the connections for a certain practice      
+        :param practice_slider_name: String
+        :return: Dict {practice_name : value}
+        """
+        practice = self.intervention_dict[practice_slider_name]
+        return get_connections(practice)
 
     def save_strategy(self, intervention_sliders, name, description):
         """

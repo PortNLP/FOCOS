@@ -103,31 +103,51 @@ def update_strategy():
 @app.route('/critic.html')
 def critic():
     entries = model.select_all()
-    strategies_to_compare = session.get("strategies_to_compare")
-    effects, principles = model.get_results(None)  # get default values for effects
 
+    strategy_to_critique = session.get("strategy_to_critique") # strategy selected for critique
+    practices_dict = {}
+    practices = []
+    if strategy_to_critique:
+        strategy = model.select_strategy(strategy_to_critique)
+        practices_dict = {k:v for (k, v) in strategy.items() if
+                            k in model.intervention_dict.keys() and v != 0}  # Filter out non-practice info and zero values
+        practices = [k for (k, v) in practices_dict.items()] # Names
+
+    practice_to_critique = session.get("practice_to_critique") # practice selected for critique
+    connections = {}
+    if practice_to_critique:
+        connections = model.get_practice_connections(practice_to_critique)
+        print(connections)
+    connections = [dict(name=k, value=v) for (k, v) in connections.items()]
+
+    strategies_to_compare = None
+    effects, principles = model.get_results(None)  # get default values for effects
     all_effects = [effects]
-    if strategies_to_compare:
-        all_effects = []
-        for name in strategies_to_compare:
-            strategy = model.select_strategy(name)
-            # Filter out non-slider input
-            interventions = {k: v for (k, v) in strategy.items() if k in model.intervention_dict.keys()}
-            print(interventions)
-            effects, _ = model.get_results(interventions)
-            effects = [int(effect) for effect in effects]
-            all_effects.append(effects)
-    # print(all_effects)
-    # print(strategies_to_compare)
+
     return render_template('critic.html', entries=entries, all_effects=all_effects,
-                           principles=principles, names=strategies_to_compare)
+                           principles=principles, names=strategies_to_compare, 
+                           practices=practices, connections=connections)
+
+@app.route('/critique_strategy', methods=['POST'])
+def critique_strategy():
+    strategy_to_critique = request.form.get("strategy_to_critique")
+    print(strategy_to_critique)
+    session["strategy_to_critique"] = strategy_to_critique
+    return redirect(url_for('critic'))
+
+@app.route('/critique_practice', methods=['POST'])
+def critique_practice():
+    practice_to_critique = request.form.get("practice_to_critique")
+    print(practice_to_critique)
+    session["practice_to_critique"] = practice_to_critique
+    return redirect(url_for('critic'))
 
 
 # route to compare.html
 @app.route('/compare.html')
 def compare():
     entries = model.select_all()
-    strategies_to_compare = session.get("strategies_to_compare")
+    strategies_to_compare = session.get("strategies_to_compare") # strategies selected for comparison
     effects, principles = model.get_results(None)  # get default values for effects
 
     all_effects = [effects]
@@ -146,11 +166,8 @@ def compare():
     return render_template('compare.html', entries=entries, all_effects=all_effects,
                            principles=principles, names=strategies_to_compare)
 
-
 @app.route('/compare_strategies', methods=['POST'])
 def compare_strategies():
-    # form_input = request.form.to_dict(flat=True)
-    # print(form_input)
     strategies_to_compare = []  # names
     for idx in range(5):
         strategy = request.form.get(f"strategies{idx}")

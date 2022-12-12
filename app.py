@@ -132,6 +132,7 @@ def critic():
 def critique_strategy():
     strategy_to_critique = request.form.get("strategy_to_critique")
     print(strategy_to_critique)
+    session["practice_to_critique"] = None
     session["strategy_to_critique"] = strategy_to_critique
     return redirect(url_for('critic'))
 

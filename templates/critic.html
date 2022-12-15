@@ -11,6 +11,7 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='critic.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -20,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script type="text/javascript" src="../js/methods.js"></script>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">
     <title>FOCOS</title>
 </head>
 
@@ -139,141 +141,146 @@
             }
         </script>
 
-            <form class="container-fluid result-area">
-                <div>
-                    <div class="sec-name pt-4 pl-4">
-                        <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                        <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+        <form class="container-fluid result-area">
+            <div>
+                <div class="sec-name pt-4 pl-4">
+                    <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                    <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+                </div>
+
+                <div class="chartCard" id="result-here">
+                    <div class="BarchartBox">
+                        <canvas id="barChart" class="py-5 px-14"></canvas>
                     </div>
 
-                    <div class="chartCard" id="result-here">
-                        <div class="BarchartBox">
-                            <canvas id="barChart" class="py-5 px-14"></canvas>
-                        </div>
-
-                        {#                <div>#}
-                        {#                    <h3>Connections:</h3>#}
-                        {#                    <p id="result-connections">#}
-                        {#                        {% for connection in connections %}#}
-                        {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
-                        {#                        {% endfor %}#}
-                        {#                    </p>#}
-                        {#                </div>#}
-                        <div class="slider-area">
-                            {% for connection in connections %}
-                                {#                            <div class="critic-slider">#}
-                                <div class="form-group">
-                                    <label class="form-label">{{ connection.name }}</label>
-                                    <div class="flex justify-content-center">
-                                        <input type="range" class="form-range" min="-1" max="1"
-                                               value="{{ connection.value }}" step="0.01" name="{{ connection.name }}"
-                                               onInput="$('#{{ connection.id_name }}').html($(this).val())">
-                                        <p><span id="{{ connection.id_name }}">{{ connection.value }}</span></p>
-                                    </div>
+                    {#                <div>#}
+                    {#                    <h3>Connections:</h3>#}
+                    {#                    <p id="result-connections">#}
+                    {#                        {% for connection in connections %}#}
+                    {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
+                    {#                        {% endfor %}#}
+                    {#                    </p>#}
+                    {#                </div>#}
+                    <div class="slider-area">
+                        {% for connection in connections %}
+                            {#                            <div class="critic-slider">#}
+                            <div class="form-group">
+                                <label class="form-label">{{ connection.name }}</label>
+                                <div class="flex justify-content-center">
+                                    <input type="range" class="form-range" min="-1" max="1"
+                                           value="{{ connection.value }}" step="0.01" name="{{ connection.name }}"
+                                           onInput="$('#{{ connection.id_name }}').html($(this).val())">
+                                    <p><span id="{{ connection.id_name }}">{{ connection.value }}</span></p>
                                 </div>
-                            {% endfor %}
-                        </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
+            </div>
+{#            <script>#}
+{#                const Slider = document.querySelector('.form-range')#}
+{#                Slider.oninput = _ => Slider.style.setProperty('--SliderColor', `hsl(${Slider.value}, 100%, 0%)`)#}
+{#            </script>#}
 
-                <div class="right-button pb-3">
-                    <button id="critique" type="submit" class="btn btn-success right-save py-3" name="save"
-                            value="Save">
-                        Save Strategy
-                    </button>
-                </div>
 
-                <script>
-                    var CHART_COLORS = [
-                        'rgb(255, 99, 132)', //red
-                        'rgb(54, 162, 235)', //blue,
-                        'rgb(75, 192, 192)', //green
-                        'rgb(255, 159, 64)', //orange
-                        'rgb(255, 205, 86)' //yellow
-                    ];
-                    // setup
-                    var principles =
-                    {{ principles|tojson }}
-                    for (let idx = 0; idx < principles.length; idx++) {
-                        principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
-                    }
+            <div class="right-button pb-3">
+                <button id="critique" type="submit" class="btn btn-success right-save py-3" name="save"
+                        value="Save">
+                    Save Strategy
+                </button>
+            </div>
 
-                    var datasets = []
-                    var labels =
-                    {{ names|tojson }}
-                    if (labels === null)
-                        labels = ""
-                    //console.log({{ names|tojson }})
-                    //console.log({{all_effects}})
-                    var all_effects =
-                    {{ all_effects }}
-                    for (let idx = 0; idx < all_effects.length; idx++) {
-                        var effects = all_effects[idx]
-                        var label = labels[idx]
-                        //console.log(label)
-                        datasets.push({
-                            label: label,
-                            data: effects,
-                            backgroundColor: CHART_COLORS[idx],
-                            borderColor: CHART_COLORS[idx],
-                            borderWidth: 1
-                        })
+            <script>
+                var CHART_COLORS = [
+                    'rgb(255, 99, 132)', //red
+                    'rgb(54, 162, 235)', //blue,
+                    'rgb(75, 192, 192)', //green
+                    'rgb(255, 159, 64)', //orange
+                    'rgb(255, 205, 86)' //yellow
+                ];
+                // setup
+                var principles =
+                {{ principles|tojson }}
+                for (let idx = 0; idx < principles.length; idx++) {
+                    principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
+                }
 
-                    }
-                    var data = {
-                        labels: principles,
-                        datasets: datasets
-                    };
+                var datasets = []
+                var labels =
+                {{ names|tojson }}
+                if (labels === null)
+                    labels = ""
+                //console.log({{ names|tojson }})
+                //console.log({{all_effects}})
+                var all_effects =
+                {{ all_effects }}
+                for (let idx = 0; idx < all_effects.length; idx++) {
+                    var effects = all_effects[idx]
+                    var label = labels[idx]
+                    //console.log(label)
+                    datasets.push({
+                        label: label,
+                        data: effects,
+                        backgroundColor: CHART_COLORS[idx],
+                        borderColor: CHART_COLORS[idx],
+                        borderWidth: 1
+                    })
 
-                    // config
-                    var config = {
-                        type: 'bar',
-                        data,
-                        plugins: [ChartDataLabels],
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            x: {
-                                max: 100,
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                datalabels: {
-                                    color: 'white',
-                                    anchor: (context) => {
-                                        const anchor = [];
-                                        if (context.dataset.data[context.dataIndex] >= 0) {
-                                            anchor.push('end');
-                                        } else {
-                                            anchor.push('start');
-                                        }
-                                        return anchor;
-                                    },
-                                    align: (context) => {
-                                        const align = [];
-                                        if (context.dataset.data[context.dataIndex] >= 0) {
-                                            align.push('start');
-                                        } else {
-                                            align.push('end');
-                                        }
-                                        return align;
-                                    },
-                                }
-                            },
-                            events: [],
-                            indexAxis: 'y',
+                }
+                var data = {
+                    labels: principles,
+                    datasets: datasets
+                };
+
+                // config
+                var config = {
+                    type: 'bar',
+                    data,
+                    plugins: [ChartDataLabels],
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        x: {
+                            max: 100,
                         },
-                    };
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            datalabels: {
+                                color: 'white',
+                                anchor: (context) => {
+                                    const anchor = [];
+                                    if (context.dataset.data[context.dataIndex] >= 0) {
+                                        anchor.push('end');
+                                    } else {
+                                        anchor.push('start');
+                                    }
+                                    return anchor;
+                                },
+                                align: (context) => {
+                                    const align = [];
+                                    if (context.dataset.data[context.dataIndex] >= 0) {
+                                        align.push('start');
+                                    } else {
+                                        align.push('end');
+                                    }
+                                    return align;
+                                },
+                            }
+                        },
+                        events: [],
+                        indexAxis: 'y',
+                    },
+                };
 
-                    // render init block
-                    var myChart = new Chart(
-                        document.getElementById('barChart'),
-                        config
-                    );
-                </script>
-            </form>
+                // render init block
+                var myChart = new Chart(
+                    document.getElementById('barChart'),
+                    config
+                );
+            </script>
+        </form>
 
     </div>
 </div>

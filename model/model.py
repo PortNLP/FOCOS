@@ -47,17 +47,18 @@ class model():
             cursor.execute(definition)
         cursor.close()
 
-    def get_results(self, intervention_sliders):
+    def get_results(self, intervention_sliders, modified_connections={}):
         """
         Gets the 5 degrees to which the HRO principles change
          in response to the latest strategy. Also returns the principle names
         :param intervention_sliders: Dict {slider_name : value}
+        :param modified_connections: Dict {practice : connections}
         :return: List of Floats, List of Strings
         """
 
         output_principle_names = []
         fcm_principle_names = []
-        for key, val in self.principle_dict.items(): #TODO: make these variables global
+        for key, val in self.principle_dict.items():
             output_principle_names.append(key)
             fcm_principle_names.append(val)
 
@@ -68,12 +69,12 @@ class model():
             interventions = {}
             for key, val in intervention_sliders.items():
                 name = self.intervention_dict[key]
-                value = float(val) * 0.01   # Convert from percent; TODO: keep rounded to two decimal places
+                value = float(val) * 0.01   # Convert from percent
                 interventions.update({name : value})
             print(interventions)
 
             # Get results for the latest strategy
-            effects = run_inference(interventions, fcm_principle_names)
+            effects = run_inference(interventions, fcm_principle_names, modified_connections)
 
         return effects, output_principle_names
 
@@ -184,5 +185,3 @@ def get_db():
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
                 for idx, value in enumerate(row))
-
-# reset select edit delete

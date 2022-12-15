@@ -8,7 +8,7 @@ from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 'import os; print(os.urandom(16))'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5) # clear session after five minutes of inactivity
 model = model()
 print("App started")
 
@@ -54,6 +54,7 @@ def about():
     return render_template('about.html')
 
 
+# add route to strategies.html
 @app.route('/strategies.html')
 def strategies():
     interventions = session.get("strategy_interventions")
@@ -109,23 +110,32 @@ def critic():
     practices = []
     if strategy_to_critique:
         strategy = model.select_strategy(strategy_to_critique)
-        practices_dict = {k:v for (k, v) in strategy.items() if
+        strategy_practices_dict = {k:v for (k, v) in strategy.items() if
                             k in model.intervention_dict.keys() and v != 0}  # Filter out non-practice info and zero values
-        practices = [k for (k, v) in practices_dict.items()] # Names
+        practices = [k for (k, v) in strategy_practices_dict.items()] # Names
 
     practice_to_critique = session.get("practice_to_critique") # practice selected for critique
     connections = {}
     if practice_to_critique:
         connections = model.get_practice_connections(practice_to_critique)
-        print(connections)
-
-    # Remove spaces from id_name but not from name
-    connections = [dict(id_name=k.replace(" ", ""), name=k, value=v) for (k, v) in connections.items()]
-    print(connections)
 
     strategies_to_compare = None
     effects, principles = model.get_results(None)  # get default values for effects
     all_effects = [effects]
+
+    practice_sliders = session.get("practice_sliders") # slider values for modified connections
+    new_practice_connections = {}
+    if practice_sliders and practice_to_critique:
+        new_practice_connections = dict(practice=model.intervention_dict[practice_to_critique], connections=practice_sliders)
+        strategies_to_compare = ["Old", "New"]
+        effects, _ = model.get_results(strategy_practices_dict)  # get old values for effects
+        all_effects = [[int(effect) for effect in effects]]
+        effects, _ = model.get_results(strategy_practices_dict, new_practice_connections)  # get new values for effects
+        all_effects.append([int(effect) for effect in effects])
+
+    # Remove spaces and slashes from id_name (for html id) but not from name
+    connections = [dict(id_name=k.replace(" ", "").replace("/", ""), name=k, value=v) for (k, v) in connections.items()]
+    print(connections)
 
     return render_template('critic.html', entries=entries, all_effects=all_effects,
                            principles=principles, names=strategies_to_compare, 
@@ -136,6 +146,7 @@ def critique_strategy():
     strategy_to_critique = request.form.get("strategy_to_critique")
     print(strategy_to_critique)
     session["practice_to_critique"] = None
+    session["practice_sliders"] = None
     session["strategy_to_critique"] = strategy_to_critique
     return redirect(url_for('critic'))
 
@@ -144,6 +155,15 @@ def critique_practice():
     practice_to_critique = request.form.get("practice_to_critique")
     print("this", practice_to_critique)
     session["practice_to_critique"] = practice_to_critique
+    return redirect(url_for('critic'))
+
+@app.route('/critique_sliders', methods=['POST'])
+def critique_sliders():
+    form_input = request.form.to_dict(flat=True)
+    practice_sliders = {k: v for (k, v) in form_input.items() if
+                            k != "Submit"}  # Filter out non-practice input if there is any
+    print(form_input)
+    session["practice_sliders"] = practice_sliders
     return redirect(url_for('critic'))
 
 
@@ -165,8 +185,6 @@ def compare():
             effects, _ = model.get_results(interventions)
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
-    # print(all_effects)
-    # print(strategies_to_compare)
     return render_template('compare.html', entries=entries, all_effects=all_effects,
                            principles=principles, names=strategies_to_compare)
 

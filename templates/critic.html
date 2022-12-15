@@ -165,10 +165,10 @@
                             <div class="form-group">
                                 <label class="form-label">{{ connection.name }}</label>
                                 <div class="flex justify-content-center">
-                                    <input type="range" class="form-range" min="-1" max="1" value="0" step="0.1"#}
+                                    <input type="range" class="form-range" min="-1" max="1" value="{{ connection.value }}" step="0.1"#}
                                            name="{{ connection.name }}"
                                            onInput="$('#{{ connection.value }}').html($(this).val())">
-                                    <p><span id="{{ connection.value }}">0</span></p>
+                                    <p><span id="{{ connection.value }}">{{ connection.value }}</span></p>
                                 </div>
                             </div>
                         {% endfor %}

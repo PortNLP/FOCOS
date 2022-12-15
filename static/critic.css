@@ -1,14 +1,16 @@
 /*.main-page{*/
 /*    max-width: 1080px;*/
 /*}*/
-
+html, body {
+  height: 100%;
+}
 
 
 .rightScreen {
     display: flex;
     padding-left: 260px;
     height: 100%;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     flex-grow: 1;
     width: 100%;
     background-color: rgb(245, 245, 245);
@@ -21,7 +23,7 @@
     /*height: max-content;*/
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     height:100%;
     background-color: #f8f8f8;
 
@@ -33,8 +35,9 @@
     flex-direction: column;
     flex-grow: 1;
     width: 100%;
-    min-height: 100vh;
-    height: 100%;
+    /*min-height: 100vh;*/
+    height: 100vh;
+    justify-content: space-between;
 }
 
 .outputText {
@@ -59,12 +62,13 @@
     align-items: center;
 }
 
-.list-group{
+.dropdown-area{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: 100%;
+    height: 100vh;
     justify-content: space-between;
+    min-width: 600px;
 }
 
 .form-select{
@@ -81,15 +85,6 @@
     font-style: italic;
 }
 
-.elementName {
-    font-size: large;
-    font-weight: bolder;
-    height: auto;
-    text-align: left;
-    vertical-align: middle;
-    margin-bottom: 10px;
-}
-
 .divider {
     /*    style="height:1.5px;width:95%;border-width:0;color:gray;background-color:gray" center position*/
     height: 1.5px;
@@ -101,10 +96,17 @@
     margin: 1.5rem auto auto;
 }
 
+.form-label{
+/*    smaller text*/
+    font-size: 0.8rem;
+    width: 100%;
+}
+
 .form-group {
     text-align: center;
     vertical-align: middle;
     background-color: rgb(237, 237, 237);
+    width: 100%;
 }
 
 .form-range {
@@ -137,7 +139,7 @@ h6 {
     grid-template-areas:
     "."
     ".";
-    height: 100%;
+    height: 40vh;
     justify-items: center;
     align-items: center;
 }
@@ -152,19 +154,40 @@ h6 {
     background: rgb(251, 251, 251);
 }
 
-.radarChartCard {
-    position: relative;
-    display: flex;
-    height: 40vh;
+.slider-area{
+
+/*    make a 3x3 grid that's 90% width and dynamically adjust height*/
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+    "slider1 slider2 slider3"
+    "slider4 slider5 slider6"
+    "slider7 slider8 slider9";
     width: 90%;
-    justify-content: space-between;
+    height: 100%;
+    justify-items: center;
+    align-items: center;
 }
 
-.radarChartBox {
-    margin: 1%;
-    border: solid 1px rgb(199, 199, 199);
-    background: rgb(251, 251, 251);
-    width: 50%;
+.critic-slider{
+    align-items: center;
+    width: 100%;
+}
+
+.left-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.right-button{
+    display: flex;
+    /*align item to right side of the div*/
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 
 .legend-info {

@@ -84,61 +84,46 @@
     {#	</div>#}
 
     <div class="rightScreen">
-        <div class="sec-name flex-sm-column">
-            <h1 class="text-4xl font-weight-bold ml-4 pt-4">Critique Mode</h1>
-            <hr class="divider">
-        </div>
-
-        {#			<div class="forEachColumn">#}
-        <div class="list-group p-6">
+        <form class="dropdown-area pt-6" action="{{ url_for('critique_practice') }}" method=post id=critique-practice>
             <div>
-                <form action="{{ url_for('critique_strategy') }}"
-                    method=post>
-                    <h3 class="option-name text-2xl py-2 pl-4">Strategy Name:</h3>
-                    <div class="drop-item">
-                        <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
-                                name=strategy_to_critique id=strategy_to_critique>
-                            <option value="none" selected disabled hidden>Choose a Strategy</option>
-                            {% for entry in entries %}
-                                <option value="{{ entry.name }}">{{ entry.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </form>
-                <form action="{{ url_for('critique_practice') }}"
-                    method=post
-                    id=critique-practice>
-                    <h3 class="option-name text-2xl py-2 pl-4">Select a PRACTICE to critique:</h3>
-                    <div class="drop-item">
-                        <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
-                                name=practice_to_critique id=practice_to_critique>
-                            <option value="none" selected disabled hidden>Choose a practice</option>
-                            {% for practice in practices %}
-                                <option value="{{ practice }}">{{ practice }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <button id="critique" type="submit" class="btn btn-success py-3" name="Critique" value="Critique">
-                            Critique
-                        </button>
-                    </div>
-                </form>
-                <div>
-                    <h3>Connections:</h3>
-                    <p id="result-connections">
-                        {% for connection in connections %}
-                            {{ connection.name }} : {{ connection.value }} <br />
+                <div class="sec-name flex-sm-column">
+                    <h1 class="text-4xl font-weight-bold ml-4 pt-4">Critique Mode</h1>
+                    <hr class="divider">
+                </div>
+                <h3 class="option-name text-2xl py-2 pl-4">Strategy Name:</h3>
+                <div class="drop-item">
+                    <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
+                            name=strategy_to_critique id=strategy_to_critique>
+                        <option value="none" selected disabled hidden>Choose a Strategy</option>
+                        {% for entry in entries %}
+                            <option value="{{ entry.name }}">{{ entry.name }}</option>
                         {% endfor %}
-                    </p>
+                    </select>
+                </div>
+                <h3 class="option-name text-2xl py-2 pl-4">Select a PRACTICE to critique:</h3>
+                <div class="drop-item">
+                    <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
+                            name=practice_to_critique id=practice_to_critique>
+                        <option value="none" selected disabled hidden>Choose a practice</option>
+                        {% for practice in practices %}
+                            <option value="{{ practice }}">{{ practice }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
+            <div class="left-button pb-3">
+                <button id="critique" type="submit" class="btn btn-success py-3" name="Critique"
+                        value="Critique">
+                    Critique
+                </button>
+            </div>
+        </form>
 
-        </div>
-            {#			</div>#}
+        {#			</div>#}
         <script>
-            let input = document.querySelector(".elementsMainArea");
+            let input = document.querySelector(".dropdown-area");
+            let dropdown = document.querySelector(".form-select");
             let button = document.querySelector(".btn");
 
             button.disabled = true; //setting button state to disabled
@@ -146,7 +131,7 @@
             input.addEventListener("change", stateHandle);
 
             function stateHandle() {
-                if (document.querySelector(".elementsMainArea").value === "") {
+                if (document.querySelector(".form-select").value === "") {
                     button.disabled = true; //button remains disabled
                 } else {
                     button.disabled = false; //button is enabled
@@ -155,30 +140,48 @@
         </script>
 
         <div class="container-fluid result-area">
-            <div class="sec-name pt-4 pl-4">
-                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
-            </div>
-
-            <div class="chartCard" id="result-here">
-                <div class="BarchartBox">
-                    <canvas id="barChart" class="p-5"></canvas>
+            <div>
+                <div class="sec-name pt-4 pl-4">
+                    <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                    <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
                 </div>
-{#                todo: dynamically populate sliders#}
-{#             <form class="critic-slider" name="main-form1"#}
-{#              action="{{ url_for('compare_strategies') }}"#}
-{#              method=post#}
-{#              id=strategies_to_compare>#}
-{#                {% for idx in range(5) %}#}
-{#                    <div class="form-group">#}
-{#                        <label class="form-label" >{{ entry.name }}</label>#}
-{#                        <div class="d-flex justify-content-center gap-5">#}
-{#                            <input type="range" class="form-range" min="-1" max="1" value="0" step="0.1"#}
-{#                                   name="strategies{{ idx }}" onInput="$('#AuthorityValue').html($(this).val())">#}
-{#                            <p><span id="AuthorityValue">0</span></p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
+
+                <div class="chartCard" id="result-here">
+                    <div class="BarchartBox">
+                        <canvas id="barChart" class="py-5 px-14"></canvas>
+                    </div>
+
+                    {#                <div>#}
+                    {#                    <h3>Connections:</h3>#}
+                    {#                    <p id="result-connections">#}
+                    {#                        {% for connection in connections %}#}
+                    {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
+                    {#                        {% endfor %}#}
+                    {#                    </p>#}
+                    {#                </div>#}
+                    <div class="slider-area">
+                        {% for connection in connections %}
+{#                            <div class="critic-slider">#}
+                            <div class="form-group">
+                                <label class="form-label">{{ connection.name }}</label>
+                                <div class="flex justify-content-center">
+                                    <input type="range" class="form-range" min="-1" max="1" value="0" step="0.1"#}
+                                           name="{{ connection.name }}"
+                                           onInput="$('#{{ connection.value }}').html($(this).val())">
+                                    <p><span id="{{ connection.value }}">0</span></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-button pb-3">
+                    <button id="critique" type="submit" class="btn btn-success right-save py-3" name="save"
+                            value="Save">
+                        Save Strategy
+                    </button>
+                </div>
 
                 <script>
                     var CHART_COLORS = [
@@ -270,44 +273,44 @@
                         config
                     );
                 </script>
-             </form>
+                </form>
+
             </div>
         </div>
-    </div>
-    <script>
-        //$(document).ready(function () {
-        $(function() {
-            $('#strategy_to_critique').change(function() {
-                var values = $("#strategy_to_critique").serialize()
-                console.log(values)
-                $.ajax({
-                    type: "POST",
-                    url: "/critique_strategy",
-                    data: values,
-                    success: function (response) {
-                        $('#critique-practice').html($('#critique-practice', response).html());
-                    }
+        <script>
+            //$(document).ready(function () {
+            $(function () {
+                $('#strategy_to_critique').change(function () {
+                    var values = $("#strategy_to_critique").serialize()
+                    console.log(values)
+                    $.ajax({
+                        type: "POST",
+                        url: "/critique_strategy",
+                        data: values,
+                        success: function (response) {
+                            $('#critique-practice').html($('#critique-practice', response).html());
+                        }
+                    });
                 });
             });
-        });
 
-        $(document).ready(function () {
-            $('#critique').click(function (e) {
-                e.preventDefault();
-                var values = $("#practice_to_critique").serialize()
-                console.log(values)
-                $.ajax({
-                    type: "POST",
-                    url: "/critique_practice",
-                    data: values,
-                    success: function (response) {
-                        $('#result-connections').html($('#result-connections', response).html());
-                    }
+            $(document).ready(function () {
+                $('#critique').click(function (e) {
+                    e.preventDefault();
+                    var values = $("#practice_to_critique").serialize()
+                    console.log(values)
+                    $.ajax({
+                        type: "POST",
+                        url: "/critique_practice",
+                        data: values,
+                        success: function (response) {
+                            $('#result-connections').html($('#result-connections', response).html());
+                        }
+                    });
                 });
             });
-        });
-    </script>
-</div>
+        </script>
+    </div>
 
 
 </body>

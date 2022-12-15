@@ -139,7 +139,7 @@ def critique_strategy():
 @app.route('/critique_practice', methods=['POST'])
 def critique_practice():
     practice_to_critique = request.form.get("practice_to_critique")
-    print(practice_to_critique)
+    print("this", practice_to_critique)
     session["practice_to_critique"] = practice_to_critique
     return redirect(url_for('critic'))
 

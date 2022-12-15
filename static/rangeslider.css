@@ -1,0 +1,42 @@
+.slidecontainer {
+    transform: translateY(-10px);
+    text-align: center;
+}
+
+.form-range {
+    --SliderColor: hsl(120, 100%, 36%);
+    -webkit-appearance: none;
+    width: 70%;
+    margin: 12px 10px;
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: rgb(200, 200, 200);
+    /*background-color: var(--SliderColor);*/
+}
+
+/* --------------------------- webkit browsers */
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
+    background-color: var(--SliderColor);
+    overflow: visible;
+    cursor: pointer;
+}
+
+/* -------------------------- Firefox */
+.form-range::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
+    background-color: var(--SliderColor);
+    overflow: visible;
+    cursor: pointer;
+}
+
+.form-range::-moz-focus-outer {
+    border: 0;
+}

@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">
 	<title>Title</title>
+
 </head>
 <body>
 <h1>About me</h1>
 <p>This is a portfolio site about anything that can be put in a portfolio.</p>
+
+<div class="slidecontainer">
+  <input type="range" min="0" max="100" value="50" class="slider" name="rangeInput">
+</div>
+<script>
+const Slider = document.querySelector('input[name=rangeInput]')
+Slider.oninput =_=> Slider.style.setProperty('--SliderColor', `hsl(${Slider.value}, 100%, 50%)`)
+</script>
 </body>
 </html>

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='critic.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script type="text/javascript" src="../js/methods.js"></script>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">
+    <title>FOCOS</title>
+</head>
+
+<body>
+
+<div class="main-page px-0 flex flex-no-wrap">
+    {#	<div class="navbar p-0">#}
+    <div class="navbar">
+        <div class="text-black w-full font-black text-3xl py-10">
+            FOCOS
+        </div>
+        <ul class="menu-list">
+            <a href="javascript:void(0)" class="nav-link">
+                <div>
+                    <i class="bi bi-arrow-down-right-circle-fill"></i>
+                    <span class="link-text text-2xl ml-2">Start</span>
+                </div>
+            </a>
+            <a href="javascript:void(0)" class="nav-link">
+                <div>
+                    <i class="bi bi-x-circle-fill"></i>
+                    <span class="link-text text-2xl ml-2">Explore</span>
+                </div>
+            </a>
+            <a href="planning.html" class="nav-link">
+                <div>
+                    <i class="bi bi-vector-pen"></i>
+                    <span class="link-text text-2xl ml-2">Plan</span>
+                </div>
+            </a>
+            <a href="strategies.html" class="nav-link">
+                <div>
+                    <i class="bi bi-ui-checks-grid"></i>
+                    <span class="link-text text-2xl ml-2">Strategies</span>
+                </div>
+            </a>
+            <a href="compare.html" class="nav-link">
+                <div>
+                    <i class="bi bi-terminal-split"></i>
+                    <span class="link-text text-2xl ml-2">Compare</span>
+                </div>
+            </a>
+            <a href="critic.html" class="nav-link active-link">
+                <div>
+                    <i class="bi active-bi bi-toggles2"></i>
+                    <span class="link-text active-text text-2xl ml-2">Critique</span>
+                </div>
+            </a>
+        </ul>
+
+
+        <div class="menu-bottom mt-auto w-full">
+            <div>
+                <hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
+            </div>
+            <div class="user-info pb-12 pt-8">
+                <a href="javascript:void(0)"><span class="text-l ml-2">Test User</span></a>
+                <a href="javascript:void(0)"><span class="text-xl ml-2">Log Out</span></a>
+            </div>
+        </div>
+    </div>
+    {#	</div>#}
+
+    <div class="rightScreen">
+        <form class="dropdown-area pt-6">
+            <div>
+                <div class="sec-name flex-sm-column">
+                    <h1 class="text-4xl font-weight-bold ml-4 pt-4">Critique Mode</h1>
+                    <hr class="divider">
+                </div>
+                <h3 class="option-name text-2xl py-2 pl-4">Strategy Name:</h3>
+                <div class="drop-item">
+                    <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
+                            name=strategy_to_critique id=strategy_to_critique>
+                        <option value="none" selected disabled hidden>Choose a Strategy</option>
+                        {% for entry in entries %}
+                            <option value="{{ entry.name }}">{{ entry.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <h3 class="option-name text-2xl py-2 pl-4">Select a PRACTICE to critique:</h3>
+                <div class="drop-item" id=critique-practice>
+                    <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
+                            name=practice_to_critique id=practice_to_critique>
+                        <option value="none" selected disabled hidden>Choose a practice</option>
+                        {% for practice in practices %}
+                            <option value="{{ practice }}">{{ practice }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="left-button pb-3">
+                <button id="critique" type="submit" class="btn btn-success py-3" name="Critique"
+                        value="Critique">
+                    Critique
+                </button>
+            </div>
+        </form>
+
+        {#			</div>#}
+        <script>
+            let input = document.querySelector(".dropdown-area");
+            let dropdown = document.querySelector(".form-select");
+            let button = document.querySelector(".btn");
+
+            button.disabled = true; //setting button state to disabled
+
+            input.addEventListener("change", stateHandle);
+
+            function stateHandle() {
+                if (document.querySelector(".form-select").value === "") {
+                    button.disabled = true; //button remains disabled
+                } else {
+                    button.disabled = false; //button is enabled
+                }
+            }
+        </script>
+
+        <form class="container-fluid result-area" id="sliders">
+            <div>
+                <div class="sec-name pt-4 pl-4">
+                    <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                    <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+                </div>
+
+                <div class="chartCard" id="result-connections">
+                    <div class="BarchartBox" id="result-chart">
+                        <canvas id="barChart" class="py-5 px-14"></canvas>
+
+                        <script>
+                            var CHART_COLORS = [
+                                'rgb(255, 205, 86)', //yellow
+                                'rgb(54, 162, 235)', //blue
+                                'rgb(75, 192, 192)', //green
+                                'rgb(255, 159, 64)' //orange
+                            ];
+                            // setup
+                            var principles =
+                            {{ principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
+                            }
+
+                            var datasets = []
+                            var labels =
+                            {{ names|tojson }}
+                            if (labels === null)
+                                labels = ""
+                            //console.log({{ names|tojson }})
+                            //console.log({{all_effects}})
+                            var all_effects =
+                            {{ all_effects }}
+                            for (let idx = 0; idx < all_effects.length; idx++) {
+                                var effects = all_effects[idx]
+                                var label = labels[idx]
+                                //console.log(label)
+                                datasets.push({
+                                    label: label,
+                                    data: effects,
+                                    backgroundColor: CHART_COLORS[idx],
+                                    borderColor: CHART_COLORS[idx],
+                                    borderWidth: 1
+                                })
+
+                            }
+                            var data = {
+                                labels: principles,
+                                datasets: datasets
+                            };
+
+                            // config
+                            var config = {
+                                type: 'bar',
+                                data,
+                                plugins: [ChartDataLabels],
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    x: {
+                                        max: 100,
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: true
+                                        },
+                                        datalabels: {
+                                            color: 'white',
+                                            anchor: (context) => {
+                                                const anchor = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    anchor.push('end');
+                                                } else {
+                                                    anchor.push('start');
+                                                }
+                                                return anchor;
+                                            },
+                                            align: (context) => {
+                                                const align = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    align.push('start');
+                                                } else {
+                                                    align.push('end');
+                                                }
+                                                return align;
+                                            },
+                                        }
+                                    },
+                                    events: [],
+                                    indexAxis: 'y',
+                                },
+                            };
+
+                            // render init block
+                            var myChart = new Chart(
+                                document.getElementById('barChart'),
+                                config
+                            );
+                        </script>
+                    </div>
+
+                    {#                <div>#}
+                    {#                    <h3>Connections:</h3>#}
+                    {#                    <p id="result-connections">#}
+                    {#                        {% for connection in connections %}#}
+                    {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
+                    {#                        {% endfor %}#}
+                    {#                    </p>#}
+                    {#                </div>#}
+                    <div class="slider-area"">
+                        {% for connection in connections %}
+                            {#                            <div class="critic-slider">#}
+                            <div class="form-group">
+                                <label class="form-label">{{ connection.name }}</label>
+                                <div class="flex justify-content-center">
+                                    <input type="range" class="form-range" min="-1" max="1"
+                                           value="{{ connection.value }}" step="0.01" name="{{ connection.name }}"
+                                           onInput="$('#{{ connection.id_name }}').html($(this).val())">
+                                    <p><span id="{{ connection.id_name }}">{{ connection.value }}</span></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+{#            <script>#}
+{#                const Slider = document.querySelector('.form-range')#}
+{#                Slider.oninput = _ => Slider.style.setProperty('--SliderColor', `hsl(${Slider.value}, 100%, 0%)`)#}
+{#            </script>#}
+
+
+            <div class="right-button pb-3">
+                <button id="submit" type="submit" class="btn btn-success right-save py-3" name="Submit"
+                        value="Submit">
+                    Submit
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<script>
+    //$(document).ready(function () {
+    $(function () {
+        $('#strategy_to_critique').change(function () {
+            var values = $("#strategy_to_critique").serialize()
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/critique_strategy",
+                data: values,
+                success: function (response) {
+                    $('#critique-practice').html($('#critique-practice', response).html());
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $('#critique').click(function (e) {
+            e.preventDefault();
+            var values = $("#practice_to_critique").serialize()
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/critique_practice",
+                data: values,
+                success: function (response) {
+                    $('#result-connections').html($('#result-connections', response).html());
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#submit').click(function (e) {
+            e.preventDefault();
+            var values = $("#sliders").serialize()
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/critique_sliders",
+                data: values,
+                success: function (response) {
+                    $('#result-chart').html($('#result-chart', response).html());
+                }
+            });
+        });
+    });
+</script>
+</div>
+
+
+</body>
+
+</html>

@@ -139,38 +139,40 @@
             }
         </script>
 
-        <div class="container-fluid result-area">
-            <div>
-                <div class="sec-name pt-4 pl-4">
-                    <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                    <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
-                </div>
-
-                <div class="chartCard" id="result-here">
-                    <div class="BarchartBox">
-                        <canvas id="barChart" class="py-5 px-14"></canvas>
+            <form class="container-fluid result-area">
+                <div>
+                    <div class="sec-name pt-4 pl-4">
+                        <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
+                        <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
                     </div>
 
-                    {#                <div>#}
-                    {#                    <h3>Connections:</h3>#}
-                    {#                    <p id="result-connections">#}
-                    {#                        {% for connection in connections %}#}
-                    {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
-                    {#                        {% endfor %}#}
-                    {#                    </p>#}
-                    {#                </div>#}
-                    <div class="slider-area">
-                        {% for connection in connections %}
-{#                            <div class="critic-slider">#}
-                            <div class="form-group">
-                                <label class="form-label">{{ connection.name }}</label>
-                                <div class="flex justify-content-center">
-                                    <input type="range" class="form-range" min="-1" max="1" value="{{ connection.value }}" step="0.1"#} onInput="$('#{{ connection.name|join("Value") }}').html($(this).val())">
-                                    <span id="{{ connection.name|join("Value") }}">{{ connection.value }}</span>
+                    <div class="chartCard" id="result-here">
+                        <div class="BarchartBox">
+                            <canvas id="barChart" class="py-5 px-14"></canvas>
+                        </div>
 
+                        {#                <div>#}
+                        {#                    <h3>Connections:</h3>#}
+                        {#                    <p id="result-connections">#}
+                        {#                        {% for connection in connections %}#}
+                        {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
+                        {#                        {% endfor %}#}
+                        {#                    </p>#}
+                        {#                </div>#}
+                        <div class="slider-area">
+                            {% for connection in connections %}
+                                {#                            <div class="critic-slider">#}
+                                {% set testing = connection.name %}
+                                <div class="form-group">
+                                    <label class="form-label">{{ connection.name }}</label>
+                                    <div class="flex justify-content-center">
+                                        <input type="range" class="form-range" min="-1" max="1"
+                                               value="{{ connection.value }}" step="0.01"#} name="{{ connection.name }}"
+                                               onInput="$('#{{ testing }}').html($(this).val())">
+                                        <p><span id="{{ testing }}">{{ connection.value }}</span></p>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -272,44 +274,44 @@
                         config
                     );
                 </script>
-                </form>
+            </form>
 
-            </div>
-        </div>
-        <script>
-            //$(document).ready(function () {
-            $(function () {
-                $('#strategy_to_critique').change(function () {
-                    var values = $("#strategy_to_critique").serialize()
-                    console.log(values)
-                    $.ajax({
-                        type: "POST",
-                        url: "/critique_strategy",
-                        data: values,
-                        success: function (response) {
-                            $('#critique-practice').html($('#critique-practice', response).html());
-                        }
-                    });
-                });
-            });
-
-            $(document).ready(function () {
-                $('#critique').click(function (e) {
-                    e.preventDefault();
-                    var values = $("#practice_to_critique").serialize()
-                    console.log(values)
-                    $.ajax({
-                        type: "POST",
-                        url: "/critique_practice",
-                        data: values,
-                        success: function (response) {
-                            $('#result-connections').html($('#result-connections', response).html());
-                        }
-                    });
-                });
-            });
-        </script>
     </div>
+</div>
+<script>
+    //$(document).ready(function () {
+    $(function () {
+        $('#strategy_to_critique').change(function () {
+            var values = $("#strategy_to_critique").serialize()
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/critique_strategy",
+                data: values,
+                success: function (response) {
+                    $('#critique-practice').html($('#critique-practice', response).html());
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#critique').click(function (e) {
+            e.preventDefault();
+            var values = $("#practice_to_critique").serialize()
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/critique_practice",
+                data: values,
+                success: function (response) {
+                    $('#result-connections').html($('#result-connections', response).html());
+                }
+            });
+        });
+    });
+</script>
+</div>
 
 
 </body>

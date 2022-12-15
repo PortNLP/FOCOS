@@ -118,7 +118,10 @@ def critic():
     if practice_to_critique:
         connections = model.get_practice_connections(practice_to_critique)
         print(connections)
-    connections = [dict(name=k, value=v) for (k, v) in connections.items()]
+
+    # Remove spaces from id_name but not from name
+    connections = [dict(id_name=k.replace(" ", ""), name=k, value=v) for (k, v) in connections.items()]
+    print(connections)
 
     strategies_to_compare = None
     effects, principles = model.get_results(None)  # get default values for effects

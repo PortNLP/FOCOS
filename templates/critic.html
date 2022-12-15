@@ -162,14 +162,13 @@
                         <div class="slider-area">
                             {% for connection in connections %}
                                 {#                            <div class="critic-slider">#}
-                                {% set testing = connection.name %}
                                 <div class="form-group">
                                     <label class="form-label">{{ connection.name }}</label>
                                     <div class="flex justify-content-center">
                                         <input type="range" class="form-range" min="-1" max="1"
                                                value="{{ connection.value }}" step="0.01"#} name="{{ connection.name }}"
-                                               onInput="$('#{{ testing }}').html($(this).val())">
-                                        <p><span id="{{ testing }}">{{ connection.value }}</span></p>
+                                               onInput="$('#{{ connection.name|join("Value") }}').html($(this).val())">
+                                        <p><span id="{{ connection.name|join("Value") }}">{{ connection.value }}</span></p>
                                     </div>
                                 </div>
                             {% endfor %}

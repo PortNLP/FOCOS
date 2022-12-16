@@ -17,6 +17,7 @@ body {
 .elementsMainArea {
     min-width: 600px;
     height: 100%;
+    max-width: 860px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;

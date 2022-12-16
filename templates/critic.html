@@ -108,7 +108,7 @@
                             name=practice_to_critique id=practice_to_critique>
                         <option value="none" selected disabled hidden>Choose a practice</option>
                         {% for practice in practices %}
-                            <option value="{{ practice }}">{{ practice }}</option>
+                            <option value="{{ practice.key_name }}">{{ practice.full_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -243,14 +243,6 @@
                         </script>
                     </div>
 
-                    {#                <div>#}
-                    {#                    <h3>Connections:</h3>#}
-                    {#                    <p id="result-connections">#}
-                    {#                        {% for connection in connections %}#}
-                    {#                            {{ connection.name }} : {{ connection.value }} <br/>#}
-                    {#                        {% endfor %}#}
-                    {#                    </p>#}
-                    {#                </div>#}
                     <div class="slider-area">
                         {% for connection in connections %}
                             {#                            <div class="critic-slider">#}
@@ -285,7 +277,6 @@
     </div>
 </div>
 <script>
-    //$(document).ready(function () {
     $(function () {
         $('#strategy_to_critique').change(function () {
             var values = $("#strategy_to_critique").serialize()
@@ -317,7 +308,7 @@
         });
     });
 
-    $(document).ready(function () {
+    $(function () {
         $('#submit').click(function (e) {
             e.preventDefault();
             var values = $("#sliders").serialize()

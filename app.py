@@ -12,10 +12,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5) # clear session 
 model = model()
 print("App started")
 
-"""
-Function decorator === app.route('/',planning())
-"""
-
 
 @app.route('/')
 @app.route('/planning.html')
@@ -25,7 +21,6 @@ def planning():
     effects = [int(effect) for effect in effects]
     print(list(zip(principles, effects)))
     return render_template('planning.html', effects=effects, principles=principles)
-
 
 @app.route('/slider', methods=['POST'])
 def slider():
@@ -71,7 +66,6 @@ def strategies():
 @app.route('/select_strategy', methods=['POST'])
 def select_strategy():
     name = request.form.get("name")
-    print(name)
     strategy = model.select_strategy(name)
     intervention_sliders = {k: v for (k, v) in strategy.items() if
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
@@ -106,13 +100,12 @@ def critic():
     entries = model.select_all()
 
     strategy_to_critique = session.get("strategy_to_critique") # strategy selected for critique
-    practices_dict = {}
     practices = []
     if strategy_to_critique:
         strategy = model.select_strategy(strategy_to_critique)
         strategy_practices_dict = {k:v for (k, v) in strategy.items() if
                             k in model.intervention_dict.keys() and v != 0}  # Filter out non-practice info and zero values
-        practices = [k for (k, v) in strategy_practices_dict.items()] # Names
+        practices = [dict(key_name=k, full_name=model.intervention_dict[k]) for (k, v) in strategy_practices_dict.items()] # Names
 
     practice_to_critique = session.get("practice_to_critique") # practice selected for critique
     connections = {}
@@ -135,7 +128,6 @@ def critic():
 
     # Remove spaces and slashes from id_name (for html id) but not from name
     connections = [dict(id_name=k.replace(" ", "").replace("/", ""), name=k, value=v) for (k, v) in connections.items()]
-    print(connections)
 
     return render_template('critic.html', entries=entries, all_effects=all_effects,
                            principles=principles, names=strategies_to_compare, 
@@ -162,7 +154,6 @@ def critique_sliders():
     form_input = request.form.to_dict(flat=True)
     practice_sliders = {k: v for (k, v) in form_input.items() if
                             k != "Submit"}  # Filter out non-practice input if there is any
-    print(form_input)
     session["practice_sliders"] = practice_sliders
     return redirect(url_for('critic'))
 
@@ -200,7 +191,6 @@ def compare_strategies():
     print(strategies_to_compare)
     session["strategies_to_compare"] = strategies_to_compare
     return redirect(url_for('compare'))
-
 
 @app.route('/compare_reset', methods=['POST'])
 def compare_reset():

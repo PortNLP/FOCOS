@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='roundRangeSlider.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='strategies.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -24,9 +23,9 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>
+{#    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>#}
 
-    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>#}
     <title>FOCOS</title>
 </head>
 
@@ -35,46 +34,46 @@
 <div class="container-fluid px-0 flex flex-no-wrap">
     {#	<div class="navbar p-0">#}
     <div class="navbar">
-        <div class="text-black w-full font-black text-3xl py-10">
+        <div class="text-black w-full font-black text-white text-5xl py-10">
             FOCOS
         </div>
         <ul class="menu-list">
-            <a href="javascript:void(0)" class="nav-link">
-                <div>
-                    <i class="bi bi-arrow-down-right-circle-fill"></i>
-                    <span class="link-text text-2xl ml-2">Start</span>
-                </div>
-            </a>
-            <a href="javascript:void(0)" class="nav-link">
+{#            <a href="javascript:void(0)" class="nav-link">#}
+{#                <div>#}
+{#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
+{#                    <span class="link-text text-2xl ml-2">Start</span>#}
+{#                </div>#}
+{#            </a>#}
+            <a href="javascript:void(0)" class="nav-link1">
                 <div>
                     <i class="bi bi-x-circle-fill"></i>
                     <span class="link-text text-2xl ml-2">Explore</span>
                 </div>
             </a>
-            <a href="planning.html" class="nav-link">
+            <a href="planning.html" class="nav-link1">
                 <div>
                     <i class="bi bi-vector-pen"></i>
                     <span class="link-text text-2xl ml-2">Plan</span>
                 </div>
             </a>
-            <a href="strategies.html" class="nav-link active-link">
+            <a href="strategies.html" class="nav-link1 active-link">
                 <div>
                     <i class="bi active-bi bi-ui-checks-grid"></i>
-                    <span class="link-text active-text text-2xl ml-2">Strategies</span>
+                    <span class="link-text active-text text-2xl ml-2">Manage</span>
                 </div>
             </a>
-            <a href="compare.html" class="nav-link">
+            <a href="compare.html" class="nav-link1">
                 <div>
                     <i class="bi bi-terminal-split"></i>
                     <span class="link-text text-2xl ml-2">Compare</span>
                 </div>
             </a>
-            <a href="critic.html" class="nav-link">
-                <div>
-                    <i class="bi bi-toggles2"></i>
-                    <span class="link-text text-2xl ml-2">Critique</span>
-                </div>
-            </a>
+{#            <a href="critic.html" class="nav-link">#}
+{#                <div>#}
+{#                    <i class="bi bi-toggles2"></i>#}
+{#                    <span class="link-text text-2xl ml-2">Critique</span>#}
+{#                </div>#}
+{#            </a>#}
         </ul>
 
 
@@ -235,20 +234,6 @@
                     document.getElementById('radarChart'),
                     config1
                 );
-            </script>
-            <script>
-                $("#slider1").roundSlider({
-                    sliderType: "min-range",
-                    handleShape: "round",
-                    width: "5",
-                    radius: "20",
-                    value: 0,
-                    handleSize: "+1",
-                    min: "-100",
-                    max: "100",
-                    editableTooltip: false,
-                    sliderType: "min-range"
-                });
             </script>
         </div>
     </div>

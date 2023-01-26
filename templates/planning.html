@@ -1,541 +1,639 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='planning.css') }}">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='planning.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	        crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-	        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	        crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-	        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	        crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-	        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	        crossorigin="anonymous"></script>
-	<script type="text/javascript" src="../js/methods.js"></script>
-	{#    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">#}
-	<title>FOCOS</title>
+{#    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
+{#            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
+{#            crossorigin="anonymous"></script>#}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script type="text/javascript" src="../js/methods.js"></script>
+    {#    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">#}
+    <title>FOCOS</title>
 </head>
 
 <body>
 <div class="container-fluid px-0 flex flex-no-wrap">
-	{#	<div class="navbar p-0">#}
-	<div class="navbar">
-		<div class="text-black w-full font-black text-3xl py-10">
-			FOCOS
-		</div>
-		<ul class="menu-list">
-			<a href="javascript:void(0)" class="nav-link">
-				<div>
-					<i class="bi bi-arrow-down-right-circle-fill"></i>
-					<span class="link-text text-2xl ml-2">Start</span>
-				</div>
-			</a>
-			<a href="javascript:void(0)" class="nav-link">
-				<div>
-					<i class="bi bi-x-circle-fill"></i>
-					<span class="link-text text-2xl ml-2">Explore</span>
-				</div>
-			</a>
-			<a href="planning.html" class="nav-link active-link">
-				<div>
-					<i class="bi active-bi bi-vector-pen"></i>
-					<span class="link-text active-text text-2xl ml-2">Plan</span>
-				</div>
-			</a>
-			<a href="strategies.html" class="nav-link">
-				<div>
-					<i class="bi bi-ui-checks-grid"></i>
-					<span class="link-text text-2xl ml-2">Strategies</span>
-				</div>
-			</a>
-			<a href="compare.html" class="nav-link">
-				<div>
-					<i class="bi bi-terminal-split"></i>
-					<span class="link-text text-2xl ml-2">Compare</span>
-				</div>
-			</a>
-			<a href="critic.html" class="nav-link">
-				<div>
-					<i class="bi bi-toggles2"></i>
-					<span class="link-text text-2xl ml-2">Critique</span>
-				</div>
-			</a>
-		</ul>
+    {#	<div class="navbar p-0">#}
+    <div class="navbar">
+        <div class="text-black w-full font-black text-white text-5xl py-10">
+            FOCOS
+        </div>
+        <ul class="menu-list">
+            {#            <a href="javascript:void(0)" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Start</span>#}
+            {#                </div>#}
+            {#            </a>#}
+            <a href="javascript:void(0)" class="nav-link1">
+                <div>
+                    <i class="bi bi-x-circle-fill"></i>
+                    <span class="link-text text-2xl ml-2">Explore</span>
+                </div>
+            </a>
+            <a href="planning.html" class="nav-link1 active-link">
+                <div>
+                    <i class="bi active-bi bi-vector-pen"></i>
+                    <span class="link-text active-text text-2xl ml-2">Plan</span>
+                </div>
+            </a>
+            <a href="strategies.html" class="nav-link1">
+                <div>
+                    <i class="bi bi-ui-checks-grid"></i>
+                    <span class="link-text text-2xl ml-2">Manage</span>
+                </div>
+            </a>
+            <a href="compare.html" class="nav-link1">
+                <div>
+                    <i class="bi bi-terminal-split"></i>
+                    <span class="link-text text-2xl ml-2">Compare</span>
+                </div>
+            </a>
+            {#            <a href="critic.html" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-toggles2"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Critique</span>#}
+            {#                </div>#}
+            {#            </a>#}
+        </ul>
 
 
-		<div class="menu-bottom mt-auto w-full">
-			<div>
-				<hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
-			</div>
-			<div class="user-info pb-12 pt-8">
-				<a href="javascript:void(0)"><span class="user-text text-l ml-2">Test User</span></a>
-				<a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
-			</div>
-		</div>
-	</div>
-	{#	</div>#}
+        <div class="menu-bottom mt-auto w-full">
+            <div>
+                <hr class="ml-0 mr-0 mb-2 p-0" style="height:1px;color:white;background-color:white">
+            </div>
+            <div class="user-info pb-12 pt-8">
+                <a href="javascript:void(0)"><span class="user-text text-l ml-2">Test User</span></a>
+                <a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
+            </div>
+        </div>
+    </div>
+    {#	</div>#}
 
 
-	<form action="{{ url_for('slider') }}" method=post id="practices" class="practices">
-		<div class="rightScreen">
-			<div class="elementsMainArea">
-				<div class="sec-name flex-sm-column">
-					<h1 class="text-4xl font-weight-bold ml-4 pt-4">Safety Practices</h1>
-					<hr class="divider">
-				</div>
-
-				<div class="slider-submit-group">
-					<div class="slider-menu">
-						<div class="forEachColumn">
-							<div class="elementName">
-								<i>Reframing Work Design</i>
-							</div>
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Authority" class="form-label">Stop-Work Authority</label>
-									<i class="btn bi bi-three-dots-vertical" tabindex="0" data-toggle="popover" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"></i>
-								</div>
-{#								<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus"#}
-{#								   title="Dismissible popover"#}
-{#								   data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>#}
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AuthoritySlider"
-									       id="Authority" onInput="$('#AuthorityValue').html($(this).val() + '%')">
-									<p><span id="AuthorityValue">0%</span></p>
-								</div>
-							</div>
+    <form action="{{ url_for('slider') }}" method=post id="practices" class="practices">
+        <div class="rightScreen">
+            <div class="elementsMainArea">
+                <div class="sec-name flex-sm-column">
+                    <h1 class="text-4xl font-weight-bold ml-4 pt-10">PRACTICES</h1>
+                    <hr class="divider">
+                </div>
 
 
-							<div class="form-group">
-								<label for="Ambivalence" class="form-label">Emotional Ambivalence</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AmbivalenceSlider"
-									       id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val() + '%')">
-									<p><span id="AmbivalenceValue">0%</span></p>
-								</div>
-							</div>
+                <div class="slider-submit-group">
+                    <div class="slider-menu">
+                        <div class="forEachColumn">
+                            <div class="elementName">
+                                <i>PROCESSES</i>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Authority" class="form-label">Stop-Work Authority</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-							<div class="form-group">
-								<label for="Drift" class="form-label">Managing Reliability Drift</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DriftSlider"
-									       id="Drift" onInput="$('#DriftValue').html($(this).val() + '%')">
-									<p><span id="DriftValue">0%</span></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="forEachColumn">
-							<div class="elementName">
-								<i>Reframing Work Training</i>
-							</div>
-
-							<div class="form-group">
-								<label for="Drills" class="form-label">Emergency Drills</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DrillsSlider"
-									       id="Drills" onInput="$('#DrillsValue').html($(this).val() + '%')">
-									<p><span id="DrillsValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Exercise" class="form-label">Tabletop Exercises</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="ExerciseSlider"
-									       id="Exercise" onInput="$('#ExerciseValue').html($(this).val() + '%')">
-									<p><span id="ExerciseValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Learning" class="form-label">Just-In-Time-Learning</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="LearningSlider"
-									       id="Learning" onInput="$('#LearningValue').html($(this).val() + '%')">
-									<p><span id="LearningValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="Debriefings" class="form-label">Post-Event Debriefings</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DebriefingsSlider"
-									       id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val() + '%')">
-									<p><span id="DebriefingsValue">0%</span></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="forEachColumn">
-							<div class="elementName">
-								<i>Reframing Relating Colleagues Peers</i>
-							</div>
-
-							<div class="form-group">
-								<label for="Motivation" class="form-label">Institutionalizing Prosocial
-									Motivation</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="MotivationSlider"
-									       id="Motivation" onInput="$('#MotivationValue').html($(this).val() + '%')">
-									<p><span id="MotivationValue">0%</span></p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="Respect" class="form-label">Fostering Social Ties and Mutual Respect</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="RespectSlider"
-									       id="Respect" onInput="$('#RespectValue').html($(this).val() + '%')">
-									<p><span id="RespectValue">0%</span></p>
-								</div>
-							</div>
-						</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AuthoritySlider"
+                                           id="Authority" onInput="$('#AuthorityValue').html($(this).val() + '%')">
+                                    <p><span id="AuthorityValue">0%</span></p>
+                                </div>
+                            </div>
 
 
-						<div class="forEachColumn">
-							<div class="elementName">
-								<i>Reframing How the Work Should Be Done</i>
-							</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Ambivalence" class="form-label">Doubts and hope</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-							<div class="form-group">
-								<label for="Mindfulness" class="form-label">Practicing Mindfulness</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="MindfulnessSlider"
-									       id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val() + '%')">
-									<p><span id="MindfulnessValue">0%</span></p>
-								</div>
-							</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AmbivalenceSlider"
+                                           id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val() + '%')">
+                                    <p><span id="AmbivalenceValue">0%</span></p>
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label for="Accountability" class="form-label">Fostering Sense of Accountability</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AccountabilitySlider"
-									       id="Accountability" onInput="$('#AccountabilityValue').html($(this).val() + '%')">
-									<p><span id="AccountabilityValue">0%</span></p>
-								</div>
-							</div>
-						</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Drift" class="form-label">Reliability Drifts</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DriftSlider"
+                                           id="Drift" onInput="$('#DriftValue').html($(this).val() + '%')">
+                                    <p><span id="DriftValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
-						<div class="forEachColumn">
-							<div class="elementName">
-								<i>Reframing Work Communication</i>
-							</div>
+                        <div class="forEachColumn">
+                            <div class="elementName">
+                                <i>TRAINING</i>
+                            </div>
 
-							<div class="form-group">
-								<label for="Huddle" class="form-label">Implementing Safety Huddles</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="HuddleSlider"
-									       id="Huddle" onInput="$('#HuddleValue').html($(this).val() + '%')">
-									<p><span id="HuddleValue">0%</span></p>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Drills" class="form-label">Emergency Drills</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-							<div class="form-group">
-								<label for="Incidents" class="form-label">Reporting Near-Misses/Incidents</label>
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="IncidentsSlider"
-									       id="Incidents" onInput="$('#IncidentsValue').html($(this).val() + '%')">
-									<p><span id="IncidentsValue">0%</span></p>
-								</div>
-							</div>
-						</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DrillsSlider"
+                                           id="Drills" onInput="$('#DrillsValue').html($(this).val() + '%')">
+                                    <p><span id="DrillsValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Exercise" class="form-label">Tabletop Exercises</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="ExerciseSlider"
+                                           id="Exercise" onInput="$('#ExerciseValue').html($(this).val() + '%')">
+                                    <p><span id="ExerciseValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Learning" class="form-label">Just-In-Time-Learning</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-					</div>
-					<div class="d-flex justify-content-around">
-						{#					<input type="submit" value="Reset" name="Reset">#}
-						<button type="button" id="submit" class="btn btn-success py-3" disabled>Submit</button>
-					</div>
-					<script>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="LearningSlider"
+                                           id="Learning" onInput="$('#LearningValue').html($(this).val() + '%')">
+                                    <p><span id="LearningValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Debriefings" class="form-label">Post-Event Debriefing</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-              $(function () {
-                  $('[data-toggle="popover"]').popover()
-              })
-              $('.popover-dismiss').popover({
-                  trigger: 'focus'
-              })
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DebriefingsSlider"
+                                           id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val() + '%')">
+                                    <p><span id="DebriefingsValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="forEachColumn">
+                            <div class="elementName">
+                                <i>COMMUNICATION</i>
+                            </div>
 
-              let input = document.querySelector(".practices");
-              let button = document.querySelector(".btn");
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Huddle" class="form-label">Safety Huddles</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-              button.disabled = true; //setting button state to disabled
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="HuddleSlider"
+                                           id="Huddle" onInput="$('#HuddleValue').html($(this).val() + '%')">
+                                    <p><span id="HuddleValue">0%</span></p>
+                                </div>
+                            </div>
 
-              input.addEventListener("change", stateHandle);
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Incidents" class="form-label">Near-Misses Reported</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-              function stateHandle() {
-                  if (document.querySelector(".practices").value === "") {
-                      button.disabled = true; //button remains disabled
-                  } else {
-                      button.disabled = false; //button is enabled
-                  }
-              }
-					</script>
-				</div>
-			</div>
-
-
-			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-			<div class="container-fluid result-area">
-				<div class="sec-name pt-4 pl-4">
-					<h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-					<h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
-				</div>
-
-				<div class="chartCard" id="result-here">
-					<div class="BarchartBox">
-						<canvas id="barChart" class="p-5"></canvas>
-					</div>
-
-
-					<div class="radarChartCard">
-						<div class="radarChartBox">
-							<canvas id="radarChart" class="p-5"></canvas>
-						</div>
-
-						<div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
-							<h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
-							                               placeholder="Strategy/test one">
-							<h6>Description:</h6> <textarea rows="3" cols="5" name="Description" spellcheck="true"
-							                                class="boxInput"
-							                                placeholder="Enter a description here..."></textarea>
-							{#							display save button and reset button on the same line#}
-							<div class="result-form d-flex justify-content-between gap-5">
-								<button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
-								        name="SaveStrategy"
-								        data-button-state="save">Save Strategy
-								</button>
-								<button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
-									Reset
-								</button>
-							</div>
-
-							{% with messages = get_flashed_messages() %}
-								{% if messages %}
-									{% for message in messages %}
-										{{ message }}
-									{% endfor %}
-								{% endif %}
-							{% endwith %}
-
-						</div>
-					</div>
-
-					<script>
-              {#import {Chart} from 'chart.js';#}
-              {#import ChartDataLabels from 'chartjs-plugin-datalabels';#}
-              {#Chart.register(ChartDataLabels);#}
-              // setup
-              var principles =
-              {{ principles|tojson }}
-              for (let idx = 0; idx < principles.length; idx++) {
-                  principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
-              }
-              var data = {
-                  labels: principles,
-                  datasets: [{
-                      label: 'Change of Intervention',
-                      data: {{ effects|tojson }},
-                      backgroundColor: [
-                          'rgba(255, 26, 104, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(0, 0, 0, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255, 26, 104, 1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(0, 0, 0, 1)'
-                      ],
-                      borderWidth: 1
-                  }]
-              };
-
-              // config
-              var config = {
-                  type: 'bar',
-                  data,
-                  plugins: [ChartDataLabels],
-                  options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      x: {
-                          max: 100,
-                      },
-                      plugins: {
-                          legend: {
-                              display: false
-                          },
-                          datalabels: {
-                              color: 'black',
-                              anchor: (context) => {
-                                  const anchor = [];
-                                  if (context.dataset.data[context.dataIndex] >= 0) {
-                                      anchor.push('end');
-                                  } else {
-                                      anchor.push('start');
-                                  }
-                                  return anchor;
-                              },
-                              align: (context) => {
-                                  const align = [];
-                                  if (context.dataset.data[context.dataIndex] >= 0) {
-                                      align.push('start');
-                                  } else {
-                                      align.push('end');
-                                  }
-                                  return align;
-                              },
-                          }
-                      },
-                      events: [],
-                      indexAxis: 'y',
-                  },
-              };
-
-              // render init block
-              var myChart = new Chart(
-                  document.getElementById('barChart'),
-                  config
-              );
-					</script>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="IncidentsSlider"
+                                           id="Incidents" onInput="$('#IncidentsValue').html($(this).val() + '%')">
+                                    <p><span id="IncidentsValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
 
-					<script>
-              var principles =
-              {{ principles|tojson }}
-              for (let idx = 0; idx < principles.length; idx++) {
-                  principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
-              }
-              var data1 = {
-                  labels: principles,
-                  datasets: [{
-                      label: 'My First Dataset',
-                      data: {{ effects|tojson }},
-                      fill: false,
-                      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                      borderColor: 'rgb(255, 99, 132)',
-                      pointBackgroundColor: 'rgb(255, 99, 132)',
-                      pointBorderColor: '#fff',
-                      pointHoverBackgroundColor: '#fff',
-                      pointHoverBorderColor: 'rgb(255, 99, 132)'
-                  }]
-              };
+                        <div class="forEachColumn">
+                            <div class="elementName">
+                                <i>ATTITUDES</i>
+                            </div>
 
-              var config1 = {
-                  type: 'radar',
-                  data: data1,
-                  options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                          r: {
-                              pointLabels: {
-                                  display: true // don't hide the labels around the radar chart
-                              }
-                          }
-                      },
-                      scale: {
-                          min: -100,
-                          max: 100,
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Mindfulness" class="form-label">Mindfulness</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
 
-                      },
-                      plugins: {
-                          legend: {
-                              display: false
-                          },
-                      },
-                      events: [],
-                      elements: {
-                          line: {
-                              borderWidth: 3
-                          }
-                      }
-                  },
-              };
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="MindfulnessSlider"
+                                           id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val() + '%')">
+                                    <p><span id="MindfulnessValue">0%</span></p>
+                                </div>
+                            </div>
 
-              // render init block
-              var myChart1 = new Chart(
-                  document.getElementById('radarChart'),
-                  config1
-              );
-					</script>
-				</div>
-			</div>
-		</div>
-	</form>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Accountability" class="form-label">Accountability</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AccountabilitySlider"
+                                           id="Accountability"
+                                           onInput="$('#AccountabilityValue').html($(this).val() + '%')">
+                                    <p><span id="AccountabilityValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="forEachColumn">
+                            <div class="elementName">
+                                <i>RELATIONSHIPS BETWEEN EMPLOYEES</i>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Motivation" class="form-label">Cultures of Caring</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="MotivationSlider"
+                                           id="Motivation" onInput="$('#MotivationValue').html($(this).val() + '%')">
+                                    <p><span id="MotivationValue">0%</span></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Respect" class="form-label">Social Ties and Respect</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="And here's some amazing content. It's very engaging. Right?"></a>
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="RespectSlider"
+                                           id="Respect" onInput="$('#RespectValue').html($(this).val() + '%')">
+                                    <p><span id="RespectValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
 
-	<script>
-      /*
-        $(document).ready(function () {
-            $('#save').click(function (e) {
-                alert("Successfully saved strategy");
-            });
-        });
-      */
-	</script>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        {#                        <button type="submit" class="btn btn-primary">CREATE STRATEGY</button>#}
+                        <button type="submit" id="submit" class="btn btn-success py-3" disabled>CREATE STRATEGY</button>
+                    </div>
+
+                    <script>
+
+                        let input = document.querySelector(".practices");
+                        let button = document.querySelector(".btn");
+
+                        button.disabled = true; //setting button state to disabled
+
+                        input.addEventListener("change", stateHandle);
+
+                        function stateHandle() {
+                            if (document.querySelector(".practices").value === "") {
+                                button.disabled = true; //button remains disabled
+                            } else {
+                                button.disabled = false; //button is enabled
+                            }
+                        }
+                    </script>
+
+                </div>
+            </div>
 
 
-	<script>
-      //stop refreshing page when click "submit" and only refresh div with id "result"
+            <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+            <div class="container-fluid result-area">
+                <div class="sec-name flex-sm-column">
+                    {#                    <h1 class="text-4xl font-weight-bold ml-4 pt-4">Output</h1>#}
+                    <ul class="nav nav-tabs ml-4 pt-4" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="output-tab" data-toggle="tab" href="#output" role="tab"
+                               aria-controls="output" aria-selected="true">OUTPUT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                               aria-controls="info" aria-selected="false">INFO</a>
+                        </li>
+                    </ul>
+                    <hr class="divider1">
+                </div>
+                {#                <div class="sec-name pt-4 pl-4">#}
+                {#                    <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>#}
+                {#                </div>#}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="output" role="tabpanel" aria-labelledby="output-tab">
+                        <div class="chartCard" id="result-here">
+                            <div class="BarchartBox">
+                                <canvas id="barChart" class="p-5"></canvas>
+                            </div>
+
+
+                            <div class="radarChartCard">
+                                <div class="radarChartBox">
+                                    <canvas id="radarChart" class="p-5"></canvas>
+                                </div>
+
+                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
+                                    <h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
+                                                                   placeholder="Strategy/test one">
+                                    <h6>Description:</h6> <textarea rows="3" cols="5" name="Description"
+                                                                    spellcheck="true"
+                                                                    class="boxInput"
+                                                                    placeholder="Enter a description here..."></textarea>
+                                    {#							display save button and reset button on the same line#}
+                                    <div class="result-form d-flex justify-content-between gap-5">
+                                        <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
+                                                name="SaveStrategy"
+                                                data-button-state="save">Save Strategy
+                                        </button>
+                                        <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
+                                                name="Reset">
+                                            Reset
+                                        </button>
+                                    </div>
+
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                {{ message }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">...</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+</script>
+
+
+<script>
+    /*
       $(document).ready(function () {
-          $('#submit').click(function (e) {
-              //jQuery('#practices').submit(function (e) {
-              e.preventDefault();
-              values = $("#practices").serialize()
-              values += "&Submit=Submit";
-              console.log(values)
-              $.ajax({
-                  type: "POST",
-                  url: "/slider",
-                  data: values,
-                  success: function (response) {
-                      //var result = $('<div />').append(response).find('#result-here').html();
-                      $('#result-here').html($('#result-here', response).html());
-                      console.log({{ effects|tojson }})	//These aren't changed
-                  }
-              });
+          $('#save').click(function (e) {
+              alert("Successfully saved strategy");
           });
       });
-	</script>
-</div>
+    */
+</script>
+
+<script>
+    //stop refreshing page when click "submit" and only refresh div with id "result"
+    $(document).ready(function () {
+        $('#submit').click(function (e) {
+            //jQuery('#practices').submit(function (e) {
+            {#e.preventDefault();#}
+            var values = $("#practices").serialize()
+            values += "&Submit=Submit";
+            console.log(values)
+            $.ajax({
+                type: "POST",
+                url: "/slider",
+                data: values,
+                success: function (response) {
+                    //var result = $('<div />').append(response).find('#result-here').html();
+                    $('#output').html($('#output', response).html());
+                    console.log({{ effects|tojson }})	//These aren't changed
+                }
+            });
+        });
+    });
+
+</script>
+
+<script>
+    {#import {Chart} from 'chart.js';#}
+    {#import ChartDataLabels from 'chartjs-plugin-datalabels';#}
+    {#Chart.register(ChartDataLabels);#}
+    // setup
+    var principles = {{ principles|tojson }}
+    for (let idx = 0; idx < principles.length; idx++) {
+        {#principles[idx] = "P" + (idx + 1).toString()#}
+        principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
+    }
+    var data = {
+        labels: principles,
+        datasets: [{
+            label: 'Change of Intervention',
+            data: {{ effects|tojson }},
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // config
+    var config = {
+        type: 'bar',
+        data,
+        plugins: [ChartDataLabels],
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            x: {
+                max: 100,
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    color: 'black',
+                    anchor: (context) => {
+                        const anchor = [];
+                        if (context.dataset.data[context.dataIndex] >= 0) {
+                            anchor.push('end');
+                        } else {
+                            anchor.push('start');
+                        }
+                        return anchor;
+                    },
+                    align: (context) => {
+                        const align = [];
+                        if (context.dataset.data[context.dataIndex] >= 0) {
+                            align.push('start');
+                        } else {
+                            align.push('end');
+                        }
+                        return align;
+                    },
+                }
+            },
+            events: [],
+            indexAxis: 'y',
+        },
+    };
+
+    // render init block
+    var myChart = new Chart(
+        document.getElementById('barChart'),
+        config
+    );
+</script>
+<script>
+    var principles =
+    {{ principles|tojson }}
+    for (let idx = 0; idx < principles.length; idx++) {
+        principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
+    }
+    var data1 = {
+        labels: principles,
+        datasets: [{
+            label: 'My First Dataset',
+            data: {{ effects|tojson }},
+            fill: false,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    var config1 = {
+        type: 'radar',
+        data: data1,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    pointLabels: {
+                        display: true // don't hide the labels around the radar chart
+                    }
+                }
+            },
+            scale: {
+                min: -100,
+                max: 100,
+
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+            },
+            events: [],
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
+        },
+    };
+
+    // render init block
+    var myChart1 = new Chart(
+        document.getElementById('radarChart'),
+        config1
+    );
+</script>
+
+
+{#<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
+{#        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
+{#        crossorigin="anonymous"></script>#}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

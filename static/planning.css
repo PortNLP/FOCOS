@@ -21,7 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: #f8f8f8;
+    background-color: #edeef0;
 }
 
 .slider-submit-group{
@@ -74,23 +74,38 @@ body {
 
 .divider {
     /*    style="height:1.5px;width:95%;border-width:0;color:gray;background-color:gray" center position*/
-    height: 1.5px;
-    width: 95%;
+    height: 2px;
+    width: 100%;
     border-width: 0;
-    color: gray;
-    background-color: gray;
+    color: #c5c7c9;
+    background-color: #c8cacc;
     position: center;
-    margin: 1.5rem auto auto;
+    margin: 20px auto auto;
+}
+
+.divider1 {
+    /*    style="height:1.5px;width:95%;border-width:0;color:gray;background-color:gray" center position*/
+    height: 2px;
+    width: 100%;
+    border-width: 0;
+    color: #c5c7c9;
+    background-color: #c8cacc;
+    position: center;
+    /*margin: 20px auto auto;*/
+    /*margin-bottom: 20px;*/
 }
 
 
 .result-area {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(245, 246, 248);
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     width: 90vh;
     height: 100%;
+    padding: 0 0;
+    border-left: 2px solid;
+    border-color: #c5c7c9;
 }
 
 .form-group {
@@ -98,7 +113,7 @@ body {
     padding-bottom: 10px;
     text-align: center;
     vertical-align: middle;
-    background-color: rgb(237, 237, 237);
+    background-color: rgb(245, 246, 248);
 }
 
 .slider-name-info{
@@ -176,9 +191,10 @@ h6 {
 }
 .bi-three-dots-vertical {
     align-self: flex-end;
-    width: 20% !important;
-    height: 20% !important;
+    font-size: 10px;
+
 }
+
 .btn-success{
     width: 90%;
 }

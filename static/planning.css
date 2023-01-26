@@ -57,7 +57,7 @@ body {
 }
 
 .forEachColumn {
-    gap: 15px 0;
+    /*gap: 15px 0;*/
     padding: 0 38px;
 }
 
@@ -100,6 +100,17 @@ body {
     vertical-align: middle;
     background-color: rgb(237, 237, 237);
 }
+
+.slider-name-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.form-label{
+    margin: auto;
+}
+
 
 .form-range {
     width: 70%;
@@ -163,7 +174,11 @@ h6 {
 .btn {
     width: 100%;;
 }
-
+.bi-three-dots-vertical {
+    align-self: flex-end;
+    width: 20% !important;
+    height: 20% !important;
+}
 .btn-success{
     width: 90%;
 }

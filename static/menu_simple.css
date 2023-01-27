@@ -95,6 +95,8 @@ a:active {
     border: 0;
     padding-bottom: 10px;
     padding-right: 50px;
+    padding-left: 50px;
+
 }
 
 .nav-tabs .nav-item .nav-link.active {
@@ -106,6 +108,7 @@ a:active {
     border-bottom-style: solid;
     padding-bottom: 10px;
     padding-right: 50px;
+    padding-left: 50px;
 }
 
 

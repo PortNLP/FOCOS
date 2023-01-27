@@ -39,7 +39,7 @@ body {
 
 .slider-menu{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.7fr 0.7fr;
     grid-template-rows: auto auto auto auto;
     grid-template-areas:
     "element1 element2"

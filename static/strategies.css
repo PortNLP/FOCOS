@@ -22,6 +22,30 @@ body {
     flex-direction: column;
 }
 
+.dynamic-list{
+    height: 80vh;
+}
+
+.forEachColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /*flex-grow: 1;*/
+    /*padding: 30px 0;*/
+}
+
+.btn-w-icon{
+/*    make items on same level, centered */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+/*    items in here should have some space in between*/
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+
+}
+
 .strategy-records{
     width: 40%;
 }

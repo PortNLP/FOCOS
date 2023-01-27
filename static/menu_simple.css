@@ -93,7 +93,8 @@ a:active {
     /*background-color: #0080FF;*/
     color: #212529;
     border: 0;
-    /*padding-bottom: 20px;*/
+    padding-bottom: 10px;
+    padding-right: 50px;
 }
 
 .nav-tabs .nav-item .nav-link.active {

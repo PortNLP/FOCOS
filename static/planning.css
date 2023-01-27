@@ -1,6 +1,7 @@
 body {
     height: 100%;
     box-sizing: border-box;
+    background-color: rgb(245, 246, 248);
 }
 
 .rightScreen {
@@ -24,7 +25,7 @@ body {
     background-color: #edeef0;
 }
 
-.slider-submit-group{
+.slider-submit-group {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -32,20 +33,48 @@ body {
     padding: 30px 0;
 }
 
-.btn-create{
+.btn-create {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.slider-menu{
+/*.slider-menu{*/
+/*    display: grid;*/
+/*    grid-template-columns: 0.7fr 0.7fr;*/
+/*    !*grid-template-rows: auto auto auto auto;*!*/
+/*    grid-auto-rows: min-content;*/
+/*    grid-template-areas:*/
+/*    "element1 element2"*/
+/*    "element3 element4"*/
+/*    "element5 element6";*/
+/*}*/
+
+.slider-menu {
     display: grid;
-    grid-template-columns: 0.7fr 0.7fr;
-    grid-template-rows: auto auto auto auto;
-    grid-template-areas:
-    "element1 element2"
-    "element3 element4"
-    "element5 element6"
-    "element7 element8";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.forEachColumn1 {
+    grid-area: 1 / 1 / 5 / 2;
+}
+
+.forEachColumn2 {
+    grid-area: 5 / 1 / 8 / 2;
+}
+
+.forEachColumn3 {
+    grid-area: 8 / 1 / 11 / 2;
+}
+
+.forEachColumn4 {
+    grid-area: 1 / 2 / 6 / 3;
+}
+
+.forEachColumn5 {
+    grid-area: 6 / 2 / 9 / 3;
 }
 
 
@@ -65,7 +94,6 @@ body {
     /*gap: 15px 0;*/
     padding: 0 38px;
 }
-
 
 
 .elementName {
@@ -121,13 +149,14 @@ body {
     background-color: rgb(245, 246, 248);
 }
 
-.slider-name-info{
+.slider-name-info {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
-.form-label{
+
+.form-label {
     margin: auto;
 }
 
@@ -194,17 +223,18 @@ h6 {
 .btn {
     width: 100%;;
 }
+
 .bi-three-dots-vertical {
     align-self: flex-end;
     font-size: 10px;
 
 }
 
-.btn-success{
+.btn-success {
     width: 90%;
 }
 
-.btn-success[disabled]{
+.btn-success[disabled] {
     background-color: #b7bcc4 !important;
     border-color: #b7bcc4 !important;
     color: white;
@@ -214,7 +244,6 @@ h6 {
     background-color: #00B800 !important;
     border-color: #00B800 !important;
 }
-
 
 
 .btn:focus, .btn:active {
@@ -231,20 +260,23 @@ h6 {
 }
 
 @media screen and (max-width: 1543px) {
-    .result-form{
+    .result-form {
         display: flex;
         flex-direction: column;
     }
-    .btn{
+
+    .btn {
         width: 100%;
     }
 }
+
 @media screen and (max-width: 1543px) {
-    .result-form{
+    .result-form {
         display: flex;
         flex-direction: column;
     }
-    .btn{
+
+    .btn {
         width: 100%;
     }
 }

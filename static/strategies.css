@@ -2,6 +2,7 @@ body {
     height: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    background-color: #f3f4f6;
 }
 
 .rightScreen {

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='compare.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -28,46 +28,46 @@
 <div class="main-page px-0 flex flex-no-wrap">
     {#	<div class="navbar p-0">#}
     <div class="navbar">
-        <div class="text-black w-full font-black text-3xl py-10">
+        <div class="text-black w-full font-black text-white text-5xl py-10">
             FOCOS
         </div>
         <ul class="menu-list">
-            <a href="javascript:void(0)" class="nav-link">
-                <div>
-                    <i class="bi bi-arrow-down-right-circle-fill"></i>
-                    <span class="link-text text-2xl ml-2">Start</span>
-                </div>
-            </a>
-            <a href="javascript:void(0)" class="nav-link">
+            {#            <a href="javascript:void(0)" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Start</span>#}
+            {#                </div>#}
+            {#            </a>#}
+            <a href="javascript:void(0)" class="nav-link1">
                 <div>
                     <i class="bi bi-x-circle-fill"></i>
                     <span class="link-text text-2xl ml-2">Explore</span>
                 </div>
             </a>
-            <a href="planning.html" class="nav-link">
+            <a href="planning.html" class="nav-link1">
                 <div>
                     <i class="bi bi-vector-pen"></i>
                     <span class="link-text text-2xl ml-2">Plan</span>
                 </div>
             </a>
-            <a href="strategies.html" class="nav-link">
+            <a href="strategies.html" class="nav-link1">
                 <div>
                     <i class="bi bi-ui-checks-grid"></i>
-                    <span class="link-text text-2xl ml-2">Strategies</span>
+                    <span class="link-text text-2xl ml-2">Manage</span>
                 </div>
             </a>
-            <a href="compare.html" class="nav-link active-link">
+            <a href="compare.html" class="nav-link1 active-link">
                 <div>
                     <i class="bi active-bi bi-terminal-split"></i>
                     <span class="link-text active-text text-2xl ml-2">Compare</span>
                 </div>
             </a>
-            <a href="critic.html" class="nav-link">
-                <div>
-                    <i class="bi bi-toggles2"></i>
-                    <span class="link-text text-2xl ml-2">Critique</span>
-                </div>
-            </a>
+            {#            <a href="critic.html" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-toggles2"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Critique</span>#}
+            {#                </div>#}
+            {#            </a>#}
         </ul>
 
 
@@ -89,15 +89,14 @@
               method=post
               id=strategies_to_compare>
             <div class="sec-name flex-sm-column">
-                <h1 class="text-4xl font-weight-bold ml-4 pt-4">Compare Strategies</h1>
+                <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
                 <hr class="divider">
             </div>
 
             {#			<div class="forEachColumn">#}
             <div class="list-group p-6">
                 <div>
-                    <h3 class="text-2xl font-weight-bold py-2">Select strategies to compare:</h3>
-                    {% for idx in range(5) %}
+                    {% for idx in range(3) %}
                         <div class="drop-item">
                             {#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
                             <select class="form-select py-3 my-3 " style="max-width:90%; aria-label:form-select example"
@@ -112,8 +111,8 @@
                 </div>
 
                 <div>
-                    <button id="compare" type="submit" class="btn btn-success py-3" name="Compare" value="Compare">
-                        Compare
+                    <button id="compare" type="submit" class="btn btn-success btn-compare py-2" name="Compare" value="Compare">
+                        COMPARE
                     </button>
                 </div>
             </div>
@@ -137,200 +136,215 @@
         </script>
 
         <div class="container-fluid result-area">
-            <div class="sec-name pt-4 pl-4">
-                <h1 class="outputText text-3xl font-weight-bold mt-4">Output / Results</h1>
-                <h2 class="text-l mt-2 mb-4">Model V1.01.2. Type: Base. Access 08.25.21</h2>
+            <div class="sec-name flex-sm-column">
+                <ul class="nav nav-tabs ml-4 pt-3" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="output-tab" data-toggle="tab" href="#output" role="tab"
+                           aria-controls="output" aria-selected="true">OUTPUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                           aria-controls="info" aria-selected="false">INFO</a>
+                    </li>
+                </ul>
+                <hr class="divider1">
             </div>
 
-            <div class="chartCard" id="result-here">
-                <div class="BarchartBox">
-                    <canvas id="barChart" class="py-4 px-24"></canvas>
-                </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="output" role="tabpanel" aria-labelledby="output-tab">
+                    <div class="chartCard" id="result-here">
+                        <div class="BarchartBox">
+                            <canvas id="barChart" class="py-4 px-24"></canvas>
+                        </div>
 
 
-                <div class="radarChartCard">
-                    <div class="radarChartBox">
-                        <canvas id="radarChart" class="p-5"></canvas>
-                    </div>
+                        <div class="radarChartCard">
+                            <div class="radarChartBox">
+                                <canvas id="radarChart" class="p-5"></canvas>
+                            </div>
 
-                    <form class="saveForm d-flex flex-column justify-content-around pt-6 pb-10"
-                          action="{{ url_for('compare_reset') }}" method=post>
-                        <button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
-                            Reset
-                        </button>
-                    </form>
-                </div>
+                            <form class="saveForm d-flex flex-column justify-content-around pt-6 pb-10"
+                                  action="{{ url_for('compare_reset') }}" method=post>
+                                <button id="reset" type="submit" class="btn btn-secondary" value="Reset" name="Reset">
+                                    Reset
+                                </button>
+                            </form>
+                        </div>
 
-                <script>
-                    var CHART_COLORS = [
-                        'rgb(255, 99, 132)', //red
-                        'rgb(54, 162, 235)', //blue,
-                        'rgb(75, 192, 192)', //green
-                        'rgb(255, 159, 64)', //orange
-                        'rgb(255, 205, 86)' //yellow
-                    ];
-                    // setup
-                    var principles =
-                    {{ principles|tojson }}
-                    for (let idx = 0; idx < principles.length; idx++) {
-                        principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
-                    }
-
-                    var datasets = []
-                    var labels =
-                    {{ names|tojson }}
-                    if (labels === null)
-                        labels = ""
-                    //console.log({{ names|tojson }})
-                    //console.log({{all_effects}})
-                    var all_effects =
-                    {{ all_effects }}
-                    for (let idx = 0; idx < all_effects.length; idx++) {
-                        var effects = all_effects[idx]
-                        var label = labels[idx]
-                        //console.log(label)
-                        datasets.push({
-                            label: label,
-                            data: effects,
-                            backgroundColor: CHART_COLORS[idx],
-                            borderColor: CHART_COLORS[idx],
-                            borderWidth: 1
-                        })
-
-                    }
-                    var data = {
-                        labels: principles,
-                        datasets: datasets
-                    };
-
-                    // config
-                    var config = {
-                        type: 'bar',
-                        data,
-                        plugins: [ChartDataLabels],
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            x: {
-                                max: 100,
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                datalabels: {
-                                    color: 'white',
-                                    anchor: (context) => {
-                                        const anchor = [];
-                                        if (context.dataset.data[context.dataIndex] >= 0) {
-                                            anchor.push('end');
-                                        } else {
-                                            anchor.push('start');
-                                        }
-                                        return anchor;
-                                    },
-                                    align: (context) => {
-                                        const align = [];
-                                        if (context.dataset.data[context.dataIndex] >= 0) {
-                                            align.push('start');
-                                        } else {
-                                            align.push('end');
-                                        }
-                                        return align;
-                                    },
-                                }
-                            },
-                            events: [],
-                            indexAxis: 'y',
-                        },
-                    };
-
-                    // render init block
-                    var myChart = new Chart(
-                        document.getElementById('barChart'),
-                        config
-                    );
-                </script>
-
-
-                <script>
-                    var principles =
-                    {{ principles|tojson }}
-                    for (let idx = 0; idx < principles.length; idx++) {
-                        principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
-                    }
-
-                    var datasets1 = []
-                    var labels =
-                    {{ names|tojson }}
-                    if (labels === null)
-                        labels = ""
-                    //console.log({{ names|tojson }})
-                    //console.log({{all_effects}})
-                    var all_effects =
-                    {{ all_effects }}
-                    for (let idx = 0; idx < all_effects.length; idx++) {
-                        var effects = all_effects[idx]
-                        var label = labels[idx]
-                        //console.log(label)
-                        datasets1.push({
-                            label: label,
-                            data: effects,
-                            fill: false,
-                            backgroundColor: CHART_COLORS[idx],
-                            borderColor: CHART_COLORS[idx],
-                            backgroundColor: CHART_COLORS[idx],
-                            borderColor: CHART_COLORS[idx],
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(255, 99, 132)'
-                        })
-
-                    }
-                    var data1 = {
-                        labels: principles,
-                        datasets: datasets1
-                    };
-
-                    var config1 = {
-                        type: 'radar',
-                        data: data1,
-                        options: {
-                            {#responsive: true,#}
-                            maintainAspectRatio: false,
-                            scales: {
-                                r: {
-                                    pointLabels: {
-                                        display: true // don't hide the labels around the radar chart
-                                    }
-                                }
-                            },
-                            scale: {
-                                min: -100,
-                                max: 100,
-
-                            },
-                            plugins: {
-                                legend: {
-                                    display: true
-                                },
-                            },
-                            events: [],
-                            elements: {
-                                line: {
-                                    borderWidth: 3
-                                }
+                        <script>
+                            var CHART_COLORS = [
+                                'rgb(255, 99, 132)', //red
+                                'rgb(54, 162, 235)', //blue,
+                                'rgb(75, 192, 192)', //green
+                                'rgb(255, 159, 64)', //orange
+                                'rgb(255, 205, 86)' //yellow
+                            ];
+                            // setup
+                            var principles =
+                            {{ principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
                             }
-                        },
-                    };
 
-                    // render init block
-                    var myChart1 = new Chart(
-                        document.getElementById('radarChart'),
-                        config1
-                    );
-                </script>
+                            var datasets = []
+                            var labels =
+                            {{ names|tojson }}
+                            if (labels === null)
+                                labels = ""
+                            //console.log({{ names|tojson }})
+                            //console.log({{all_effects}})
+                            var all_effects =
+                            {{ all_effects }}
+                            for (let idx = 0; idx < all_effects.length; idx++) {
+                                var effects = all_effects[idx]
+                                var label = labels[idx]
+                                //console.log(label)
+                                datasets.push({
+                                    label: label,
+                                    data: effects,
+                                    backgroundColor: CHART_COLORS[idx],
+                                    borderColor: CHART_COLORS[idx],
+                                    borderWidth: 1
+                                })
 
+                            }
+                            var data = {
+                                labels: principles,
+                                datasets: datasets
+                            };
+
+                            // config
+                            var config = {
+                                type: 'bar',
+                                data,
+                                plugins: [ChartDataLabels],
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    x: {
+                                        max: 100,
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        datalabels: {
+                                            color: 'white',
+                                            anchor: (context) => {
+                                                const anchor = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    anchor.push('end');
+                                                } else {
+                                                    anchor.push('start');
+                                                }
+                                                return anchor;
+                                            },
+                                            align: (context) => {
+                                                const align = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    align.push('start');
+                                                } else {
+                                                    align.push('end');
+                                                }
+                                                return align;
+                                            },
+                                        }
+                                    },
+                                    events: [],
+                                    indexAxis: 'y',
+                                },
+                            };
+
+                            // render init block
+                            var myChart = new Chart(
+                                document.getElementById('barChart'),
+                                config
+                            );
+                        </script>
+
+
+                        <script>
+                            var principles =
+                            {{ principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
+                            }
+
+                            var datasets1 = []
+                            var labels =
+                            {{ names|tojson }}
+                            if (labels === null)
+                                labels = ""
+                            //console.log({{ names|tojson }})
+                            //console.log({{all_effects}})
+                            var all_effects =
+                            {{ all_effects }}
+                            for (let idx = 0; idx < all_effects.length; idx++) {
+                                var effects = all_effects[idx]
+                                var label = labels[idx]
+                                //console.log(label)
+                                datasets1.push({
+                                    label: label,
+                                    data: effects,
+                                    fill: false,
+                                    backgroundColor: CHART_COLORS[idx],
+                                    borderColor: CHART_COLORS[idx],
+                                    backgroundColor: CHART_COLORS[idx],
+                                    borderColor: CHART_COLORS[idx],
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                                })
+
+                            }
+                            var data1 = {
+                                labels: principles,
+                                datasets: datasets1
+                            };
+
+                            var config1 = {
+                                type: 'radar',
+                                data: data1,
+                                options: {
+                                    {#responsive: true,#}
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        r: {
+                                            pointLabels: {
+                                                display: true // don't hide the labels around the radar chart
+                                            }
+                                        }
+                                    },
+                                    scale: {
+                                        min: -100,
+                                        max: 100,
+
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: true
+                                        },
+                                    },
+                                    events: [],
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    }
+                                },
+                            };
+
+                            // render init block
+                            var myChart1 = new Chart(
+                                document.getElementById('radarChart'),
+                                config1
+                            );
+                        </script>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">...</div>
             </div>
+
         </div>
     </div>
     <script>
@@ -357,7 +371,13 @@
     </script>
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

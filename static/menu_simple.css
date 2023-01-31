@@ -66,28 +66,11 @@ a:active {
 }
 
 .nav-link {
-    font-size: 41px;
+    font-size: 45px;
     color: #212529;
     font-weight: bold;
-    padding: 0 40px 0 30px;
-    /*margin-bottom: -7px;*/
-    /*   put underline under text*/
+
 }
-
-/*.nav-link:active, .nav-link:focus{*/
-/*    text-decoration: underline;*/
-/*    text-decoration-color: #00b700; !important;*/
-/*    text-decoration-thickness: 4px;*/
-/*    text-underline-offset: 15px;*/
-/*}*/
-
-/*.nav-item :hover{*/
-/*    color: #00b700;*/
-/*}*/
-
-/*.nav-item :active, .nav-item :focus{*/
-/*    color: #00b700; !important;*/
-/*}*/
 
 .nav-tabs .nav-item .nav-link {
     /*background-color: #0080FF;*/

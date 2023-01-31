@@ -3,7 +3,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Bootstrap CSS -->
@@ -383,46 +383,46 @@
                 </div>
 
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active chartCard" id="result-here" role="tabpanel">
-                        <div class="BarchartBox">
-                            <canvas id="barChart" class="p-5"></canvas>
-                        </div>
-
-
+                    <div class="tab-pane fade show active chartCard pl-16" id="result-here" role="tabpanel">
                         <div class="radarChartCard">
-                            <div class="radarChartBox">
-                                <canvas id="radarChart" class="p-5"></canvas>
-                            </div>
-
-                            <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">
-                                <h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
-                                                               placeholder="Strategy/test one">
-                                <h6>Description:</h6> <textarea rows="3" cols="5" name="Description"
-                                                                spellcheck="true"
-                                                                class="boxInput"
-                                                                placeholder="Enter a description here..."></textarea>
-                                {#							display save button and reset button on the same line#}
-                                <div class="result-form d-flex justify-content-between gap-5">
-                                    <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
-                                            name="SaveStrategy"
-                                            data-button-state="save">Save Strategy
-                                    </button>
-                                    <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
-                                            name="Reset">
-                                        Reset
-                                    </button>
+                            <div class="graph-labels">
+                                <div class="result-item pt-4">
+                                    <h5 class="result-text" style="font-weight: bold">HRO PRINCIPLES</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 26, 104, 0.2)"></i>
+                                    <h5 class="result-text">P1: Deference to Expertise</h5>
                                 </div>
 
-                                {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-                                        {% for message in messages %}
-                                            {{ message }}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endwith %}
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(54, 162, 235, 0.2)"></i>
+                                    <h5 class="result-text">P2: Commitment to Resilience</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 206, 86, 0.2)"></i>
+                                    <h5 class="result-text">P3: Sensitivity to Operations</h5>
 
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(75, 192, 192, 0.2)"></i>
+                                    <h5 class="result-text">P4: Reluctance to Simplify</h5>
+
+                                </div>
+                                <div class="result-item  pt-4 pb-2">
+                                    <i class="bi bi-square-fill" style="color: rgba(153, 102, 255, 0.2)"></i>
+                                    <h5 class="result-text">P5: Preoccupation With Failure</h5>
+                                </div>
+                            </div>
+
+                            <div class="radarChartBox">
+                                <canvas id="radarChart" class="p-2"></canvas>
                             </div>
                         </div>
+                        <div class="BarchartBox">
+                            <canvas id="barChart" class="p-1"></canvas>
+                        </div>
+
+
                         <script>
                             {#import {Chart} from 'chart.js';#}
                             {#import ChartDataLabels from 'chartjs-plugin-datalabels';#}
@@ -431,7 +431,7 @@
                             var principles =
                             {{ principles|tojson }}
                             for (let idx = 0; idx < principles.length; idx++) {
-                                principles[idx] = "P" + (idx + 1).toString() + ": " + principles[idx]
+                                principles[idx] = "P" + (idx + 1).toString()
                             }
                             var data = {
                                 labels: principles,
@@ -464,6 +464,23 @@
                                 data,
                                 plugins: [ChartDataLabels],
                                 options: {
+                                    {#change x label text size to bigger#}
+                                    scales: {
+                                        x: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        },
+                                        y: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        }
+                                    },
                                     responsive: true,
                                     maintainAspectRatio: false,
                                     x: {
@@ -531,10 +548,21 @@
                                 type: 'radar',
                                 data: data1,
                                 options: {
+                                    {#change label size to bigger#}
+                                    scales: {
+                                        r: {
+                                            pointLabels: {
+                                                font: {
+                                                    size: 20
+                                                }
+                                            }
+                                        }
+                                    },
                                     responsive: true,
                                     maintainAspectRatio: false,
                                     scales: {
                                         r: {
+                                            //display points labels information on the left side of the chart
                                             pointLabels: {
                                                 display: true // don't hide the labels around the radar chart
                                             }
@@ -547,7 +575,7 @@
                                     },
                                     plugins: {
                                         legend: {
-                                            display: false
+                                            display: false,
                                         },
                                     },
                                     events: [],
@@ -569,6 +597,89 @@
 
                     </div>
                     <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">...</div>
+                </div>
+
+
+                <!-- Modal -->
+                <!-- Button trigger modal -->
+                <div class="save-info-area pt-2 pr-4">
+                    <div class="save-message">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    </div>
+
+                    <div class="result-form gap-5">
+                        <button type="button" class="btn btn-primary btn-create py-2" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            Save
+                        </button>
+
+                        <button id="reset" type="submit" class="btn btn-secondary btn-create py-2" value="Reset"
+                                name="Reset">
+                            RESET
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Save Model</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body d-flex flex-column justify-content-around">
+                                {#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
+                                <h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
+                                                               placeholder="Strategy/test one">
+                                <h6>Description:</h6> <textarea rows="3" cols="5" name="Description"
+                                                                spellcheck="true"
+                                                                class="boxInput"
+                                                                placeholder="Enter a description here..."></textarea>
+                                {#                                    display save button and reset button on the same line#}
+                                {#                                    <div class="result-form d-flex justify-content-between gap-5">#}
+                                {#                                        <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"#}
+                                {#                                                name="SaveStrategy"#}
+                                {#                                                data-button-state="save">Save Strategy#}
+                                {#                                        </button>#}
+                                {#                                        <button id="reset" type="submit" class="btn btn-secondary" value="Reset"#}
+                                {#                                                name="Reset">#}
+                                {#                                            Reset#}
+                                {#                                        </button>#}
+                                {#                                    </div>#}
+                                {##}
+                                {#                                    {% with messages = get_flashed_messages() %}#}
+                                {#                                        {% if messages %}#}
+                                {#                                            {% for message in messages %}#}
+                                {#                                                {{ message }}#}
+                                {#                                            {% endfor %}#}
+                                {#                                        {% endif %}#}
+                                {#                                    {% endwith %}#}
+
+                                {#                                </div>#}
+                            </div>
+                            <div class="modal-footer">
+                                <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
+                                        name="SaveStrategy"
+                                        data-button-state="save">Save Strategy
+                                </button>
+                                <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
+                                        name="Reset">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

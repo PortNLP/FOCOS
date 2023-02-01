@@ -172,9 +172,9 @@ h6 {
     font-weight: bolder;
 }
 
-.tab-content{
-    min-height: 80vh;
-}
+/*.tab-content{*/
+/*    min-height: 80vh;*/
+/*}*/
 
 .info-tab{
     display: flex;
@@ -184,7 +184,7 @@ h6 {
     width: 80%;
     margin: auto;
     gap: 20px;
-    min-height: 80vh;
+    /*min-height: 80vh;*/
 }
 
 

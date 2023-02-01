@@ -363,6 +363,7 @@
 					<script>
               function showDiv() {
                   document.getElementById('result-here').style.display = "";
+                  document.getElementById('result-form').style.display = "";
               }
 					</script>
 
@@ -657,7 +658,7 @@
 						{% endwith %}
 					</div>
 
-					<div class="result-form gap-5">
+					<div class="result-form gap-5" id="result-form" style="display:none;">
 						<button type="button" class="btn btn-primary btn-create py-2" data-toggle="modal"
 						        data-target="#exampleModalCenter">
 							Save

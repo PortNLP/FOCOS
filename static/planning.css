@@ -172,6 +172,10 @@ h6 {
     font-weight: bolder;
 }
 
+.tab-content{
+    min-height: 85vh;
+}
+
 
 .chartCard {
     display: grid;

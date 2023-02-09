@@ -375,7 +375,8 @@
 
                 <!-- Modal -->
                 <!-- Button trigger modal -->
-                <div class="save-info-area pt-2 pr-4">
+{#            <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>#}
+                <form class="save-info-area pt-2 pr-4" action="{{ url_for('update_strategy') }}" method=post>
                     <div class="save-message">
                         {% with messages = get_flashed_messages() %}
                             {% if messages %}
@@ -397,7 +398,7 @@
                             DELETE
                         </button>
                     </div>
-                </div>
+                </form>
 
 
                 <!-- Modal -->
@@ -426,7 +427,7 @@
                                             name="EditStrategy"
                                             data-button-state="Edit">Save Edit
                                     </button>
-                                    <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
+                                    <button id="reset1" type="submit" class="btn btn-secondary" value="Reset"
                                             name="Reset">
                                         Cancel
                                     </button>

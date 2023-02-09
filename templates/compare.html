@@ -98,7 +98,7 @@
                 {#			<div class="forEachColumn">#}
                 <div class="list-group p-6">
                     <div>
-                        {% for idx in range(3) %}
+                        {% for idx in range(entries|length) %}
                             <div class="drop-item">
                                 {#						<label for="strategies{{ idx }}">Option {{ idx }}: </label>#}
                                 <select class="form-select py-3 my-3 "

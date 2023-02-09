@@ -3,29 +3,21 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='strategies.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-
-    {#    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet"/>#}
-
-    {#    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>#}
+    {#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>FOCOS</title>
 </head>
 
@@ -44,12 +36,12 @@
             {#                    <span class="link-text text-2xl ml-2">Start</span>#}
             {#                </div>#}
             {#            </a>#}
-{#            <a href="javascript:void(0)" class="nav-link1">#}
-{#                <div>#}
-{#                    <i class="bi bi-x-circle-fill"></i>#}
-{#                    <span class="link-text text-2xl ml-2">Explore</span>#}
-{#                </div>#}
-{#            </a>#}
+            {#            <a href="javascript:void(0)" class="nav-link1">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-x-circle-fill"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Explore</span>#}
+            {#                </div>#}
+            {#            </a>#}
             <a href="planning.html" class="nav-link1">
                 <div>
                     <i class="bi bi-vector-pen"></i>
@@ -88,178 +80,366 @@
         </div>
     </div>
 
-    <div class="rightScreen">
-        <form class="elementsMainArea" name="main-form" action="{{ url_for('select_strategy') }}"
-              method=post>
-            <div class="sec-name flex-sm-column">
-                <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
-                <hr class="divider">
-            </div>
-
-            <div class="forEachColumn">
-                <div class="list-group dynamic-list pt-6">
-                    {% for entry in entries %}
-                        {#                       print the entry#}
-                        <a href="#" class="strategy-cell list-group-item list-group-item-action">
-                            <div class="strategy-records">
-                                <h3 class="mb-2" style="font-weight: bold;">Name: {{ entry.name }} </h3>
-                                <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
-                                <h3 class="mb-2">Model: {{ entry.model }}</h3>
-                                {#                                <input type="submit" value="{{ entry.name }}" name="name">#}
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}"> View
-                                    Strategy
-                                </button>
-                            </div>
-
-                        </a>
-
-                    {% endfor %}
+    <div class="main-body">
+        <div class="rightScreen">
+            <form class="elementsMainArea" name="main-form" action="{{ url_for('select_strategy') }}"
+                  method=post>
+                <div class="sec-name flex-sm-column">
+                    <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
+                    <hr class="divider">
                 </div>
-                <div class="d-flex justify-content-around px-8">
-                    {#                    a button on click jump to planning.html#}
-                    <a href="planning.html" class="btn btn-success btn-w-icon py-2"><i
-                            class="bi bi-plus-circle-fill"></i>NEW STRATEGY</a>
-                    {#                    <button type="submit" id="submit" class="btn btn-success btn-w-icon py-3"><i class="bi bi-plus-circle-fill"></i>NEW STRATEGY</button>#}
-                </div>
-            </div>
 
-        </form>
+                <div class="forEachColumn">
+                    <div class="list-group dynamic-list pt-6">
+                        {% for entry in entries %}
+                            {#                       print the entry#}
+                            <a href="#" class="strategy-cell list-group-item list-group-item-action">
+                                <div class="strategy-records">
+                                    <h3 class="mb-2" style="font-weight: bold;">Name: {{ entry.name }} </h3>
+                                    <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
+                                    <h3 class="mb-2">Model: {{ entry.model }}</h3>
+                                    {#                                <input type="submit" value="{{ entry.name }}" name="name">#}
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}">
+                                        View
+                                        Strategy
+                                    </button>
+                                </div>
 
-        <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-        <div class="container-fluid result-area">
-            <div class="sec-name flex-sm-column">
-                <ul class="nav nav-tabs ml-4 pt-2" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="output-tab" data-toggle="tab" href="#output" role="tab"
-                           aria-controls="output" aria-selected="true">OUTPUT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
-                           aria-controls="info" aria-selected="false">INFO</a>
-                    </li>
-                </ul>
-                <hr class="divider1">
-            </div>
+                            </a>
 
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="output" role="tabpanel" aria-labelledby="output-tab">
-                    <div class="chartCard">
-                <div class="radarChartCard">
-                    <form class="result-items px-4 py-2">
-                        <!-- a form that takes two inputs: Strategy name and Description, with a save button and reset button -->
-                        <div class="result-item pt-4">
-                            <h5 class="result-text" style="font-size:1vw">Preoccupation with Failure</h5>
-                            <strong class="progress-value">{{ strategy.effects[0] }}</strong>
-                        </div>
-
-                        <div class="result-item pt-4">
-                            <h5 class="result-text" style="font-size:1vw">Reluctance to Simplify</h5>
-                            <strong class="progress-value">{{ strategy.effects[1] }}</strong>
-
-                        </div>
-                        <div class="result-item pt-4">
-                            <h5 class="result-text" style="font-size:1vw">Commitment to Resilience</h5>
-                            <strong class="progress-value">{{ strategy.effects[2] }}</strong>
-
-                        </div>
-                        <div class="result-item pt-4">
-                            <h5 class="result-text" style="font-size:1vw">Deference to Expertise</h5>
-                            <strong class="progress-value">{{ strategy.effects[3] }}</strong>
-
-                        </div>
-                        <div class="result-item  pt-4 pb-2">
-                            <h5 class="result-text" style="font-size:1vw">Sensitivity to Operations</h5>
-                            <strong class="progress-value">{{ strategy.effects[4] }}</strong>
-                        </div>
-                    </form>
-                    <div class="radarChartBox">
-                        <canvas id="radarChart" class="p-5"></canvas>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-around px-8">
+                        {#                    a button on click jump to planning.html#}
+                        <a href="planning.html" class="btn btn-success btn-w-icon py-2"><i
+                                class="bi bi-plus-circle-fill"></i>NEW STRATEGY</a>
                     </div>
                 </div>
 
-                <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>
-                    <h6>Edit Description:</h6>
-                    <textarea rows="10" cols="50" name="Description" spellcheck="true"
-                              class="boxInput">{{ strategy.description }}</textarea>
-                    {#							display save button and reset button on the same line#}
-                    <div class="d-flex justify-content-end gap-5 mt-2">
-                        <button id="save" type="submit" class="btn btn-success" value="EditStrategy"
-                                name="EditStrategy"
-                                data-button-state="Edit">Save Edit
+            </form>
+
+            <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+            <div class="container-fluid result-area" id="result-area">
+                <div class="sec-name flex-sm-column">
+                    <ul class="nav nav-tabs ml-4 pt-2" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="output-tab" data-toggle="tab" href="#output" role="tab"
+                               aria-controls="output" aria-selected="true">OUTPUT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                               aria-controls="info" aria-selected="false">INFO</a>
+                        </li>
+                    </ul>
+                    <hr class="divider1">
+                </div>
+
+                <div class="tab-content" style="background-color: #fdfdfd" id="myTabContent">
+                    <div class="tab-pane fade show active chartCard pl-16" id="output" role="tabpanel"
+                         aria-labelledby="output-tab">
+                        <div class="radarChartCard">
+                            <div class="graph-labels">
+                                <div class="result-item pt-4">
+                                    <h5 class="result-text" style="font-weight: bold">HRO PRINCIPLES</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 26, 104, 0.2)"></i>
+                                    <h5 class="result-text">P1: Deference to Expertise</h5>
+                                </div>
+
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(54, 162, 235, 0.2)"></i>
+                                    <h5 class="result-text">P2: Commitment to Resilience</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 206, 86, 0.2)"></i>
+                                    <h5 class="result-text">P3: Sensitivity to Operations</h5>
+
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(75, 192, 192, 0.2)"></i>
+                                    <h5 class="result-text">P4: Reluctance to Simplify</h5>
+
+                                </div>
+                                <div class="result-item  pt-4 pb-2">
+                                    <i class="bi bi-square-fill" style="color: rgba(153, 102, 255, 0.2)"></i>
+                                    <h5 class="result-text">P5: Preoccupation With Failure</h5>
+                                </div>
+                            </div>
+
+                            <div class="radarChartBox">
+                                <canvas id="radarChart" class="p-2"></canvas>
+                            </div>
+                        </div>
+                        <div class="BarchartBox">
+                            <canvas id="barChart" class="p-1"></canvas>
+                        </div>
+
+                        <script>
+                            {#import {Chart} from 'chart.js';#}
+                            {#import ChartDataLabels from 'chartjs-plugin-datalabels';#}
+                            {#Chart.register(ChartDataLabels);#}
+                            // setup
+                            var principles =
+                            {{ strategy.principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString()
+                            }
+                            var data = {
+                                labels: principles,
+                                datasets: [{
+                                    label: 'Change of Intervention',
+                                    data: {{ strategy.effects|tojson }},
+                                    backgroundColor: [
+                                        'rgba(255, 26, 104, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(0, 0, 0, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 26, 104, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(0, 0, 0, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            // config
+                            var config = {
+                                type: 'bar',
+                                data,
+                                plugins: [ChartDataLabels],
+                                options: {
+                                    {#change x label text size to bigger#}
+                                    scales: {
+                                        x: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        },
+                                        y: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    x: {
+                                        max: 100,
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        datalabels: {
+                                            color: 'black',
+                                            font: {
+                                                size: 20,
+                                            },
+                                            anchor: (context) => {
+                                                const anchor = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    anchor.push('end');
+                                                } else {
+                                                    anchor.push('start');
+                                                }
+                                                return anchor;
+                                            },
+                                            align: (context) => {
+                                                const align = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    align.push('start');
+                                                } else {
+                                                    align.push('end');
+                                                }
+                                                return align;
+                                            },
+                                        }
+                                    },
+                                    events: [],
+                                    indexAxis: 'y',
+                                },
+                            };
+
+                            // render init block
+                            var myChart = new Chart(
+                                document.getElementById('barChart'),
+                                config
+                            );
+                        </script>
+                        <script>
+                            var principles =
+                            {{ strategy.principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
+                            }
+                            var data1 = {
+                                labels: principles,
+                                datasets: [{
+                                    label: 'My First Dataset',
+                                    data: {{ strategy.effects|tojson }},
+                                    fill: false,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                                }]
+                            };
+
+                            var config1 = {
+                                type: 'radar',
+                                data: data1,
+                                options: {
+                                    scales: {
+                                        r: {
+                                            pointLabels: {
+                                                font: {
+                                                    size: 20
+                                                }
+                                            }
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scale: {
+                                        min: -100,
+                                        max: 100,
+                                        r: {
+                                            //display points labels information on the left side of the chart
+                                            pointLabels: {
+                                                display: true // don't hide the labels around the radar chart
+                                            }
+                                        }
+
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                    },
+                                    events: [],
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    }
+                                },
+                            };
+
+                            // render init block
+                            var myChart1 = new Chart(
+                                document.getElementById('radarChart'),
+                                config1
+                            );
+                        </script>
+
+                    </div>
+                    <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="info-tab">
+                            <div class="info-name-date">
+                                <div class="result-item pt-4">
+                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">STRATEGY NAME:</h5>
+                                    <h5 class="result-text text-xl">{{ strategy.name }}</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">LAST EDITED:</h5>
+                                    <h5 class="result-text text-xl">N/A</h5>
+                                </div>
+                            </div>
+
+
+                            <div class="text-group pt-4">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">STRATEGY DESCRIPTION:</h3>
+                                <h4 class="result-text text-xl">{{ strategy.description }}</h4>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <!-- Button trigger modal -->
+                <div class="save-info-area pt-2 pr-4">
+                    <div class="save-message">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="result-form gap-5" id="result-form">
+                        <button type="button" class="btn btn-success btn-create py-2" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            EDIT
                         </button>
 
-                        <button id="reset" type="submit" class="btn btn-danger" value="Delete" name="Delete">
-                            Delete
+                        <button id="reset" type="submit" class="btn btn-danger btn-create py-2" value="Delete"
+                                name="Delete">
+                            DELETE
                         </button>
+                    </div>
+                </div>
+
+
+                <!-- Modal -->
+                <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Model</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body d-flex flex-column justify-content-around">
+                                    {#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
+                                    <h6>Strategy Name:</h6> <textarea type="text" name="new-Name" class="boxInput"
+                                                                      placeholder="Strategy/test one">{{ strategy.name }}</textarea>
+                                    <h6>Edit Description:</h6><textarea rows="10" cols="50" name="Description"
+                                                                        spellcheck="true"
+                                                                        class="boxInput">{{ strategy.description }}</textarea>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="save" type="submit" class="btn btn-success" value="EditStrategy"
+                                            name="EditStrategy"
+                                            data-button-state="Edit">Save Edit
+                                    </button>
+                                    <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
+                                            name="Reset">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
+
             </div>
-                </div>
-                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">...</div>
-            </div>
-
-
-
-            <script>
-                var principles =
-                {{ strategy.principles|tojson }}
-                var data1 = {
-                    labels: principles,
-                    datasets: [{
-                        label: 'My First Dataset',
-                        data: {{ strategy.effects|tojson }},
-                        fill: false,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
-                    }]
-                };
-
-                var config1 = {
-                    type: 'radar',
-                    data: data1,
-                    options: {
-                        scales: {
-                            r: {
-                                pointLabels: {
-                                    display: false // don't hide the labels around the radar chart
-                                }
-                            }
-                        },
-                        scale: {
-                            min: -100,
-                            max: 100,
-
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                        },
-                        events: [],
-                        elements: {
-                            line: {
-                                borderWidth: 3
-                            }
-                        }
-                    },
-                };
-
-                // render init block
-                var myChart1 = new Chart(
-                    document.getElementById('radarChart'),
-                    config1
-                );
-            </script>
         </div>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

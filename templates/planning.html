@@ -1,714 +1,721 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='planning.css') }}">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='planning.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='menu_simple.css') }}">
 
-	{#    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
-	{#            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
-	{#            crossorigin="anonymous"></script>#}
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">#}
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-	{#    <script type="text/javascript" src="../js/methods.js"></script>#}
-	{#    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">#}
-	<title>FOCOS</title>
+    {#    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
+    {#            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
+    {#            crossorigin="anonymous"></script>#}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    {#    <script type="text/javascript" src="../js/methods.js"></script>#}
+    {#    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='rangeslider.css') }}">#}
+    <title>FOCOS</title>
 </head>
 
 <body>
 <div class="container-fluid px-0 flex flex-no-wrap">
-	{#	<div class="navbar p-0">#}
-	<div class="navbar">
-		<div class="text-black w-full font-black text-white text-5xl py-10">
-			FOCOS
-		</div>
-		<ul class="menu-list">
-			{#            <a href="javascript:void(0)" class="nav-link">#}
-			{#                <div>#}
-			{#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
-			{#                    <span class="link-text text-2xl ml-2">Start</span>#}
-			{#                </div>#}
-			{#            </a>#}
-{#			<a href="javascript:void(0)" class="nav-link1">#}
-{#				<div>#}
-{#					<i class="bi bi-x-circle-fill"></i>#}
-{#					<span class="link-text text-2xl ml-2">Explore</span>#}
-{#				</div>#}
-{#			</a>#}
-			<a href="planning.html" class="nav-link1 active-link">
-				<div>
-					<i class="bi active-bi bi-vector-pen"></i>
-					<span class="link-text active-text text-2xl ml-2">Plan</span>
-				</div>
-			</a>
-			<a href="strategies.html" class="nav-link1">
-				<div>
-					<i class="bi bi-ui-checks-grid"></i>
-					<span class="link-text text-2xl ml-2">Manage</span>
-				</div>
-			</a>
-			<a href="compare.html" class="nav-link1">
-				<div>
-					<i class="bi bi-terminal-split"></i>
-					<span class="link-text text-2xl ml-2">Compare</span>
-				</div>
-			</a>
-			{#            <a href="critic.html" class="nav-link">#}
-			{#                <div>#}
-			{#                    <i class="bi bi-toggles2"></i>#}
-			{#                    <span class="link-text text-2xl ml-2">Critique</span>#}
-			{#                </div>#}
-			{#            </a>#}
-		</ul>
+    {#	<div class="navbar p-0">#}
+    <div class="navbar">
+        <div class="text-black w-full font-black text-white text-5xl py-10">
+            FOCOS
+        </div>
+        <ul class="menu-list">
+            {#            <a href="javascript:void(0)" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Start</span>#}
+            {#                </div>#}
+            {#            </a>#}
+            {#			<a href="javascript:void(0)" class="nav-link1">#}
+            {#				<div>#}
+            {#					<i class="bi bi-x-circle-fill"></i>#}
+            {#					<span class="link-text text-2xl ml-2">Explore</span>#}
+            {#				</div>#}
+            {#			</a>#}
+            <a href="planning.html" class="nav-link1 active-link">
+                <div>
+                    <i class="bi active-bi bi-vector-pen"></i>
+                    <span class="link-text active-text text-2xl ml-2">Plan</span>
+                </div>
+            </a>
+            <a href="strategies.html" class="nav-link1">
+                <div>
+                    <i class="bi bi-ui-checks-grid"></i>
+                    <span class="link-text text-2xl ml-2">Manage</span>
+                </div>
+            </a>
+            <a href="compare.html" class="nav-link1">
+                <div>
+                    <i class="bi bi-terminal-split"></i>
+                    <span class="link-text text-2xl ml-2">Compare</span>
+                </div>
+            </a>
+            {#            <a href="critic.html" class="nav-link">#}
+            {#                <div>#}
+            {#                    <i class="bi bi-toggles2"></i>#}
+            {#                    <span class="link-text text-2xl ml-2">Critique</span>#}
+            {#                </div>#}
+            {#            </a>#}
+        </ul>
 
 
-		<div class="menu-bottom mt-auto w-full">
-			<div>
-				<hr class="ml-0 mr-0 mb-1 p-0" style="height:0;color:white;background-color:white">
-			</div>
-			<div class="user-info pb-12 pt-8">
-				<a href="javascript:void(0)"><span class="user-text text-l ml-2">Test User</span></a>
-				<a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
-			</div>
-		</div>
-	</div>
-	{#	</div>#}
+        <div class="menu-bottom mt-auto w-full">
+            <div>
+                <hr class="ml-0 mr-0 mb-1 p-0" style="height:0;color:white;background-color:white">
+            </div>
+            <div class="user-info pb-12 pt-8">
+                <a href="javascript:void(0)"><span class="user-text text-l ml-2">Test User</span></a>
+                <a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
+            </div>
+        </div>
+    </div>
+    {#	</div>#}
 
 
-	<form action="{{ url_for('slider') }}" method=post id="practices" class="practices">
-		<div class="rightScreen">
-			<div class="elementsMainArea">
-				<div class="sec-name flex-sm-column">
-					<h1 class="text-4xl font-weight-bold ml-4 pt-10">PRACTICES</h1>
-					<hr class="divider">
-				</div>
+    <form action="{{ url_for('slider') }}" method=post id="practices" class="practices">
+        <div class="rightScreen">
+            <div class="elementsMainArea">
+                <div class="sec-name flex-sm-column">
+                    <h1 class="text-4xl font-weight-bold ml-4 pt-10">PRACTICES</h1>
+                    <hr class="divider">
+                </div>
 
 
-				<div class="container-fluid slider-submit-group">
-					<div class="slider-menu">
-						<div class="forEachColumn forEachColumn1">
-							<div class="elementName">
-								<i>PROCESSES</i>
-							</div>
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Authority" class="form-label">Stop-Work Authority</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Employees and contractors are trained and empowered to stop working on any activity that, in their opinion, poses a threat to human health, property, or the environment."></a>
-								</div>
+                <div class="container-fluid slider-submit-group">
+                    <div class="slider-menu">
+                        <div class="forEachColumn forEachColumn1">
+                            <div class="elementName">
+                                <i>PROCESSES</i>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Authority" class="form-label">Stop-Work Authority</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Employees and contractors are trained and empowered to stop working on any activity that, in their opinion, poses a threat to human health, property, or the environment."></a>
+                                </div>
 
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AuthoritySlider"
-									       id="Authority" onInput="$('#AuthorityValue').html($(this).val() + '%')">
-									<p><span id="AuthorityValue">0%</span></p>
-								</div>
-							</div>
-
-
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Ambivalence" class="form-label">Doubts and hope</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Employees and leaders maintain mixed feelings, such as feeling confident and cautious, or optimistic and aware of what can go wrong. This is often described as emotional ambivalence. Having such mixed feelings makes people more open to alternative perspectives and improves their ability to anticipate and respond to failures."></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AmbivalenceSlider"
-									       id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val() + '%')">
-									<p><span id="AmbivalenceValue">0%</span></p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Drift" class="form-label">Reliability Drifts</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Leaders and employees push back against reliability drift. Reliability drift describes the tendency of people and organizations to form habits that cause processes to degrade over time and become less reliable. Leaders can prevent this from happening through awareness, continuously monitoring, and controls. "></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DriftSlider"
-									       id="Drift" onInput="$('#DriftValue').html($(this).val() + '%')">
-									<p><span id="DriftValue">0%</span></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="forEachColumn forEachColumn4">
-							<div class="elementName">
-								<i>TRAINING</i>
-							</div>
-
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Exercise" class="form-label">Tabletop Exercises</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Training is scenario-based and brings participants around a table to assess and reflect on different features of preplanned scenarios. This helps people understand how to deal with risk, what rules to apply, and how to apply them."></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="ExerciseSlider"
-									       id="Exercise" onInput="$('#ExerciseValue').html($(this).val() + '%')">
-									<p><span id="ExerciseValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Learning" class="form-label">Just-In-Time-Learning</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Training is focused on providing employees with the knowledge and skills they need at the very moment they are needed, including in critical situations. This increases motivation and makes learning relevant."></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="LearningSlider"
-									       id="Learning" onInput="$('#LearningValue').html($(this).val() + '%')">
-									<p><span id="LearningValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Drills" class="form-label">Emergency Drills</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Training uses realistic simulations of significant hazard scenarios and the safety action plans for responding to such events."></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DrillsSlider"
-									       id="Drills" onInput="$('#DrillsValue').html($(this).val() + '%')">
-									<p><span id="DrillsValue">0%</span></p>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Debriefings" class="form-label">Post-Event Debriefing</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Meetings that are held after a real-world incident or an exercise to discuss, summarize, and learn from the activities the team has just experienced. "></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="DebriefingsSlider"
-									       id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val() + '%')">
-									<p><span id="DebriefingsValue">0%</span></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="forEachColumn forEachColumn3">
-							<div class="elementName">
-								<i>COMMUNICATION</i>
-							</div>
-
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Huddle" class="form-label">Safety Huddles</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="A brief, daily meeting (typically face-to-face) in which a group of people with different roles discuss safety-related issues and concerns. It  can encourage multiple perspectives, critical inquiry, and learning from failure and near misses."></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="HuddleSlider"
-									       id="Huddle" onInput="$('#HuddleValue').html($(this).val() + '%')">
-									<p><span id="HuddleValue">0%</span></p>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Incidents" class="form-label">Near-Misses Reported</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Leaders actively encourage the reporting of near misses and safety-critical events and reduce existing barriers to reporting. "></a>
-								</div>
-
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="IncidentsSlider"
-									       id="Incidents" onInput="$('#IncidentsValue').html($(this).val() + '%')">
-									<p><span id="IncidentsValue">0%</span></p>
-								</div>
-							</div>
-						</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AuthoritySlider"
+                                           id="Authority" onInput="$('#AuthorityValue').html($(this).val() + '%')">
+                                    <p><span id="AuthorityValue">0%</span></p>
+                                </div>
+                            </div>
 
 
-						<div class="forEachColumn forEachColumn2">
-							<div class="elementName">
-								<i>ATTITUDES</i>
-							</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Ambivalence" class="form-label">Doubts and hope</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Employees and leaders maintain mixed feelings, such as feeling confident and cautious, or optimistic and aware of what can go wrong. This is often described as emotional ambivalence. Having such mixed feelings makes people more open to alternative perspectives and improves their ability to anticipate and respond to failures."></a>
+                                </div>
 
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Mindfulness" class="form-label">Mindfulness</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Employees concentrate on the here and now and calmly acknowledge and accept their feelings and thoughts. This helps them maintain situational awareness, reduce pressure, and feel calm and competent."></a>
-								</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AmbivalenceSlider"
+                                           id="Ambivalence" onInput="$('#AmbivalenceValue').html($(this).val() + '%')">
+                                    <p><span id="AmbivalenceValue">0%</span></p>
+                                </div>
+                            </div>
 
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="MindfulnessSlider"
-									       id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val() + '%')">
-									<p><span id="MindfulnessValue">0%</span></p>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Drift" class="form-label">Reliability Drifts</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Leaders and employees push back against reliability drift. Reliability drift describes the tendency of people and organizations to form habits that cause processes to degrade over time and become less reliable. Leaders can prevent this from happening through awareness, continuously monitoring, and controls. "></a>
+                                </div>
 
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Accountability" class="form-label">Accountability</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Leaders and employees take personal responsibility seriously. They assess their performance, reflect on their own behavior and are willing to acknowledge mistakes."></a>
-								</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DriftSlider"
+                                           id="Drift" onInput="$('#DriftValue').html($(this).val() + '%')">
+                                    <p><span id="DriftValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="AccountabilitySlider"
-									       id="Accountability"
-									       onInput="$('#AccountabilityValue').html($(this).val() + '%')">
-									<p><span id="AccountabilityValue">0%</span></p>
-								</div>
-							</div>
-						</div>
+                        <div class="forEachColumn forEachColumn4">
+                            <div class="elementName">
+                                <i>TRAINING</i>
+                            </div>
 
-						<div class="forEachColumn forEachColumn5">
-							<div class="elementName">
-								<i>RELATIONSHIPS BETWEEN EMPLOYEES</i>
-							</div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Exercise" class="form-label">Tabletop Exercises</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Training is scenario-based and brings participants around a table to assess and reflect on different features of preplanned scenarios. This helps people understand how to deal with risk, what rules to apply, and how to apply them."></a>
+                                </div>
 
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Motivation" class="form-label">Cultures of Caring</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Leaders and employees create a caring culture by orienting people toward each other. This increases people’s desire to do things that beneﬁt other people because they see similarities between themselves and others. This is also called prosocial motivation."></a>
-								</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="ExerciseSlider"
+                                           id="Exercise" onInput="$('#ExerciseValue').html($(this).val() + '%')">
+                                    <p><span id="ExerciseValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Learning" class="form-label">Just-In-Time-Learning</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Training is focused on providing employees with the knowledge and skills they need at the very moment they are needed, including in critical situations. This increases motivation and makes learning relevant."></a>
+                                </div>
 
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="MotivationSlider"
-									       id="Motivation" onInput="$('#MotivationValue').html($(this).val() + '%')">
-									<p><span id="MotivationValue">0%</span></p>
-								</div>
-							</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="LearningSlider"
+                                           id="Learning" onInput="$('#LearningValue').html($(this).val() + '%')">
+                                    <p><span id="LearningValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Drills" class="form-label">Emergency Drills</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Training uses realistic simulations of significant hazard scenarios and the safety action plans for responding to such events."></a>
+                                </div>
 
-							<div class="form-group">
-								<div class="slider-name-info">
-									<label for="Respect" class="form-label">Social Ties and Respect</label>
-									<a class="bi bi-three-dots-vertical" tabindex="0"
-									   style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
-									   data-content="Leaders and employees create a work environment that improves connections  between people and builds on mutual respect. Activities include mentoring new team members, creating opportunities for social interactions, and setting clear expectations for respectful behavior."></a>
-								</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DrillsSlider"
+                                           id="Drills" onInput="$('#DrillsValue').html($(this).val() + '%')">
+                                    <p><span id="DrillsValue">0%</span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Debriefings" class="form-label">Post-Event Debriefing</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Meetings that are held after a real-world incident or an exercise to discuss, summarize, and learn from the activities the team has just experienced. "></a>
+                                </div>
 
-								<div class="d-flex justify-content-center gap-5">
-									<input type="range" class="form-range" min="0" max="100" value="0" step="1"
-									       name="RespectSlider"
-									       id="Respect" onInput="$('#RespectValue').html($(this).val() + '%')">
-									<p><span id="RespectValue">0%</span></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="d-flex justify-content-around">
-						{#                        <button type="submit" class="btn btn-primary">CREATE STRATEGY</button>#}
-						<button type="submit" id="submit" class="btn btn-success btn-create py-2" onclick="showDiv()" disabled>
-							CREATE
-							STRATEGY
-						</button>
-					</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="DebriefingsSlider"
+                                           id="Debriefings" onInput="$('#DebriefingsValue').html($(this).val() + '%')">
+                                    <p><span id="DebriefingsValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
-					<script>
+                        <div class="forEachColumn forEachColumn3">
+                            <div class="elementName">
+                                <i>COMMUNICATION</i>
+                            </div>
 
-              let input = document.querySelector(".practices");
-              let button = document.querySelector(".btn");
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Huddle" class="form-label">Safety Huddles</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="A brief, daily meeting (typically face-to-face) in which a group of people with different roles discuss safety-related issues and concerns. It  can encourage multiple perspectives, critical inquiry, and learning from failure and near misses."></a>
+                                </div>
 
-              button.disabled = true; //setting button state to disabled
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="HuddleSlider"
+                                           id="Huddle" onInput="$('#HuddleValue').html($(this).val() + '%')">
+                                    <p><span id="HuddleValue">0%</span></p>
+                                </div>
+                            </div>
 
-              input.addEventListener("change", stateHandle);
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Incidents" class="form-label">Near-Misses Reported</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Leaders actively encourage the reporting of near misses and safety-critical events and reduce existing barriers to reporting. "></a>
+                                </div>
 
-              function stateHandle() {
-                  if (document.querySelector(".practices").value === "") {
-                      button.disabled = true; //button remains disabled
-                  } else {
-                      button.disabled = false; //button is enabled
-                  }
-              }
-					</script>
-					<script>
-              function showDiv() {
-                  document.getElementById('result-here').style.display = "";
-                  document.getElementById('result-form').style.display = "";
-              }
-					</script>
-
-				</div>
-			</div>
-
-
-			<!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
-			<div class="container-fluid result-area" id="result-area">
-				<div class="sec-name flex-sm-column">
-					{#                    <h1 class="text-4xl font-weight-bold ml-4 pt-4">Output</h1>#}
-					<ul class="nav nav-tabs ml-4 pt-2" id="myTab" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" id="result-here-tab" data-toggle="tab" href="#result-here"
-							   role="tab"
-							   aria-controls="result-here" aria-selected="true">OUTPUT</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
-							   aria-controls="info" aria-selected="false">INFO</a>
-						</li>
-					</ul>
-					<hr class="divider1">
-				</div>
-
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active chartCard pl-16" id="result-here" role="tabpanel" style="display:none;">
-						<div class="radarChartCard">
-							<div class="graph-labels">
-								<div class="result-item pt-4">
-									<h5 class="result-text" style="font-weight: bold">HRO PRINCIPLES</h5>
-								</div>
-								<div class="result-item pt-4">
-									<i class="bi bi-square-fill" style="color: rgba(255, 26, 104, 0.2)"></i>
-									<h5 class="result-text">P1: Deference to Expertise</h5>
-								</div>
-
-								<div class="result-item pt-4">
-									<i class="bi bi-square-fill" style="color: rgba(54, 162, 235, 0.2)"></i>
-									<h5 class="result-text">P2: Commitment to Resilience</h5>
-								</div>
-								<div class="result-item pt-4">
-									<i class="bi bi-square-fill" style="color: rgba(255, 206, 86, 0.2)"></i>
-									<h5 class="result-text">P3: Sensitivity to Operations</h5>
-
-								</div>
-								<div class="result-item pt-4">
-									<i class="bi bi-square-fill" style="color: rgba(75, 192, 192, 0.2)"></i>
-									<h5 class="result-text">P4: Reluctance to Simplify</h5>
-
-								</div>
-								<div class="result-item  pt-4 pb-2">
-									<i class="bi bi-square-fill" style="color: rgba(153, 102, 255, 0.2)"></i>
-									<h5 class="result-text">P5: Preoccupation With Failure</h5>
-								</div>
-							</div>
-
-							<div class="radarChartBox">
-								<canvas id="radarChart" class="p-2"></canvas>
-							</div>
-						</div>
-						<div class="BarchartBox">
-							<canvas id="barChart" class="p-1"></canvas>
-						</div>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="IncidentsSlider"
+                                           id="Incidents" onInput="$('#IncidentsValue').html($(this).val() + '%')">
+                                    <p><span id="IncidentsValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
 
 
-						<script>
-                {#import {Chart} from 'chart.js';#}
-                {#import ChartDataLabels from 'chartjs-plugin-datalabels';#}
-                {#Chart.register(ChartDataLabels);#}
-                // setup
-                var principles =
-                {{ principles|tojson }}
-                for (let idx = 0; idx < principles.length; idx++) {
-                    principles[idx] = "P" + (idx + 1).toString()
-                }
-                var data = {
-                    labels: principles,
-                    datasets: [{
-                        label: 'Change of Intervention',
-                        data: {{ effects|tojson }},
-                        backgroundColor: [
-                            'rgba(255, 26, 104, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(0, 0, 0, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 26, 104, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(0, 0, 0, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                };
+                        <div class="forEachColumn forEachColumn2">
+                            <div class="elementName">
+                                <i>ATTITUDES</i>
+                            </div>
 
-                // config
-                var config = {
-                    type: 'bar',
-                    data,
-                    plugins: [ChartDataLabels],
-                    options: {
-                        {#change x label text size to bigger#}
-                        scales: {
-                            x: {
-                                ticks: {
-                                    font: {
-                                        size: 15
-                                    }
-                                }
-                            },
-                            y: {
-                                ticks: {
-                                    font: {
-                                        size: 15
-                                    }
-                                }
-                            }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        x: {
-                            max: 100,
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            datalabels: {
-                                color: 'black',
-                                font: {
-                                    size: 20,
-                                },
-                                anchor: (context) => {
-                                    const anchor = [];
-                                    if (context.dataset.data[context.dataIndex] >= 0) {
-                                        anchor.push('end');
-                                    } else {
-                                        anchor.push('start');
-                                    }
-                                    return anchor;
-                                },
-                                align: (context) => {
-                                    const align = [];
-                                    if (context.dataset.data[context.dataIndex] >= 0) {
-                                        align.push('start');
-                                    } else {
-                                        align.push('end');
-                                    }
-                                    return align;
-                                },
-                            }
-                        },
-                        events: [],
-                        indexAxis: 'y',
-                    },
-                };
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Mindfulness" class="form-label">Mindfulness</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Employees concentrate on the here and now and calmly acknowledge and accept their feelings and thoughts. This helps them maintain situational awareness, reduce pressure, and feel calm and competent."></a>
+                                </div>
 
-                // render init block
-                var myChart = new Chart(
-                    document.getElementById('barChart'),
-                    config
-                );
-						</script>
-						<script>
-                var principles =
-                {{ principles|tojson }}
-                for (let idx = 0; idx < principles.length; idx++) {
-                    principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
-                }
-                var data1 = {
-                    labels: principles,
-                    datasets: [{
-                        label: 'My First Dataset',
-                        data: {{ effects|tojson }},
-                        fill: false,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
-                    }]
-                };
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="MindfulnessSlider"
+                                           id="Mindfulness" onInput="$('#MindfulnessValue').html($(this).val() + '%')">
+                                    <p><span id="MindfulnessValue">0%</span></p>
+                                </div>
+                            </div>
 
-                var config1 = {
-                    type: 'radar',
-                    data: data1,
-                    options: {
-                        {#change label size to bigger#}
-                        scales: {
-                            r: {
-                                pointLabels: {
-                                    font: {
-                                        size: 20
-                                    }
-                                }
-                            }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                //display points labels information on the left side of the chart
-                                pointLabels: {
-                                    display: true // don't hide the labels around the radar chart
-                                }
-                            }
-                        },
-                        scale: {
-                            min: -100,
-                            max: 100,
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Accountability" class="form-label">Accountability</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Leaders and employees take personal responsibility seriously. They assess their performance, reflect on their own behavior and are willing to acknowledge mistakes."></a>
+                                </div>
 
-                        },
-                        plugins: {
-                            legend: {
-                                display: false,
-                            },
-                        },
-                        events: [],
-                        elements: {
-                            line: {
-                                borderWidth: 3
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="AccountabilitySlider"
+                                           id="Accountability"
+                                           onInput="$('#AccountabilityValue').html($(this).val() + '%')">
+                                    <p><span id="AccountabilityValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="forEachColumn forEachColumn5">
+                            <div class="elementName">
+                                <i>RELATIONSHIPS BETWEEN EMPLOYEES</i>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Motivation" class="form-label">Cultures of Caring</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Leaders and employees create a caring culture by orienting people toward each other. This increases people’s desire to do things that beneﬁt other people because they see similarities between themselves and others. This is also called prosocial motivation."></a>
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="MotivationSlider"
+                                           id="Motivation" onInput="$('#MotivationValue').html($(this).val() + '%')">
+                                    <p><span id="MotivationValue">0%</span></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="slider-name-info">
+                                    <label for="Respect" class="form-label">Social Ties and Respect</label>
+                                    <a class="bi bi-three-dots-vertical" tabindex="0"
+                                       style="font-size: 20px; color: grey;" data-toggle="popover" data-trigger="focus"
+                                       data-content="Leaders and employees create a work environment that improves connections  between people and builds on mutual respect. Activities include mentoring new team members, creating opportunities for social interactions, and setting clear expectations for respectful behavior."></a>
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-5">
+                                    <input type="range" class="form-range" min="0" max="100" value="0" step="1"
+                                           name="RespectSlider"
+                                           id="Respect" onInput="$('#RespectValue').html($(this).val() + '%')">
+                                    <p><span id="RespectValue">0%</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        {#                        <button type="submit" class="btn btn-primary">CREATE STRATEGY</button>#}
+                        <button type="submit" id="submit" class="btn btn-success btn-create py-2" onclick="showDiv()"
+                                disabled>
+                            CREATE
+                            STRATEGY
+                        </button>
+                    </div>
+
+                    <script>
+
+                        let input = document.querySelector(".practices");
+                        let button = document.querySelector(".btn");
+
+                        button.disabled = true; //setting button state to disabled
+
+                        input.addEventListener("change", stateHandle);
+
+                        function stateHandle() {
+                            if (document.querySelector(".practices").value === "") {
+                                button.disabled = true; //button remains disabled
+                            } else {
+                                button.disabled = false; //button is enabled
                             }
                         }
-                    },
-                };
+                    </script>
+                    <script>
+                        function showDiv() {
+                            document.getElementById('result-here').style.display = "";
+                            document.getElementById('result-form').style.display = "";
+                        }
+                    </script>
 
-                // render init block
-                var myChart1 = new Chart(
-                    document.getElementById('radarChart'),
-                    config1
-                );
-						</script>
-
-
-					</div>
-					<div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
-						<div class="info-tab">
-							<div class="result-item pt-4">
-								<h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">HRO PRINCIPLES</h5>
-							</div>
-							<div class="text-group">
-									<h3 class="result-text text-xl" style="font-weight: bold;">Preocupation with Failure</h3>
-									<h4 class="result-text text-xl">A mindset of precaution and prevention that treats any weakness, failure, or near-miss as a sign
-										of potentially large-scale issues.</h4>
-							</div>
-
-							<div class="text-group">
-									<h3 class="result-text text-xl" style="font-weight: bold;">Reluctance to Simplify</h3>
-									<h4 class="result-text text-xl">The tendency to question assumptions, think critically, and shift perspectives in order to get a
-										complete and nuanced picture of what is happening.</h4>
-							</div>
-
-							<div class="text-group">
-									<h3 class="result-text text-xl" style="font-weight: bold;">Sensitivity to Operations</h3>
-									<h4 class="result-text text-xl">The state of awareness of the employees for their intimidate tasks, as well as the overall status
-										of the operations - technology, people, and processes.</h4>
-							</div>
-
-							<div class="text-group">
-									<h3 class="result-text text-xl" style="font-weight: bold;">Commitment to Resilience</h3>
-									<h4 class="result-text text-xl">The capability and attitude to quickly notice, contain, and learn from errors and use them to
-										bounce back to normal operations.</h4>
-							</div>
-
-							<div class="text-group">
-									<h3 class="result-text text-xl" style="font-weight: bold;">Deference to Expertise</h3>
-									<h4 class="result-text text-xl">In case of unexpected events, decision-making power shifts to the person(s) with the most
-										knowledge about the issue.</h4>
-							</div>
-						</div>
-					</div>
-				</div>
+                </div>
+            </div>
 
 
-				<!-- Modal -->
-				<!-- Button trigger modal -->
-				<div class="save-info-area pt-2 pr-4">
-					<div class="save-message">
-						{% with messages = get_flashed_messages() %}
-							{% if messages %}
-								{% for message in messages %}
-									{{ message }}
-								{% endfor %}
-							{% endif %}
-						{% endwith %}
-					</div>
+            <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
+            <div class="container-fluid result-area" id="result-area">
+                <div class="sec-name flex-sm-column">
+                    {#                    <h1 class="text-4xl font-weight-bold ml-4 pt-4">Output</h1>#}
+                    <ul class="nav nav-tabs ml-4 pt-2" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="result-here-tab" data-toggle="tab" href="#result-here"
+                               role="tab"
+                               aria-controls="result-here" aria-selected="true">OUTPUT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                               aria-controls="info" aria-selected="false">INFO</a>
+                        </li>
+                    </ul>
+                    <hr class="divider1">
+                </div>
 
-					<div class="result-form gap-5" id="result-form" style="display:none;">
-						<button type="button" class="btn btn-primary btn-create py-2" data-toggle="modal"
-						        data-target="#exampleModalCenter">
-							Save
-						</button>
+                <div class="tab-content" style="background-color: #fdfdfd" id="myTabContent">
+                    <div class="tab-pane fade show active chartCard pl-16" id="result-here" role="tabpanel"
+                         style="display:none;">
+                        <div class="radarChartCard">
+                            <div class="graph-labels">
+                                <div class="result-item pt-4">
+                                    <h5 class="result-text" style="font-weight: bold">HRO PRINCIPLES</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 26, 104, 0.2)"></i>
+                                    <h5 class="result-text">P1: Deference to Expertise</h5>
+                                </div>
 
-						<button id="reset" type="submit" class="btn btn-secondary btn-create py-2" value="Reset"
-						        name="Reset">
-							RESET
-						</button>
-					</div>
-				</div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(54, 162, 235, 0.2)"></i>
+                                    <h5 class="result-text">P2: Commitment to Resilience</h5>
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(255, 206, 86, 0.2)"></i>
+                                    <h5 class="result-text">P3: Sensitivity to Operations</h5>
+
+                                </div>
+                                <div class="result-item pt-4">
+                                    <i class="bi bi-square-fill" style="color: rgba(75, 192, 192, 0.2)"></i>
+                                    <h5 class="result-text">P4: Reluctance to Simplify</h5>
+
+                                </div>
+                                <div class="result-item  pt-4 pb-2">
+                                    <i class="bi bi-square-fill" style="color: rgba(153, 102, 255, 0.2)"></i>
+                                    <h5 class="result-text">P5: Preoccupation With Failure</h5>
+                                </div>
+                            </div>
+
+                            <div class="radarChartBox">
+                                <canvas id="radarChart" class="p-2"></canvas>
+                            </div>
+                        </div>
+                        <div class="BarchartBox">
+                            <canvas id="barChart" class="p-1"></canvas>
+                        </div>
 
 
-				<!-- Modal -->
-				<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-				     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalCenterTitle">Save Model</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body d-flex flex-column justify-content-around">
-								{#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
-								<h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
-								                               placeholder="Strategy/test one">
-								<h6>Description:</h6> <textarea rows="3" cols="5" name="Description"
-								                                spellcheck="true"
-								                                class="boxInput"
-								                                placeholder="Enter a description here..."></textarea>
+                        <script>
+                            // setup
+                            var principles =
+                            {{ principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString()
+                            }
+                            var data = {
+                                labels: principles,
+                                datasets: [{
+                                    label: 'Change of Intervention',
+                                    data: {{ effects|tojson }},
+                                    backgroundColor: [
+                                        'rgba(255, 26, 104, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(0, 0, 0, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 26, 104, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(0, 0, 0, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
 
-							</div>
-							<div class="modal-footer">
-								<button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
-								        name="SaveStrategy"
-								        data-button-state="save">Save Strategy
-								</button>
-								<button id="reset" type="submit" class="btn btn-secondary" value="Reset"
-								        name="Reset">
-									Cancel
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+                            // config
+                            var config = {
+                                type: 'bar',
+                                data,
+                                plugins: [ChartDataLabels],
+                                options: {
+                                    {#change x label text size to bigger#}
+                                    scales: {
+                                        x: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        },
+                                        y: {
+                                            ticks: {
+                                                font: {
+                                                    size: 15
+                                                }
+                                            }
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    x: {
+                                        max: 100,
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        datalabels: {
+                                            color: 'black',
+                                            font: {
+                                                size: 20,
+                                            },
+                                            anchor: (context) => {
+                                                const anchor = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    anchor.push('end');
+                                                } else {
+                                                    anchor.push('start');
+                                                }
+                                                return anchor;
+                                            },
+                                            align: (context) => {
+                                                const align = [];
+                                                if (context.dataset.data[context.dataIndex] >= 0) {
+                                                    align.push('start');
+                                                } else {
+                                                    align.push('end');
+                                                }
+                                                return align;
+                                            },
+                                        }
+                                    },
+                                    events: [],
+                                    indexAxis: 'y',
+                                },
+                            };
+
+                            // render init block
+                            var myChart = new Chart(
+                                document.getElementById('barChart'),
+                                config
+                            );
+                        </script>
+                        <script>
+                            var principles =
+                            {{ principles|tojson }}
+                            for (let idx = 0; idx < principles.length; idx++) {
+                                principles[idx] = "P" + (idx + 1).toString() //+ ": " + principles[idx]
+                            }
+                            var data1 = {
+                                labels: principles,
+                                datasets: [{
+                                    label: 'My First Dataset',
+                                    data: {{ effects|tojson }},
+                                    fill: false,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                                }]
+                            };
+
+                            var config1 = {
+                                type: 'radar',
+                                data: data1,
+                                options: {
+                                    {#change label size to bigger#}
+                                    scales: {
+                                        r: {
+                                            pointLabels: {
+                                                font: {
+                                                    size: 20
+                                                }
+                                            }
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        r: {
+                                            //display points labels information on the left side of the chart
+                                            pointLabels: {
+                                                display: true // don't hide the labels around the radar chart
+                                            }
+                                        }
+                                    },
+                                    scale: {
+                                        min: -100,
+                                        max: 100,
+
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                        },
+                                    },
+                                    events: [],
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    }
+                                },
+                            };
+
+                            // render init block
+                            var myChart1 = new Chart(
+                                document.getElementById('radarChart'),
+                                config1
+                            );
+                        </script>
+
+
+                    </div>
+                    <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="info-tab">
+                            <div class="result-item pt-4">
+                                <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">HRO
+                                    PRINCIPLES</h5>
+                            </div>
+                            <div class="text-group">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">Preocupation with
+                                    Failure</h3>
+                                <h4 class="result-text text-xl">A mindset of precaution and prevention that treats any
+                                    weakness, failure, or near-miss as a sign
+                                    of potentially large-scale issues.</h4>
+                            </div>
+
+                            <div class="text-group">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">Reluctance to Simplify</h3>
+                                <h4 class="result-text text-xl">The tendency to question assumptions, think critically,
+                                    and shift perspectives in order to get a
+                                    complete and nuanced picture of what is happening.</h4>
+                            </div>
+
+                            <div class="text-group">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">Sensitivity to
+                                    Operations</h3>
+                                <h4 class="result-text text-xl">The state of awareness of the employees for their
+                                    intimidate tasks, as well as the overall status
+                                    of the operations - technology, people, and processes.</h4>
+                            </div>
+
+                            <div class="text-group">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">Commitment to Resilience</h3>
+                                <h4 class="result-text text-xl">The capability and attitude to quickly notice, contain,
+                                    and learn from errors and use them to
+                                    bounce back to normal operations.</h4>
+                            </div>
+
+                            <div class="text-group">
+                                <h3 class="result-text text-xl" style="font-weight: bold;">Deference to Expertise</h3>
+                                <h4 class="result-text text-xl">In case of unexpected events, decision-making power
+                                    shifts to the person(s) with the most
+                                    knowledge about the issue.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal -->
+                <!-- Button trigger modal -->
+                <div class="save-info-area pt-2 pr-4">
+                    <div class="save-message">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="result-form gap-5" id="result-form" style="display:none;">
+                        <button type="button" class="btn btn-primary btn-create py-2" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            Save
+                        </button>
+
+                        <button id="reset" type="submit" class="btn btn-secondary btn-create py-2" value="Reset"
+                                name="Reset">
+                            RESET
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Save Model</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body d-flex flex-column justify-content-around">
+                                {#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
+                                <h6>Strategy Name:</h6> <input type="text" name="Name" class="boxInput"
+                                                               placeholder="Strategy/test one">
+                                <h6>Description:</h6> <textarea rows="3" cols="5" name="Description"
+                                                                spellcheck="true"
+                                                                class="boxInput"
+                                                                placeholder="Enter a description here..."></textarea>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button id="save" type="submit" class="btn btn-primary" value="SaveStrategy"
+                                        name="SaveStrategy"
+                                        data-button-state="save">Save Strategy
+                                </button>
+                                <button id="reset" type="submit" class="btn btn-secondary" value="Reset"
+                                        name="Reset">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 
 </div>

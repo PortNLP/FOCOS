@@ -25,7 +25,6 @@ def planning():
 
 @app.route('/slider', methods=['POST'])
 def slider():
-    print("jashdksjdfhsdf")
     form_input = request.form.to_dict(flat=True)
     intervention_sliders = {k: v for (k, v) in form_input.items() if
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
@@ -85,8 +84,11 @@ def update_strategy():
         return redirect(url_for('strategies'))
     elif request.form.get("EditStrategy"):
         description = request.form.get("Description")
-        strategy = model.update_description(name, description)
+        new_name = request.form.get("new-Name")
+        strategy = model.update_description(name, new_name, description)
         session["description"] = strategy["description"]
+        session["name"] = strategy["name"]
+
     elif request.form.get("Delete"):
         model.delete_strategy(name)
         session["strategy_interventions"] = None

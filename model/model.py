@@ -9,10 +9,10 @@ class model():
         print("Created model")
         # Dict {fcm_principle_name : output_principle_name}
         self.principle_dict = {
-            "Deference to Expertise" :      "DEFERENCE TO EXPERTISE",  
+            "Deference to Expertise" :      "DEFERENCE TO EXPERTISE",
             "Commitment to Resilience" :    "COMMITMENT TO RESILIENCE",
             "Sensitivity to Operations" :   "SENSITIVITY TO OPERATION",
-            "Reluctance to Simplify " :     "RELUCTANCE TO SIMPLIFY",  
+            "Reluctance to Simplify " :     "RELUCTANCE TO SIMPLIFY",
             "Preoccupation With Failure" :  "PREOCCUPATION WITH FAILURE"
         }
 
@@ -37,7 +37,7 @@ class model():
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         # Check if our database exists
-        try: 
+        try:
             cursor.execute("SELECT COUNT(rowid) FROM strategies")
         except sqlite3.OperationalError:
             definition = "CREATE TABLE strategies (model text, day text, name text NOT NULL PRIMARY KEY, description text"
@@ -95,7 +95,7 @@ class model():
         :param description: String
         :return: none
         """
-        
+
         intervention_values = [intervention_sliders[k] for k in self.intervention_names]
         day = date.today()
         model = FCM_MODEL
@@ -124,7 +124,7 @@ class model():
         rows = cursor.fetchall()
         #print(rows)
         cursor.close()
-        
+
         return rows
 
     def select_strategy(self, name):
@@ -138,10 +138,10 @@ class model():
         row = cursor.fetchall()[0]
         print(row)
         cursor.close()
-        
+
         return row
 
-    def update_description(self, name, description):
+    def update_description(self, name, new_name, description):
         """
         Update a certain strategy based on name
         :param name: String
@@ -155,7 +155,7 @@ class model():
         print(row)
         connection.commit()
         cursor.close()
-        
+
         return row
 
     def delete_strategy(self, name):

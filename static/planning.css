@@ -4,6 +4,10 @@ body {
     background-color: rgb(245, 246, 248);
 }
 
+.practices{
+    width: auto;
+}
+
 .rightScreen {
     display: flex;
     padding-left: 260px;
@@ -136,7 +140,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 90vh;
+    width: 100%;
     height: 100%;
     padding: 0 0;
     border-left: 2px solid;
@@ -182,6 +186,7 @@ h6 {
     justify-content: space-evenly;
     padding: 30px 0;
     width: 80%;
+    min-height: 80vh;
     margin: auto;
     gap: 20px;
     /*min-height: 80vh;*/
@@ -331,26 +336,4 @@ h6 {
 /*    center item*/
     margin: auto;
 
-}
-
-@media screen and (max-width: 1543px) {
-    .result-form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 1543px) {
-    .result-form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
 }

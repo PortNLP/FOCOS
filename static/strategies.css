@@ -20,6 +20,10 @@ body {
     justify-content: space-around;
 }
 
+.strategy-cell.active {
+  background-color: #a81010;
+}
+
 .elementsMainArea {
     min-width: 600px;
     height: 100%;

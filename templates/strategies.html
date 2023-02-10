@@ -101,16 +101,14 @@
                                     {#                                <input type="submit" value="{{ entry.name }}" name="name">#}
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}">
-                                        View
-                                        Strategy
-                                    </button>
+                                    <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}">View Strategy</button>
                                 </div>
 
                             </a>
 
                         {% endfor %}
                     </div>
+
                     <div class="d-flex justify-content-around px-8">
                         {#                    a button on click jump to planning.html#}
                         <a href="planning.html" class="btn btn-success btn-w-icon py-2"><i
@@ -414,8 +412,8 @@
                                 </div>
                                 <div class="modal-body d-flex flex-column justify-content-around">
                                     {#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
-                                    <h6>Strategy Name:</h6> <textarea type="text" name="new-Name" class="boxInput"
-                                                                      placeholder="Strategy/test one">{{ strategy.name }}</textarea>
+                                    <h6>Strategy Name:</h6> <input type="text" name="new-Name" readonly class="form-control-plaintext boxInput"
+                                                                      placeholder="Strategy/test one" value="{{ strategy.name }}">
                                     <h6>Edit Description:</h6><textarea rows="10" cols="50" name="Description"
                                                                         spellcheck="true"
                                                                         class="boxInput">{{ strategy.description }}</textarea>

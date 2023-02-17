@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 'import os; print(os.urandom(16))'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 model = model()
-print("App started")
+# print("App started")
 
 
 @app.route('/')
@@ -19,7 +19,7 @@ def planning():
     interventions = session.get("interventions")
     effects, principles = model.get_results(interventions)
     effects = [int(effect) for effect in effects]
-    print("here you go", list(zip(principles, effects)))
+    # print("here you go", list(zip(principles, effects)))
     return render_template('planning.html', effects=effects, principles=principles)
 
 
@@ -29,7 +29,7 @@ def slider():
     intervention_sliders = {k: v for (k, v) in form_input.items() if
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
 
-    print(form_input)
+    # print(form_input)
     if request.form.get("Submit"):
         session["interventions"] = intervention_sliders
     elif request.form.get("SaveStrategy"):
@@ -177,7 +177,7 @@ def compare():
             strategy = model.select_strategy(name)
             # Filter out non-slider input
             interventions = {k: v for (k, v) in strategy.items() if k in model.intervention_dict.keys()}
-            print(interventions)
+            # print(interventions)
             effects, _ = model.get_results(interventions)
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
@@ -194,7 +194,7 @@ def compare_strategies():
             if strategy not in strategies_to_compare:  # check for duplicate
                 strategies_to_compare.append(strategy)
 
-    print(strategies_to_compare)
+    # print(strategies_to_compare)
     session["strategies_to_compare"] = strategies_to_compare
     return redirect(url_for('compare'))
 

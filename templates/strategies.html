@@ -82,7 +82,7 @@
 
     <div class="main-body">
         <div class="rightScreen">
-            <form class="elementsMainArea" name="main-form" action="{{ url_for('select_strategy') }}"
+            <form class="elementsMainArea" name="main-form" id="main-form" action="{{ url_for('select_strategy') }}"
                   method=post>
                 <div class="sec-name flex-sm-column">
                     <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
@@ -93,16 +93,19 @@
                     <div class="list-group dynamic-list pt-6">
                         {% for entry in entries %}
                             {#                       print the entry#}
-                            <a href="#" class="strategy-cell list-group-item list-group-item-action">
+                            <a href="#" class="strategy-cell list-group-item list-group-item-action" data-toggle="list"
+                               onclick="submitForm('{{ entry.name }}')">
                                 <div class="strategy-records">
                                     <h3 class="mb-2" style="font-weight: bold;">Name: {{ entry.name }} </h3>
                                     <h3 class="mb-2">Last Modified: {{ entry.day }}</h3>
                                     <h3 class="mb-2">Model: {{ entry.model }}</h3>
                                     {#                                <input type="submit" value="{{ entry.name }}" name="name">#}
                                 </div>
-                                <div>
-                                    <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}">View Strategy</button>
-                                </div>
+                                {#                                <div>#}
+                                {#                                    <button type="submit" class="btn btn-success" name="name" value="{{ entry.name }}">#}
+                                {#                                        View Strategy#}
+                                {#                                    </button>#}
+                                {#                                </div>#}
 
                             </a>
 
@@ -115,8 +118,37 @@
                                 class="bi bi-plus-circle-fill"></i>NEW STRATEGY</a>
                     </div>
                 </div>
+                <input id="name-input" type="hidden" name="name" value="">
 
             </form>
+            <script>
+                function submitForm(strategyName) {
+                    // Set the value of the hidden input field
+                    var nameInput = document.getElementById('name-input');
+                    nameInput.value = strategyName;
+
+                    // Add the 'selected-cell' class to the clicked element
+                    var clickedCell = event.target.closest('.strategy-cell');
+                    clickedCell.classList.add('selected-cell');
+
+                    // Send an AJAX request to submit the form data and update the result area
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for('select_strategy') }}',
+                        data: $('form[name="main-form"]').serialize(),
+                        success: function (response) {
+                            // Update the result area with the server response
+                            $('#output').html($('#output', response).html());
+                        },
+                        error: function (xhr) {
+                            // Handle any errors if necessary
+                        }
+                    });
+
+                    // Prevent the form from being submitted and the page from refreshing
+                    event.preventDefault();
+                }
+            </script>
 
             <!-- Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border -->
             <div class="container-fluid result-area" id="result-area">
@@ -135,7 +167,8 @@
                 </div>
 
                 <div class="tab-content" style="background-color: #fdfdfd" id="myTabContent">
-                    <div class="tab-pane fade show active chartCard pl-16" id="output" role="tabpanel" aria-labelledby="output-tab">
+                    <div class="tab-pane fade show active chartCard pl-16" id="output" role="tabpanel"
+                         aria-labelledby="output-tab">
                         <div class="radarChartCard">
                             <div class="graph-labels">
                                 <div class="result-item pt-4">
@@ -350,11 +383,13 @@
                         <div class="info-tab">
                             <div class="info-name-date">
                                 <div class="result-item pt-4">
-                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">STRATEGY NAME:</h5>
+                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">
+                                        STRATEGY NAME:</h5>
                                     <h5 class="result-text text-xl">{{ strategy.name }}</h5>
                                 </div>
                                 <div class="result-item pt-4">
-                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">LAST EDITED:</h5>
+                                    <h5 class="result-text text-xl" style="font-weight: bold; font-style: italic">LAST
+                                        EDITED:</h5>
                                     <h5 class="result-text text-xl">N/A</h5>
                                 </div>
                             </div>
@@ -372,7 +407,7 @@
 
                 <!-- Modal -->
                 <!-- Button trigger modal -->
-{#            <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>#}
+                {#            <form class="saveForm d-flex flex-column" action="{{ url_for('update_strategy') }}" method=post>#}
                 <form class="save-info-area pt-2 pr-4" action="{{ url_for('update_strategy') }}" method=post>
                     <div class="save-message">
                         {% with messages = get_flashed_messages() %}
@@ -412,8 +447,10 @@
                                 </div>
                                 <div class="modal-body d-flex flex-column justify-content-around">
                                     {#                                <div class="saveForm d-flex flex-column justify-content-around pt-6 pb-10">#}
-                                    <h6>Strategy Name:</h6> <input type="text" name="new-Name" readonly class="form-control-plaintext boxInput"
-                                                                      placeholder="Strategy/test one" value="{{ strategy.name }}">
+                                    <h6>Strategy Name:</h6> <input type="text" name="new-Name" readonly
+                                                                   class="form-control-plaintext boxInput"
+                                                                   placeholder="Strategy/test one"
+                                                                   value="{{ strategy.name }}">
                                     <h6>Edit Description:</h6><textarea rows="10" cols="50" name="Description"
                                                                         spellcheck="true"
                                                                         class="boxInput">{{ strategy.description }}</textarea>

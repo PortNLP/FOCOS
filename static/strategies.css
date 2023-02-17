@@ -22,6 +22,8 @@ body {
 
 .strategy-cell.active {
     background-color: #e1ebe4;
+    border-color: #26c027;
+    border-width: 3px;
 }
 
 .selected-cell h3 {

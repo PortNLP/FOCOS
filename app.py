@@ -7,6 +7,7 @@ import time
 from datetime import timedelta
 
 app = Flask(__name__)
+f_type = "tanh";
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 'import os; print(os.urandom(16))'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 model = model()
@@ -16,11 +17,12 @@ model = model()
 @app.route('/')
 @app.route('/planning.html')
 def planning():
+    f_type = session.get('f_type', "tanh")
     interventions = session.get("interventions")
     effects, principles = model.get_results(interventions)
     effects = [int(effect) for effect in effects]
     # print("here you go", list(zip(principles, effects)))
-    return render_template('planning.html', effects=effects, principles=principles)
+    return render_template('planning.html', effects=effects, principles=principles, func_type=f_type)
 
 
 @app.route('/slider', methods=['POST'])
@@ -50,6 +52,7 @@ def slider():
 @app.route('/strategies.html')
 def strategies():
     interventions = session.get("strategy_interventions")
+    f_type = session.get('f_type', "tanh")
     entries = model.select_all()
     effects, principles = model.get_results(interventions)
     # change each element in effect from float to int
@@ -57,7 +60,7 @@ def strategies():
     description = session.get("description")
     name = session.get("name") if session.get("name") else "No Strategy Selected"
     strategy = {"name": name, "description": description, "effects": effects, "principles": principles}
-    return render_template('strategies.html', entries=entries, strategy=strategy)
+    return render_template('strategies.html', entries=entries, strategy=strategy, func_type=f_type)
 
 
 @app.route('/select_strategy', methods=['POST'])
@@ -166,6 +169,7 @@ def update_strategy():
 # route to compare.html
 @app.route('/compare.html')
 def compare():
+    f_type = session.get('f_type', "tanh")
     entries = model.select_all()
     strategies_to_compare = session.get("strategies_to_compare")  # strategies selected for comparison
     effects, principles = model.get_results(None)  # get default values for effects
@@ -182,7 +186,7 @@ def compare():
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
     return render_template('compare.html', entries=entries, all_effects=all_effects,
-                           principles=principles, names=strategies_to_compare)
+                           principles=principles, names=strategies_to_compare, func_type=f_type)
 
 
 @app.route('/compare_strategies', methods=['POST'])
@@ -206,8 +210,14 @@ def compare_reset():
 
 @app.route('/advanced.html', methods=['GET','POST'])
 def set_params():
-    return render_template(url_for('set_params'))
+    f_type = session.get('f_type',"tanh")
+    return render_template('advanced.html',func_type=f_type)
 
+@app.route('/UpdateSquashFunc', methods=['POST'])
+def UpdateSquashFunc():
+    f_type = request.form.get('f_type')
+    session['f_type'] = f_type if f_type != None else "tanh"
+    return redirect(url_for('set_params'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=False)

@@ -64,6 +64,8 @@
                 <div>
                     <i class="bi active-bi bi-toggles2"></i>
                     <span class="link-text active-text text-2xl ml-2">Advanced</span>
+                    <br></br>
+                    <span>Squash function set - {{func_type}}</span>
                 </div>
             </a>
         </ul>
@@ -83,45 +85,37 @@
     <div class="main-body">
         <div class="rightScreen">
             <form class="elementsMainArea" name="main-form"
-                  action="{{ url_for('set_params') }}"
+                  action="{{ url_for('UpdateSquashFunc') }}"
                   method=post
-                  id=strategies_to_compare>
+                  id=squshing_functions_list>
                 <div class="sec-name flex-sm-column">
                     <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
                     <hr class="divider">
                 </div>
-
-                {#			<div class="forEachColumn">#}
+                <br></br>
                 <div class="list-group p-6">
                     <div>
-                        <br>Squash Function</br>
+                        <br>Squash Function selected - </br>
                         <div class="drop-item">
                             <select class="form-select py-3 my-3 "
                                     style="max-width:90%;"
-                                    name="ParamList">
-                                <option value="tanh">Tanh</option>
-                                <option value="sig">Sigmoid</option>
-                                <option value="Bivalent">Bivalent</option>
-                                <option value="Trivalent">Trivalent</option>
+                                    name="f_type">
+                                <option value="tanh" {% if func_type == 'tanh' %} selected {% endif %}>Tanh</option>
+                                <option value="sig" {% if func_type == 'sig' %} selected {% endif %}>Sigmoid</option>
+                                <option value="Bivalent" {% if func_type == 'Bivalent' %} selected {% endif %}>Bivalent</option>
+                                <option value="Trivalent" {% if func_type == 'Trivalent' %} selected {% endif %}>Trivalent</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <button id="SetParam" type="button" class="btn btn-success btn-compare py-2" name="SetParam"
-                                value="SetParam" onclick="showDiv()">
+                        <button id="SetParam" type="Submit" class="btn btn-success btn-compare py-2" name="SetParam"
+                                value="SetParam">
                             SET PARAMETERS
                         </button>
                     </div>
                 </div>
             </form>
-            <script>
-                function showDiv() {
-                    document.getElementById('output').style.display = "";
-                    document.getElementById('result-form').style.display = "";
-                }
-            </script>
-
             <div class="container-fluid result-area" id="result-area">
                 <div class="sec-name flex-sm-column">
                     <ul class="nav nav-tabs ml-4 pt-2" id="myTab" role="tablist">

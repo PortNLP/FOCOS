@@ -204,6 +204,10 @@ def compare_reset():
     session["strategies_to_compare"] = None
     return redirect(url_for('compare'))
 
+@app.route('/advanced.html', methods=['GET','POST'])
+def set_params():
+    return render_template(url_for('set_params'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=False)

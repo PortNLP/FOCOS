@@ -17,7 +17,7 @@ def get_connections(practice):
 
     return connections
 
-def run_inference(interventions, principles, modified_connections={}):
+def run_inference(interventions, principles, modified_connections={}, function_type = "tanh"):
     """
     Run FCM inference for a set of interventions (changes in practices)
     :param interventions: Dict {intervention_name : value}
@@ -54,7 +54,6 @@ def run_inference(interventions, principles, modified_connections={}):
                 else:
                     Adj_matrix[i,j]=df.iat[i,j]
 
-    function_type = "tanh" # Hyperbolic tangent 
     infer_rule = "k" # Kosko
 
     intervention_indexes = []

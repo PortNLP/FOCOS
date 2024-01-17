@@ -19,7 +19,7 @@ model = model()
 def planning():
     f_type = session.get('f_type', "tanh")
     interventions = session.get("interventions")
-    effects, principles = model.get_results(interventions)
+    effects, principles = model.get_results(interventions, function_type = f_type)
     effects = [int(effect) for effect in effects]
     # print("here you go", list(zip(principles, effects)))
     return render_template('planning.html', effects=effects, principles=principles, func_type=f_type)
@@ -54,7 +54,7 @@ def strategies():
     interventions = session.get("strategy_interventions")
     f_type = session.get('f_type', "tanh")
     entries = model.select_all()
-    effects, principles = model.get_results(interventions)
+    effects, principles = model.get_results(interventions, function_type = f_type)
     # change each element in effect from float to int
     effects = [int(effect) for effect in effects]
     description = session.get("description")

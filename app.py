@@ -37,8 +37,9 @@ def slider():
     elif request.form.get("SaveStrategy"):
         name = request.form.get("Name")
         description = request.form.get("Description")
+        function_type = session.get('f_type', "tanh")
         if name:
-            success = model.save_strategy(intervention_sliders, name, description)
+            success = model.save_strategy(intervention_sliders, name, description, function_type)
             flash("Successfully saved strategy" if success else "Error: Name already taken")
         else:
             flash("Please enter a name")
@@ -59,7 +60,7 @@ def strategies():
     effects = [int(effect) for effect in effects]
     description = session.get("description")
     name = session.get("name") if session.get("name") else "No Strategy Selected"
-    strategy = {"name": name, "description": description, "effects": effects, "principles": principles}
+    strategy = {"name": name, "description": description, "effects": effects, "principles": principles, "function_type": session.get("f_type","tanh")}
     return render_template('strategies.html', entries=entries, strategy=strategy, func_type=f_type)
 
 
@@ -71,6 +72,7 @@ def select_strategy():
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
     session["strategy_interventions"] = intervention_sliders  # session["interventions"] is for the planning page
     session["name"] = name
+    session["f_type"] = strategy['function_type']
     session["description"] = strategy["description"]
     return redirect(url_for('strategies'))
 
@@ -180,9 +182,10 @@ def compare():
         for name in strategies_to_compare:
             strategy = model.select_strategy(name)
             # Filter out non-slider input
+            strategy_ftype = strategy["function_type"]
             interventions = {k: v for (k, v) in strategy.items() if k in model.intervention_dict.keys()}
             # print(interventions)
-            effects, _ = model.get_results(interventions)
+            effects, _ = model.get_results(interventions, function_type = strategy_ftype)
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
     return render_template('compare.html', entries=entries, all_effects=all_effects,

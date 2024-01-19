@@ -40,7 +40,7 @@ class model():
         try:
             cursor.execute("SELECT COUNT(rowid) FROM strategies")
         except sqlite3.OperationalError:
-            definition = "CREATE TABLE strategies (model text, day text, name text NOT NULL PRIMARY KEY, description text"
+            definition = "CREATE TABLE strategies (model text, day text, name text NOT NULL PRIMARY KEY, description text, function_type text DEFAULT tanh"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " INTEGER"
             definition = definition + ")"
@@ -87,7 +87,7 @@ class model():
         practice = self.intervention_dict[practice_slider_name]
         return get_connections(practice)
 
-    def save_strategy(self, intervention_sliders, name, description):
+    def save_strategy(self, intervention_sliders, name, description, function_type = "tanh"):
         """
         Save Current Strategy
         :param intervention_sliders: Dict {slider_name : value}
@@ -101,15 +101,15 @@ class model():
         model = FCM_MODEL
         connection = get_db()
         cursor = connection.cursor()
-        sql = "INSERT INTO strategies VALUES (?,?,?,?" + ",?"*len(self.intervention_names) + ")"
+        sql = "INSERT INTO strategies VALUES (?,?,?,?,?" + ",?"*len(self.intervention_names) + ")"
 
         try:
-            cursor.execute(sql, (model, day, name, description) + tuple(intervention_values))
+            cursor.execute(sql, (model, day, name, description, function_type) + tuple(intervention_values))
         except sqlite3.IntegrityError as e:
             print(e)
             return False
-        cursor.execute("SELECT * FROM strategies")
-        print(cursor.fetchall())
+        #cursor.execute("SELECT * FROM strategies")
+        #print(cursor.fetchall())
         connection.commit()
         cursor.close()
         return True

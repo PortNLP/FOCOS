@@ -2,3 +2,5 @@ flask
 pandas
 numpy
 gunicorn
+Flask-SQLAlchemy
+PyMySQL

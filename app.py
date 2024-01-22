@@ -5,11 +5,17 @@ from flask import Flask, redirect, request, url_for, render_template, session, f
 from model.model import model
 import time
 from datetime import timedelta
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
-f_type = "tanh";
+f_type = "tanh"
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 'import os; print(os.urandom(16))'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 model = model()
 # print("App started")
 

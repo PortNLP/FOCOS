@@ -4,3 +4,4 @@ numpy
 gunicorn
 Flask-SQLAlchemy
 PyMySQL
+Flask-Migrate

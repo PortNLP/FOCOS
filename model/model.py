@@ -1,12 +1,17 @@
 from model.fcm import run_inference, get_connections
 import sqlite3
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import text
 from datetime import date
 DB_FILE = 'focos.db'    # file for our Database
 FCM_MODEL = "V1"
+db = SQLAlchemy()
 
 class model():
-    def __init__(self):
+
+    def __init__(self,app):
         print("Created model")
+
         # Dict {fcm_principle_name : output_principle_name}
         self.principle_dict = {
             "Deference to Expertise" :      "DEFERENCE TO EXPERTISE",
@@ -46,6 +51,22 @@ class model():
             definition = definition + ")"
             cursor.execute(definition)
         cursor.close()
+
+         # Check if our MySQL database exists
+        
+        try:
+            with app.app_context():
+                db.session.execute(text("SELECT COUNT(name) FROM strategies"))
+        except:
+            with app.app_context():
+                definition = '''CREATE TABLE strategies (model text, day text, name varchar(50) NOT NULL PRIMARY KEY, description text, 
+                                   function_type text DEFAULT ('tanh') '''
+                for intervention in self.intervention_names:
+                    definition += ", " + intervention + " INTEGER"
+                definition = definition + ")"
+                db.session.execute(text(definition))
+                db.session.commit()
+        
 
     def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh"):
         """
@@ -102,6 +123,14 @@ class model():
         connection = get_db()
         cursor = connection.cursor()
         sql = "INSERT INTO strategies VALUES (?,?,?,?,?" + ",?"*len(self.intervention_names) + ")"
+
+
+        try:
+            print(tuple(intervention_values))
+            UserModel = DbModel(name=name,day=day,description=description,function_type=function_type,
+                                intervention_values=tuple(intervention_values))
+        except e:
+            print(e)
 
         try:
             cursor.execute(sql, (model, day, name, description, function_type) + tuple(intervention_values))

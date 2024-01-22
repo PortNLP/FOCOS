@@ -2,7 +2,7 @@
 FOCOS Flask app
 """
 from flask import Flask, redirect, request, url_for, render_template, session, flash
-from model.model import model
+from model.model import model, db
 import time
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
@@ -14,10 +14,11 @@ app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+db.init_app(app)
 migrate = Migrate(app, db)
-model = model()
-# print("App started")
+model = model(app)
+print("App started")
 
 
 @app.route('/')

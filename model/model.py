@@ -1,5 +1,7 @@
 from model.fcm import run_inference, get_connections
 import sqlite3
+import os
+import mysql.connector as MySQLConnector
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 from datetime import date
@@ -39,21 +41,37 @@ class model():
         }
         self.intervention_names = [k for (k,v) in self.intervention_dict.items()]
 
-        connection = sqlite3.connect(DB_FILE)
+        # Access environment variables for database connection
+        db_host = os.environ.get('DB_HOST', 'localhost')
+        db_user = os.environ.get('DB_USER', 'default_user')
+        db_password = os.environ.get('DB_PASSWORD', 'default_password')
+        db_database = os.environ.get('DB_DATABASE', 'default_database')
+
+        connection = MySQLConnector.connect(host=db_host,
+        user=db_user,
+        password=db_password,
+        database=db_database)
+
         cursor = connection.cursor()
+
         # Check if our database exists
         try:
-            cursor.execute("SELECT COUNT(rowid) FROM strategies")
-        except sqlite3.OperationalError:
-            definition = "CREATE TABLE strategies (model text, day text, name text NOT NULL PRIMARY KEY, description text, function_type text DEFAULT tanh"
+            cursor.execute("SELECT COUNT(name) FROM strategies")
+        except MySQLConnector.errors.ProgrammingError as e:
+            definition = "CREATE TABLE strategies (model VARCHAR(50), day text, name VARCHAR(50) NOT NULL PRIMARY KEY, description text, function_type VARCHAR(10) DEFAULT ('tanh')"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " INTEGER"
             definition = definition + ")"
             cursor.execute(definition)
-        cursor.close()
+            connection.commit()
 
-         # Check if our MySQL database exists
+        cursor.fetchall() # this is a MySQL oddity
+        cursor.close()
+        connection.close()
+
+        # Check if our MySQL database exists
         
+        """
         try:
             with app.app_context():
                 db.session.execute(text("SELECT COUNT(name) FROM strategies"))
@@ -66,6 +84,7 @@ class model():
                 definition = definition + ")"
                 db.session.execute(text(definition))
                 db.session.commit()
+        """
         
 
     def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh"):

@@ -74,23 +74,6 @@ class model():
         cursor.fetchall() # this is a MySQL oddity
         cursor.close()
         connection.close()
-
-        # Check if our MySQL database exists
-        
-        """
-        try:
-            with app.app_context():
-                db.session.execute(text("SELECT COUNT(name) FROM strategies"))
-        except:
-            with app.app_context():
-                definition = '''CREATE TABLE strategies (model text, day text, name varchar(50) NOT NULL PRIMARY KEY, description text, 
-                                   function_type text DEFAULT ('tanh') '''
-                for intervention in self.intervention_names:
-                    definition += ", " + intervention + " INTEGER"
-                definition = definition + ")"
-                db.session.execute(text(definition))
-                db.session.commit()
-        """
         
 
     def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh"):
@@ -166,34 +149,6 @@ class model():
             connection.close()
         
         return True
-
-        """
-        intervention_values = [intervention_sliders[k] for k in self.intervention_names]
-        day = date.today()
-        model = FCM_MODEL
-        connection = get_db()
-        cursor = connection.cursor()
-        sql = "INSERT INTO strategies VALUES (?,?,?,?,?" + ",?"*len(self.intervention_names) + ")"
-
-
-        try:
-            print(tuple(intervention_values))
-            UserModel = DbModel(name=name,day=day,description=description,function_type=function_type,
-                                intervention_values=tuple(intervention_values))
-        except e:
-            print(e)
-
-        try:
-            cursor.execute(sql, (model, day, name, description, function_type) + tuple(intervention_values))
-        except sqlite3.IntegrityError as e:
-            print(e)
-            return False
-        #cursor.execute("SELECT * FROM strategies")
-        #print(cursor.fetchall())
-        connection.commit()
-        cursor.close()
-        return True
-        """
 
     def select_all(self):
         """

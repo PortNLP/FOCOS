@@ -9,6 +9,12 @@ DB_FILE = 'focos.db'    # file for our Database
 FCM_MODEL = "V1"
 db = SQLAlchemy()
 
+# Access environment variables for database connection
+db_host = os.environ.get('DB_HOST', 'localhost')
+db_user = os.environ.get('DB_USER', 'default_user')
+db_password = os.environ.get('DB_PASSWORD', 'default_password')
+db_database = os.environ.get('DB_DATABASE', 'default_database')
+
 class model():
 
     def __init__(self,app):
@@ -140,6 +146,32 @@ class model():
         day = date.today()
         model = FCM_MODEL
         connection = get_db()
+        cursor = connection.cursor(dictionary=True)
+
+        columns_str = ", ".join(self.intervention_names)
+        length = len(self.intervention_names)
+        values = ", ".join(["%s" for _ in range(length)])
+        sql = f"INSERT INTO STRATEGIES (model,day,name,description,function_type,{columns_str}) VALUES (%s, %s, %s, %s, %s, {values})"
+
+        # Check if our database exists
+        try:
+            cursor.execute(sql, (model, day, name, description, function_type) + tuple(intervention_values))
+        except MySQLConnector.errors.ProgrammingError as e:
+            print(e)
+            return False
+        finally:
+            connection.commit()
+            cursor.fetchall() # this is a MySQL oddity
+            cursor.close()
+            connection.close()
+        
+        return True
+
+        """
+        intervention_values = [intervention_sliders[k] for k in self.intervention_names]
+        day = date.today()
+        model = FCM_MODEL
+        connection = get_db()
         cursor = connection.cursor()
         sql = "INSERT INTO strategies VALUES (?,?,?,?,?" + ",?"*len(self.intervention_names) + ")"
 
@@ -161,17 +193,25 @@ class model():
         connection.commit()
         cursor.close()
         return True
+        """
 
     def select_all(self):
         """
         Select all rows
         :return: List of Dicts
         """
-        cursor = get_db().cursor()
-        cursor.execute("SELECT * FROM strategies")
-        rows = cursor.fetchall()
-        #print(rows)
-        cursor.close()
+        
+        try:
+            connection = get_db()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM strategies")
+        finally:
+            rows = cursor.fetchall()
+            connection.commit()
+            #print(rows)
+            cursor.close()
+            connection.close()
+
 
         return rows
 
@@ -181,11 +221,16 @@ class model():
         :param name: String
         :return: Dict
         """
-        cursor = get_db().cursor()
-        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
-        row = cursor.fetchall()[0]
-        print(row)
-        cursor.close()
+
+        try:
+            connection = get_db()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''SELECT * FROM strategies WHERE name = %s''', tuple([name]))
+            row = cursor.fetchall()[0]
+        finally:
+            #print(row)
+            cursor.close()
+            connection.close()
 
         return row
 
@@ -195,14 +240,18 @@ class model():
         :param name: String
         :return: Dict
         """
-        connection = get_db()
-        cursor = connection.cursor()
-        cursor.execute('''UPDATE strategies SET description = ? WHERE name = ?''', (description, name,))
-        cursor.execute('''SELECT * FROM strategies WHERE name = ?''', (name,))
-        row = cursor.fetchall()[0]
-        print(row)
-        connection.commit()
-        cursor.close()
+        try:
+                
+            connection = get_db()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''UPDATE strategies SET description = %s WHERE name = %s''', (description, name,))
+            cursor.execute('''SELECT * FROM strategies WHERE name = %s''', (name,))
+            row = cursor.fetchall()[0]
+            #print(row)
+        finally:    
+            connection.commit()
+            cursor.close()
+            connection.close()
 
         return row
 
@@ -212,20 +261,25 @@ class model():
         :param name: String
         :return: None
         """
-        connection = get_db()
-        cursor = connection.cursor()
-        cursor.execute('''DELETE FROM strategies WHERE name = ?''', (name,))
-        connection.commit()
-        cursor.close()
+        try:
+            connection = get_db()
+            cursor = connection.cursor()
+            cursor.execute('''DELETE FROM strategies WHERE name = %s''', (name,))
+        finally:
+            connection.commit()
+            cursor.close()
+            connection.close()
 
         return True
 
 def get_db():
     connection = None
     try:
-        connection = sqlite3.connect(DB_FILE)
-        connection.row_factory = make_dicts
-    except Error as e:
+        connection = MySQLConnector.connect(host=db_host,
+        user=db_user,
+        password=db_password,
+        database=db_database)
+    except Exception as e:
         print(e)
     return connection
 

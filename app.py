@@ -7,6 +7,8 @@ import time
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from Forms.webforms import LoginForm
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 app = Flask(__name__)
 f_type = "tanh"
@@ -20,19 +22,42 @@ migrate = Migrate(app, db)
 model = model(app)
 print("App started")
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = form.username.data
+        password = form.password.data
+		
+        if user == 'admin' and password == 'password':            
+            # Check the hash
+            session['userid'] = 'admin'
+            login_user('admin')
+            return redirect(url_for('planning'))
+        else:
+            flash("Wrong Password - Try Again!")
+
+    return render_template('login.html', form=form)
+
+
 @app.route('/planning.html')
+@login_required
 def planning():
     f_type = session.get('f_type', "tanh")
     interventions = session.get("interventions")
     effects, principles = model.get_results(interventions, function_type = f_type)
     effects = [int(effect) for effect in effects]
     # print("here you go", list(zip(principles, effects)))
-    return render_template('planning.html', effects=effects, principles=principles, func_type=f_type)
+    return render_template('planning.html', effects=effects, principles=principles, func_type=f_type, userid=session['userid'])
 
 
 @app.route('/slider', methods=['POST'])
+@login_required
 def slider():
     form_input = request.form.to_dict(flat=True)
     intervention_sliders = {k: v for (k, v) in form_input.items() if
@@ -58,6 +83,7 @@ def slider():
 
 # add route to strategies.html
 @app.route('/strategies.html')
+@login_required
 def strategies():
     interventions = session.get("strategy_interventions")
     f_type = session.get('f_type', "tanh")
@@ -68,10 +94,11 @@ def strategies():
     description = session.get("description")
     name = session.get("name") if session.get("name") else "No Strategy Selected"
     strategy = {"name": name, "description": description, "effects": effects, "principles": principles, "function_type": session.get("f_type","tanh")}
-    return render_template('strategies.html', entries=entries, strategy=strategy, func_type=f_type)
+    return render_template('strategies.html', entries=entries, strategy=strategy, func_type=f_type, userid=session['userid'])
 
 
 @app.route('/select_strategy', methods=['POST'])
+@login_required
 def select_strategy():
     name = request.form.get("name")
     strategy = model.select_strategy(name)
@@ -85,6 +112,7 @@ def select_strategy():
 
 
 @app.route('/update_strategy', methods=['POST'])
+@login_required
 def update_strategy():
     name = session.get("name")
     if not name:
@@ -177,6 +205,7 @@ def update_strategy():
 
 # route to compare.html
 @app.route('/compare.html')
+@login_required
 def compare():
     f_type = session.get('f_type', "tanh")
     entries = model.select_all()
@@ -196,10 +225,11 @@ def compare():
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
     return render_template('compare.html', entries=entries, all_effects=all_effects,
-                           principles=principles, names=strategies_to_compare, func_type=f_type)
+                           principles=principles, names=strategies_to_compare, func_type=f_type, userid=session['userid'])
 
 
 @app.route('/compare_strategies', methods=['POST'])
+@login_required
 def compare_strategies():
     strategies_to_compare = []  # names
     for idx in range(5):
@@ -214,6 +244,7 @@ def compare_strategies():
 
 
 @app.route('/compare_reset', methods=['POST'])
+@login_required
 def compare_reset():
     session["strategies_to_compare"] = None
     return redirect(url_for('compare'))
@@ -224,10 +255,15 @@ def set_params():
     return render_template('advanced.html',func_type=f_type)
 
 @app.route('/UpdateSquashFunc', methods=['POST'])
+@login_required
 def UpdateSquashFunc():
     f_type = request.form.get('f_type')
     session['f_type'] = f_type if f_type != None else "tanh"
     return redirect(url_for('set_params'))
+
+@login_manager.user_loader
+def load_user(user_id):
+	return 'admin'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=False)

@@ -6,3 +6,6 @@ Flask-SQLAlchemy
 PyMySQL
 Flask-Migrate
 cryptography
+Flask-Login
+Flask-WTF
+WTForms

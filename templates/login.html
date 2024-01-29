@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+    {% for message in get_flashed_messages() %}
+	  {{ message }}
+	</div>
+    {% endfor %}
+
+    <h1>Login</h1>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}
+        {{ form.username.label(class="form-label") }}
+		{{ form.username(class="form-control") }}
+		<br/>
+		{{ form.password.label(class="form-label") }}
+		{{ form.password(class="form-control") }}
+		<br/>
+		<br/>
+		{{ form.submit(class="btn btn-secondary") }}
+    </form>
+</body>
+</html>

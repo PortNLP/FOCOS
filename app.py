@@ -2,6 +2,7 @@
 FOCOS Flask app
 """
 from flask import Flask, redirect, request, url_for, render_template, session, flash
+from user.user import initUsers, User, get_user
 from model.model import model, db
 import time
 from datetime import timedelta
@@ -17,9 +18,12 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 db.init_app(app)
 migrate = Migrate(app, db)
 model = model(app)
+initUsers()
+
 print("App started")
 
 login_manager = LoginManager()
@@ -31,13 +35,14 @@ login_manager.login_view = 'login'
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = form.username.data
+        username = form.username.data
         password = form.password.data
 		
-        if user == 'admin' and password == 'password':            
-            # Check the hash
-            session['userid'] = 'admin'
-            login_user('admin')
+        user = User(username)
+
+        if(user.is_authenticated()):
+            login_user(user)
+            session['userid'] = user.get_id()
             return redirect(url_for('planning'))
         else:
             flash("Wrong Password - Try Again!")
@@ -263,7 +268,7 @@ def UpdateSquashFunc():
 
 @login_manager.user_loader
 def load_user(user_id):
-	return 'admin'
+	return get_user(user_id)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=False)

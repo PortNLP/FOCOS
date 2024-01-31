@@ -21,8 +21,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
-model = model(app)
 initUsers()
+model = model()
+
 
 print("App started")
 
@@ -38,7 +39,7 @@ def login():
         username = form.username.data
         password = form.password.data
 		
-        user = User(username)
+        user = User(username, password)
 
         if(user.is_authenticated()):
             login_user(user)
@@ -73,10 +74,11 @@ def slider():
         session["interventions"] = intervention_sliders
     elif request.form.get("SaveStrategy"):
         name = request.form.get("Name")
+        userid = current_user.get_id()
         description = request.form.get("Description")
         function_type = session.get('f_type', "tanh")
         if name:
-            success = model.save_strategy(intervention_sliders, name, description, function_type)
+            success = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type)
             flash("Successfully saved strategy" if success else "Error: Name already taken")
         else:
             flash("Please enter a name")
@@ -92,7 +94,8 @@ def slider():
 def strategies():
     interventions = session.get("strategy_interventions")
     f_type = session.get('f_type', "tanh")
-    entries = model.select_all()
+    userid = current_user.get_id()
+    entries = model.select_all(userid)
     effects, principles = model.get_results(interventions, function_type = f_type)
     # change each element in effect from float to int
     effects = [int(effect) for effect in effects]
@@ -106,7 +109,8 @@ def strategies():
 @login_required
 def select_strategy():
     name = request.form.get("name")
-    strategy = model.select_strategy(name)
+    userid = current_user.get_id()
+    strategy = model.select_strategy(name,userid)
     intervention_sliders = {k: v for (k, v) in strategy.items() if
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
     session["strategy_interventions"] = intervention_sliders  # session["interventions"] is for the planning page
@@ -213,7 +217,8 @@ def update_strategy():
 @login_required
 def compare():
     f_type = session.get('f_type', "tanh")
-    entries = model.select_all()
+    userid = current_user.get_id()
+    entries = model.select_all(userid)
     strategies_to_compare = session.get("strategies_to_compare")  # strategies selected for comparison
     effects, principles = model.get_results(None)  # get default values for effects
 
@@ -221,7 +226,8 @@ def compare():
     if strategies_to_compare:
         all_effects = []
         for name in strategies_to_compare:
-            strategy = model.select_strategy(name)
+            userid = current_user.get_id()
+            strategy = model.select_strategy(name,userid)
             # Filter out non-slider input
             strategy_ftype = strategy["function_type"]
             interventions = {k: v for (k, v) in strategy.items() if k in model.intervention_dict.keys()}

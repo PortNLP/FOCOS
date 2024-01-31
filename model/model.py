@@ -17,7 +17,7 @@ db_database = os.environ.get('DB_DATABASE', 'default_database')
 
 class model():
 
-    def __init__(self,app):
+    def __init__(self):
         print("Created model")
 
         # Dict {fcm_principle_name : output_principle_name}
@@ -64,10 +64,10 @@ class model():
         try:
             cursor.execute("SELECT COUNT(name) FROM strategies")
         except MySQLConnector.errors.ProgrammingError as e:
-            definition = "CREATE TABLE strategies (model VARCHAR(50), day text, name VARCHAR(50) NOT NULL PRIMARY KEY, description text, function_type VARCHAR(10) DEFAULT ('tanh')"
+            definition = "CREATE TABLE strategies (model VARCHAR(50), id VARCHAR(50), day text, name VARCHAR(50) NOT NULL, description text, function_type VARCHAR(10) DEFAULT ('tanh')"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " INTEGER"
-            definition = definition + ")"
+            definition = definition + " ,FOREIGN KEY (id) REFERENCES users(id))"
             cursor.execute(definition)
             connection.commit()
 
@@ -116,7 +116,7 @@ class model():
         practice = self.intervention_dict[practice_slider_name]
         return get_connections(practice)
 
-    def save_strategy(self, intervention_sliders, name, description, function_type = "tanh"):
+    def save_strategy(self, intervention_sliders, name, description, userid, function_type = "tanh",):
         """
         Save Current Strategy
         :param intervention_sliders: Dict {slider_name : value}
@@ -134,23 +134,22 @@ class model():
         columns_str = ", ".join(self.intervention_names)
         length = len(self.intervention_names)
         values = ", ".join(["%s" for _ in range(length)])
-        sql = f"INSERT INTO STRATEGIES (model,day,name,description,function_type,{columns_str}) VALUES (%s, %s, %s, %s, %s, {values})"
+        sql = f"INSERT INTO STRATEGIES (model,id,day,name,description,function_type,{columns_str}) VALUES (%s, %s, %s, %s, %s, %s, {values})"
 
         # Check if our database exists
         try:
-            cursor.execute(sql, (model, day, name, description, function_type) + tuple(intervention_values))
+            cursor.execute(sql, (model, userid, day, name, description, function_type) + tuple(intervention_values))
         except MySQLConnector.errors.ProgrammingError as e:
             print(e)
             return False
         finally:
             connection.commit()
-            cursor.fetchall() # this is a MySQL oddity
             cursor.close()
             connection.close()
         
         return True
 
-    def select_all(self):
+    def select_all(self, userid):
         """
         Select all rows
         :return: List of Dicts
@@ -159,7 +158,7 @@ class model():
         try:
             connection = get_db()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM strategies")
+            cursor.execute(f"SELECT * FROM strategies where id = '{userid}'")
         finally:
             rows = cursor.fetchall()
             connection.commit()
@@ -170,7 +169,7 @@ class model():
 
         return rows
 
-    def select_strategy(self, name):
+    def select_strategy(self, name, userid):
         """
         Select a certain strategy based on name
         :param name: String
@@ -180,7 +179,7 @@ class model():
         try:
             connection = get_db()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute('''SELECT * FROM strategies WHERE name = %s''', tuple([name]))
+            cursor.execute('''SELECT * FROM strategies WHERE name = %s and id = %s''', tuple([name,userid]))
             row = cursor.fetchall()[0]
         finally:
             #print(row)

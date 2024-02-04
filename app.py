@@ -5,6 +5,7 @@ from flask import Flask, redirect, request, url_for, render_template, session, f
 from user.user import initUsers, User, get_user
 from model.model import model, db
 import time
+import os
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -17,7 +18,7 @@ app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['UPLOAD_FOLDER'] = "/app/model"
 
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -142,7 +143,6 @@ def update_strategy():
 
     return redirect(url_for('strategies'))
 
-
 # add route to critic.html
 # @app.route('/critic.html')
 # def critic():
@@ -261,15 +261,32 @@ def compare_reset():
     return redirect(url_for('compare'))
 
 @app.route('/advanced.html', methods=['GET','POST'])
+@login_required
 def set_params():
     f_type = session.get('f_type',"tanh")
-    return render_template('advanced.html',func_type=f_type)
+    weights = session.get('FCM_FILE','FCM-HROT_InterventionsIncluded.csv')
+
+    if 'FCM_FILE' not in session:
+        session['FCM_FILE'] = 'FCM-HROT_InterventionsIncluded.csv'
+
+    return render_template('advanced.html',func_type=f_type, weights=weights)
 
 @app.route('/UpdateSquashFunc', methods=['POST'])
 @login_required
 def UpdateSquashFunc():
     f_type = request.form.get('f_type')
     session['f_type'] = f_type if f_type != None else "tanh"
+
+    if 'file' not in request.files:
+            return redirect(url_for('set_params'))
+    
+    file = request.files['file']
+    session['FCM_FILE'] = file.filename
+
+    if file:
+        filename = file.filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
     return redirect(url_for('set_params'))
 
 @login_manager.user_loader

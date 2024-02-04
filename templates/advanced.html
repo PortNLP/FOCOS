@@ -87,7 +87,8 @@
             <form class="elementsMainArea" name="main-form"
                   action="{{ url_for('UpdateSquashFunc') }}"
                   method=post
-                  id=squshing_functions_list>
+                  id=squashing_functions_list
+                  enctype="multipart/form-data">
                 <div class="sec-name flex-sm-column">
                     <h1 class="text-4xl font-weight-bold ml-4 pt-10">STRATEGIES</h1>
                     <hr class="divider">
@@ -107,13 +108,22 @@
                             </select>
                         </div>
                     </div>
+                </div>
 
-                    <div>
-                        <button id="SetParam" type="Submit" class="btn btn-success btn-compare py-2" name="SetParam"
-                                value="SetParam">
-                            SET PARAMETERS
-                        </button>
-                    </div>
+                <div style="position:relative;bottom: 450px;left: 50px;">
+                    <br>Current weights file used - {{weights}} </br>
+                </div>
+
+                <div style="position:relative;bottom: 400px;left: 50px;">
+                    <label for="file">Update weights file -</label>
+                    <input id="file" name="file" type="file" />
+                </div>
+
+                <div>
+                    <button id="SetParam" type="Submit" class="btn btn-success btn-compare py-2" name="SetParam"
+                            value="SetParam">
+                        SET PARAMETERS
+                    </button>
                 </div>
             </form>
             <div class="container-fluid result-area" id="result-area">

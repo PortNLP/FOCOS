@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 def get_connections(practice):
     """
@@ -17,7 +18,7 @@ def get_connections(practice):
 
     return connections
 
-def run_inference(interventions, principles, modified_connections={}, function_type = "tanh"):
+def run_inference(interventions, principles, modified_connections={}, function_type = "tanh", file_name = None):
     """
     Run FCM inference for a set of interventions (changes in practices)
     :param interventions: Dict {intervention_name : value}
@@ -25,8 +26,11 @@ def run_inference(interventions, principles, modified_connections={}, function_t
     :param modified_connections: Dict {practice : connections}
     :return: List of Floats
     """
+    if file_name is None:
+        file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
+    else:
+        file_name = os.path.join("model/",file_name)
 
-    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
     df = pd.read_csv(file_name,index_col=0)
 
     # change connections if the model is being critiqued

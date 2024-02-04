@@ -76,7 +76,7 @@ class model():
         connection.close()
         
 
-    def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh"):
+    def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh", file_name = None):
         """
         Gets the 5 degrees to which the HRO principles change
          in response to the latest strategy. Also returns the principle names
@@ -103,7 +103,7 @@ class model():
             print(interventions)
 
             # Get results for the latest strategy
-            effects = run_inference(interventions, fcm_principle_names, modified_connections, function_type = function_type)
+            effects = run_inference(interventions, fcm_principle_names, modified_connections, function_type = function_type, file_name = file_name)
 
         return effects, output_principle_names
 

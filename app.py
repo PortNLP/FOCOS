@@ -59,7 +59,8 @@ def login():
 def planning():
     f_type = session.get('f_type', "tanh")
     interventions = session.get("interventions")
-    effects, principles = model.get_results(interventions, function_type = f_type)
+    file_name = session.get('FCM_FILE')
+    effects, principles = model.get_results(interventions, function_type = f_type, file_name=file_name)
     effects = [int(effect) for effect in effects]
     # print("here you go", list(zip(principles, effects)))
     return render_template('planning.html', effects=effects, principles=principles, func_type=f_type, userid=session['userid'])
@@ -99,7 +100,8 @@ def strategies():
     f_type = session.get('f_type', "tanh")
     userid = current_user.get_id()
     entries = model.select_all(userid)
-    effects, principles = model.get_results(interventions, function_type = f_type)
+    file_name = session.get('FCM_FILE')
+    effects, principles = model.get_results(interventions, function_type = f_type, file_name = file_name)
     # change each element in effect from float to int
     effects = [int(effect) for effect in effects]
     description = session.get("description")
@@ -219,6 +221,7 @@ def update_strategy():
 @login_required
 def compare():
     f_type = session.get('f_type', "tanh")
+    file_name = session.get('FCM_FILE')
     userid = current_user.get_id()
     entries = model.select_all(userid)
     strategies_to_compare = session.get("strategies_to_compare")  # strategies selected for comparison
@@ -237,8 +240,9 @@ def compare():
             effects, _ = model.get_results(interventions, function_type = strategy_ftype)
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
+
     return render_template('compare.html', entries=entries, all_effects=all_effects,
-                           principles=principles, names=strategies_to_compare, func_type=f_type, userid=session['userid'])
+                           principles=principles, names=strategies_to_compare, func_type=f_type, userid=session['userid'], file_name=file_name)
 
 
 @app.route('/compare_strategies', methods=['POST'])

@@ -6,6 +6,8 @@ from user.user import initUsers, User, get_user
 from model.model import model, db
 import time
 import os
+from werkzeug.utils import secure_filename
+from util.util import allowed_file
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -281,11 +283,13 @@ def UpdateSquashFunc():
             return redirect(url_for('set_params'))
     
     file = request.files['file']
-    session['FCM_FILE'] = file.filename
 
-    if file:
-        filename = file.filename
+    if file and allowed_file(file.filename):
+        session['FCM_FILE'] = file.filename
+        filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    elif file and not allowed_file(file.filename):
+        flash('Only CSV file types are allowed')
 
     return redirect(url_for('set_params'))
 

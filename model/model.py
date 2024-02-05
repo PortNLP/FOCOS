@@ -1,4 +1,4 @@
-from model.fcm import run_inference, get_connections
+from model.fcm import run_inference
 import sqlite3
 import os
 import mysql.connector as MySQLConnector
@@ -106,15 +106,6 @@ class model():
             effects = run_inference(interventions, fcm_principle_names, modified_connections, function_type = function_type, file_name = file_name)
 
         return effects, output_principle_names
-
-    def get_practice_connections(self, practice_slider_name):
-        """
-        Get the connections for a certain practice      
-        :param practice_slider_name: String
-        :return: Dict {practice_name : value}
-        """
-        practice = self.intervention_dict[practice_slider_name]
-        return get_connections(practice)
 
     def save_strategy(self, intervention_sliders, name, description, userid, function_type = "tanh",):
         """

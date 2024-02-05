@@ -2,22 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 
-def get_connections(practice):
-    """
-    Get the connections/edges for a specific practice
-    :param practice: String
-    :return: Dict {practice_name : value}
-    """
-
-    file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
-    df = pd.read_csv(file_name,index_col=0)
-
-    connections = df.loc[practice]
-    connections = connections.to_dict() # Dict {String : Float}
-    connections = {k:v for (k,v) in connections.items() if v != 0} # Filter out zero values
-
-    return connections
-
 def run_inference(interventions, principles, modified_connections={}, function_type = "tanh", file_name = None):
     """
     Run FCM inference for a set of interventions (changes in practices)

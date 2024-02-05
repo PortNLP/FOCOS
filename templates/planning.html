@@ -30,18 +30,6 @@
             FOCOS
         </div>
         <ul class="menu-list">
-            {#            <a href="javascript:void(0)" class="nav-link">#}
-            {#                <div>#}
-            {#                    <i class="bi bi-arrow-down-right-circle-fill"></i>#}
-            {#                    <span class="link-text text-2xl ml-2">Start</span>#}
-            {#                </div>#}
-            {#            </a>#}
-            {#			<a href="javascript:void(0)" class="nav-link1">#}
-            {#				<div>#}
-            {#					<i class="bi bi-x-circle-fill"></i>#}
-            {#					<span class="link-text text-2xl ml-2">Explore</span>#}
-            {#				</div>#}
-            {#			</a>#}
             <a href="planning.html" class="nav-link1 active-link">
                 <div>
                     <i class="bi active-bi bi-vector-pen"></i>
@@ -77,7 +65,7 @@
             </div>
             <div class="user-info pb-12 pt-8">
                 <a href="javascript:void(0)"><span class="user-text text-l ml-2">{{userid}}</span></a>
-                <a href="javascript:void(0)"><span class="user-text text-xl ml-2">Log Out</span></a>
+                <a href="{{url_for('logout')}}"><span class="user-text text-xl ml-2">Log Out</span></a>
             </div>
         </div>
     </div>

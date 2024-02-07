@@ -101,7 +101,7 @@ def slider():
 
         if file_name:
             file_name = os.path.join("temp",session['userid'],session.get('FCM_FILE'))
-            
+
         if name:
             success, msg = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type,file_name=file_name)
             flash("Successfully saved strategy" if success else msg)
@@ -196,7 +196,7 @@ def compare():
             strategy_ftype = strategy["function_type"]
             interventions = {k: v for (k, v) in strategy.items() if k in model.intervention_dict.keys()}
             # print(interventions)
-            effects, _ = model.get_results(interventions, function_type = strategy_ftype)
+            effects, _ = model.get_strategy_results(name, userid, interventions, function_type = strategy_ftype)
             effects = [int(effect) for effect in effects]
             all_effects.append(effects)
 

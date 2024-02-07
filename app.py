@@ -248,8 +248,8 @@ def UpdateSquashFunc():
     file = request.files['file']
 
     if file and allowed_file(file.filename):
-        session['FCM_FILE'] = file.filename
         filename = secure_filename(file.filename)
+        session['FCM_FILE'] = filename
         dirToMake = os.path.join(app.config['UPLOAD_FOLDER'],session['userid'])
         
         if os.path.exists(dirToMake):
@@ -268,7 +268,8 @@ def UpdateSquashFunc():
             # If the directory doesn't exist, create it
             os.makedirs(dirToMake)
         
-        file.save(os.path.join(dirToMake, filename))
+
+        file.save(os.path.join(dirToMake, session['FCM_FILE'] ))
 
     elif file and not allowed_file(file.filename):
         session['FCM_FILE'] = None

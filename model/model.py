@@ -1,4 +1,4 @@
-from model.fcm import run_inference
+from model.fcm import run_inference, run_strategy_inference
 import sqlite3
 import os
 import mysql.connector as MySQLConnector
@@ -64,7 +64,7 @@ class model():
         try:
             cursor.execute("SELECT COUNT(name) FROM strategies")
         except MySQLConnector.errors.ProgrammingError as e:
-            definition = "CREATE TABLE strategies (model VARCHAR(50), id VARCHAR(50), day text, name VARCHAR(50) NOT NULL, description text, function_type VARCHAR(10) DEFAULT ('tanh')"
+            definition = "CREATE TABLE strategies (model VARCHAR(50), id VARCHAR(50), day text, name VARCHAR(50) NOT NULL, description text, function_type VARCHAR(10) DEFAULT ('tanh'), FILE MEDIUMBLOB DEFAULT NULL"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " INTEGER"
             definition = definition + " ,FOREIGN KEY (id) REFERENCES users(id), PRIMARY KEY (id,name))"
@@ -74,7 +74,39 @@ class model():
         cursor.fetchall() # this is a MySQL oddity
         cursor.close()
         connection.close()
-        
+
+    def get_strategy_results(self, strategy_name, id, intervention_sliders, modified_connections={}, function_type = "tanh"):
+        """
+        Gets the 5 degrees to which the HRO principles change
+         in response to the latest strategy. Also returns the principle names
+        :param intervention_sliders: Dict {slider_name : value}
+        :param modified_connections: Dict {practice : connections}
+        :return: List of Floats, List of Strings
+        """
+
+        output_principle_names = []
+        fcm_principle_names = []
+        for key, val in self.principle_dict.items():
+            output_principle_names.append(key)
+            fcm_principle_names.append(val)
+
+
+        if not intervention_sliders:  # no intervention
+            effects = [0, 0, 0, 0, 0]
+        else:
+            interventions = {}
+            for key, val in intervention_sliders.items():
+                name = self.intervention_dict[key]
+                value = float(val) * 0.01   # Convert from percent
+                interventions.update({name : value})
+            print(interventions)
+
+            weights = get_weights(strategy_name,id)['file']
+
+            # Get results for the latest strategy
+            effects = run_strategy_inference(interventions, fcm_principle_names, weights, modified_connections, function_type = function_type)
+
+        return effects, output_principle_names
 
     def get_results(self, intervention_sliders, modified_connections={}, function_type = "tanh", file_name = None):
         """
@@ -107,7 +139,7 @@ class model():
 
         return effects, output_principle_names
 
-    def save_strategy(self, intervention_sliders, name, description, userid, function_type = "tanh",):
+    def save_strategy(self, intervention_sliders, name, description, userid, function_type = "tanh",file_name = None):
         """
         Save Current Strategy
         :param intervention_sliders: Dict {slider_name : value}
@@ -122,14 +154,19 @@ class model():
         connection = get_db()
         cursor = connection.cursor(dictionary=True)
 
+        if file_name:
+            file = open(file_name,"rb").read()
+        else:
+            file = None # explicit setting to NULL 
+
         columns_str = ", ".join(self.intervention_names)
         length = len(self.intervention_names)
         values = ", ".join(["%s" for _ in range(length)])
-        sql = f"INSERT INTO STRATEGIES (model,id,day,name,description,function_type,{columns_str}) VALUES (%s, %s, %s, %s, %s, %s, {values})"
+        sql = f"INSERT INTO STRATEGIES (model,id,day,name,description,function_type,file,{columns_str}) VALUES (%s, %s, %s, %s, %s, %s, %s, {values})"
 
         # Check if our database exists
         try:
-            cursor.execute(sql, (model, userid, day, name, description, function_type) + tuple(intervention_values))
+            cursor.execute(sql, (model, userid, day, name, description, function_type,file) + tuple(intervention_values))
         except MySQLConnector.errors.IntegrityError as e:
             print(e)
             return False, str("Error: Name already taken")
@@ -153,6 +190,8 @@ class model():
             connection = get_db()
             cursor = connection.cursor(dictionary=True)
             cursor.execute(f"SELECT * FROM strategies where id = '{userid}'")
+        except:
+            return list()
         finally:
             rows = cursor.fetchall()
             connection.commit()
@@ -235,3 +274,16 @@ def get_db():
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
                 for idx, value in enumerate(row))
+
+def get_weights(name,id):
+
+    try:
+        connection = get_db()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute('''SELECT file FROM strategies WHERE name = %s and id = %s''', tuple([name,id]))
+        row = cursor.fetchall()[0]
+    finally:
+        cursor.close()
+        connection.close()
+
+    return row

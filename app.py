@@ -6,6 +6,7 @@ from user.user import initUsers, User, get_user
 from model.model import model, db
 import time
 import os
+import shutil
 from werkzeug.utils import secure_filename
 from util.util import allowed_file
 from datetime import timedelta
@@ -20,7 +21,7 @@ app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = "/app/model"
+app.config['UPLOAD_FOLDER'] = "/app/temp"
 
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -69,7 +70,13 @@ def planning():
     f_type = session.get('f_type', "tanh")
     interventions = session.get("interventions")
     file_name = session.get('FCM_FILE')
-    effects, principles = model.get_results(interventions, function_type = f_type, file_name=file_name)
+
+    if file_name is not None:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'],session['userid'],file_name)
+    else:
+        filepath = None
+
+    effects, principles = model.get_results(interventions, function_type = f_type, file_name=filepath)
     effects = [int(effect) for effect in effects]
     # print("here you go", list(zip(principles, effects)))
     return render_template('planning.html', effects=effects, principles=principles, func_type=f_type, userid=session['userid'])
@@ -90,8 +97,13 @@ def slider():
         userid = current_user.get_id()
         description = request.form.get("Description")
         function_type = session.get('f_type', "tanh")
+        file_name = session.get('FCM_FILE')
+
+        if file_name:
+            file_name = os.path.join("temp",session['userid'],session.get('FCM_FILE'))
+            
         if name:
-            success, msg = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type)
+            success, msg = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type,file_name=file_name)
             flash("Successfully saved strategy" if success else msg)
         else:
             flash("Please enter a name")
@@ -109,8 +121,14 @@ def strategies():
     f_type = session.get('f_type', "tanh")
     userid = current_user.get_id()
     entries = model.select_all(userid)
+    name = session.get("name")
     file_name = session.get('FCM_FILE')
-    effects, principles = model.get_results(interventions, function_type = f_type, file_name = file_name)
+
+    if name is not None:
+        effects, principles = model.get_strategy_results(name, userid, interventions, function_type = f_type)
+    else:
+        effects, principles = model.get_results(interventions, function_type = f_type, file_name = file_name)
+    
     # change each element in effect from float to int
     effects = [int(effect) for effect in effects]
     description = session.get("description")
@@ -129,6 +147,7 @@ def select_strategy():
                             k in model.intervention_dict.keys()}  # Filter out non-slider input
     session["strategy_interventions"] = intervention_sliders  # session["interventions"] is for the planning page
     session["name"] = name
+    session['id'] = strategy['id']
     session["f_type"] = strategy['function_type']
     session["description"] = strategy["description"]
     return redirect(url_for('strategies'))
@@ -155,75 +174,6 @@ def update_strategy():
         session["strategies_to_compare"] = None
 
     return redirect(url_for('strategies'))
-
-# add route to critic.html
-# @app.route('/critic.html')
-# def critic():
-#     entries = model.select_all()
-#
-#     strategy_to_critique = session.get("strategy_to_critique")  # strategy selected for critique
-#     practices = []
-#     if strategy_to_critique:
-#         strategy = model.select_strategy(strategy_to_critique)
-#         strategy_practices_dict = {k: v for (k, v) in strategy.items() if
-#                                    k in model.intervention_dict.keys() and v != 0}  # Filter out non-practice info and zero values
-#         practices = [dict(key_name=k, full_name=model.intervention_dict[k]) for (k, v) in
-#                      strategy_practices_dict.items()]  # Names
-#
-#     practice_to_critique = session.get("practice_to_critique")  # practice selected for critique
-#     connections = {}
-#     if practice_to_critique:
-#         connections = model.get_practice_connections(practice_to_critique)
-#
-#     strategies_to_compare = None
-#     effects, principles = model.get_results(None)  # get default values for effects
-#     all_effects = [effects]
-#
-#     practice_sliders = session.get("practice_sliders")  # slider values for modified connections
-#     new_practice_connections = {}
-#     if practice_sliders and practice_to_critique:
-#         new_practice_connections = dict(practice=model.intervention_dict[practice_to_critique],
-#                                         connections=practice_sliders)
-#         strategies_to_compare = ["Old", "New"]
-#         effects, _ = model.get_results(strategy_practices_dict)  # get old values for effects
-#         all_effects = [[int(effect) for effect in effects]]
-#         effects, _ = model.get_results(strategy_practices_dict, new_practice_connections)  # get new values for effects
-#         all_effects.append([int(effect) for effect in effects])
-#
-#     # Remove spaces and slashes from id_name (for html id) but not from name
-#     connections = [dict(id_name=k.replace(" ", "").replace("/", ""), name=k, value=v) for (k, v) in connections.items()]
-#
-#     return render_template('critic.html', entries=entries, all_effects=all_effects,
-#                            principles=principles, names=strategies_to_compare,
-#                            practices=practices, connections=connections)
-#
-#
-# @app.route('/critique_strategy', methods=['POST'])
-# def critique_strategy():
-#     strategy_to_critique = request.form.get("strategy_to_critique")
-#     print(strategy_to_critique)
-#     session["practice_to_critique"] = None
-#     session["practice_sliders"] = None
-#     session["strategy_to_critique"] = strategy_to_critique
-#     return redirect(url_for('critic'))
-#
-#
-# @app.route('/critique_practice', methods=['POST'])
-# def critique_practice():
-#     practice_to_critique = request.form.get("practice_to_critique")
-#     print("this", practice_to_critique)
-#     session["practice_to_critique"] = practice_to_critique
-#     return redirect(url_for('critic'))
-#
-#
-# @app.route('/critique_sliders', methods=['POST'])
-# def critique_sliders():
-#     form_input = request.form.to_dict(flat=True)
-#     practice_sliders = {k: v for (k, v) in form_input.items() if
-#                         k != "Submit"}  # Filter out non-practice input if there is any
-#     session["practice_sliders"] = practice_sliders
-#     return redirect(url_for('critic'))
-
 
 # route to compare.html
 @app.route('/compare.html')
@@ -279,10 +229,10 @@ def compare_reset():
 @login_required
 def set_params():
     f_type = session.get('f_type',"tanh")
-    weights = session.get('FCM_FILE','FCM-HROT_InterventionsIncluded.csv')
+    weights = session.get('FCM_FILE')
 
-    if 'FCM_FILE' not in session:
-        session['FCM_FILE'] = 'FCM-HROT_InterventionsIncluded.csv'
+    if not weights:
+        weights = "FCM-HROT_InterventionsIncluded.csv"
 
     return render_template('advanced.html',func_type=f_type, weights=weights)
 
@@ -300,9 +250,32 @@ def UpdateSquashFunc():
     if file and allowed_file(file.filename):
         session['FCM_FILE'] = file.filename
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        dirToMake = os.path.join(app.config['UPLOAD_FOLDER'],session['userid'])
+        
+        if os.path.exists(dirToMake):
+        # If the directory exists, delete its contents
+            for filename in os.listdir(dirToMake):
+                file_path = os.path.join(dirToMake, filename)
+                try:
+                    if os.path.isfile(file_path):
+                        os.remove(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+                except Exception as e:
+                    print(f"Error deleting {file_path}: {e}")
+
+        else:
+            # If the directory doesn't exist, create it
+            os.makedirs(dirToMake)
+        
+        file.save(os.path.join(dirToMake, filename))
+
     elif file and not allowed_file(file.filename):
+        session['FCM_FILE'] = None
         flash('Only CSV file types are allowed')
+    elif 'FCM_FILE' in session:
+        session['FCM_FILE'] = None
+        flash('FCM_FILE to be used is reset to default', category="info")
 
     return redirect(url_for('set_params'))
 

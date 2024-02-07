@@ -1,6 +1,73 @@
 import pandas as pd
 import numpy as np
+from io import StringIO
 import os
+
+def run_strategy_inference(interventions, principles, weights, modified_connections={}, function_type = "tanh"):
+    """
+    Run FCM inference for a set of interventions (changes in practices)
+    :param interventions: Dict {intervention_name : value}
+    :param principles: List of Strings
+    :param modified_connections: Dict {practice : connections}
+    :return: List of Floats
+    """
+    if weights is None:
+        df = pd.read_csv("model/FCM-HROT_InterventionsIncluded.csv",index_col=0)
+    else:
+        weights = weights.decode('utf-8')
+        weights = StringIO(weights)
+        df = pd.read_csv(weights,index_col=0)
+
+    # change connections if the model is being critiqued
+    if modified_connections:
+        connections = modified_connections["connections"]
+        if connections:
+            for key, val in connections.items():
+                #print(df.loc[modified_connections["practice"], key])
+                df.loc[modified_connections["practice"], key] = float(val)
+
+    n_concepts = df.shape[0]
+
+    Adj_matrix = np.zeros((n_concepts,n_concepts))
+    activation_vec = np.ones(n_concepts)
+
+    # remove the edges with a weight less than a specific number (e.g. 0.1) 
+    noise_threshold = 0 # use full FCM without removing noises 
+    if noise_threshold == 0:
+        Adj_matrix = df.to_numpy()
+    else:
+        for i in range (n_concepts):
+            for j in range (n_concepts):
+                if abs(df.iat[i,j])<=noise_threshold:
+                    Adj_matrix[i,j]=0
+                else:
+                    Adj_matrix[i,j]=df.iat[i,j]
+
+    infer_rule = "k" # Kosko
+
+    intervention_indexes = []
+    vals = []
+    for key, val in interventions.items():
+        intervention_indexes.append(df.columns.get_loc(key))
+        vals.append(val)
+
+    steady_state = np.zeros(n_concepts) # steady_state is 0 for this model
+    #steady_state = infer_steady(init_vec = activation_vec, AdjmT = Adj_matrix.T, 
+    #                            n = n_concepts, f_type = function_type , infer_rule = infer_rule)
+    scenario_state = infer_scenario(intervention_indexes = intervention_indexes, vals = vals, init_vec = activation_vec, AdjmT = Adj_matrix.T, 
+                                n = n_concepts, f_type = function_type, infer_rule = infer_rule)
+    changes = scenario_state - steady_state
+
+    principle_indexes = []
+    for name in principles:
+        pi = df.columns.get_loc(name)
+        principle_indexes.append(pi)
+
+
+    effects = changes[principle_indexes] * 100 # Convert to percent
+    effects = list(effects.astype(float)) # Convert to list of 64 bit floats so it's serializable
+    return effects
+
 
 def run_inference(interventions, principles, modified_connections={}, function_type = "tanh", file_name = None):
     """
@@ -11,11 +78,10 @@ def run_inference(interventions, principles, modified_connections={}, function_t
     :return: List of Floats
     """
     if file_name is None:
-        file_name = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
+        fileToUse = "model/FCM-HROT_InterventionsIncluded.csv" # directory is relative to app.py
+        df = pd.read_csv(fileToUse,index_col=0)
     else:
-        file_name = os.path.join("model/",file_name)
-
-    df = pd.read_csv(file_name,index_col=0)
+        df = pd.read_csv(file_name,index_col=0)
 
     # change connections if the model is being critiqued
     if modified_connections:

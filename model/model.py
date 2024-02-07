@@ -67,7 +67,7 @@ class model():
             definition = "CREATE TABLE strategies (model VARCHAR(50), id VARCHAR(50), day text, name VARCHAR(50) NOT NULL, description text, function_type VARCHAR(10) DEFAULT ('tanh')"
             for intervention in self.intervention_names:
                 definition += ", " + intervention + " INTEGER"
-            definition = definition + " ,FOREIGN KEY (id) REFERENCES users(id))"
+            definition = definition + " ,FOREIGN KEY (id) REFERENCES users(id), PRIMARY KEY (id,name))"
             cursor.execute(definition)
             connection.commit()
 
@@ -130,15 +130,18 @@ class model():
         # Check if our database exists
         try:
             cursor.execute(sql, (model, userid, day, name, description, function_type) + tuple(intervention_values))
-        except MySQLConnector.errors.ProgrammingError as e:
+        except MySQLConnector.errors.IntegrityError as e:
             print(e)
-            return False
+            return False, str("Error: Name already taken")
+        except e:
+            print(e)
+            return False, str("Unexpected database error")
         finally:
             connection.commit()
             cursor.close()
             connection.close()
         
-        return True
+        return True, str("No problemo in saving")
 
     def select_all(self, userid):
         """

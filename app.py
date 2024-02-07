@@ -91,8 +91,8 @@ def slider():
         description = request.form.get("Description")
         function_type = session.get('f_type', "tanh")
         if name:
-            success = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type)
-            flash("Successfully saved strategy" if success else "Error: Name already taken")
+            success, msg = model.save_strategy(intervention_sliders, name, description, userid=userid, function_type=function_type)
+            flash("Successfully saved strategy" if success else msg)
         else:
             flash("Please enter a name")
     elif request.form.get("Reset"):

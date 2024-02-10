@@ -5,7 +5,7 @@ import time
 import os
 import shutil
 from files.files import delete_files_and_directories
-from flask import Flask, redirect, request, url_for, render_template, session, flash
+from flask import Flask, redirect, request, url_for, render_template, session, flash, appcontext_tearing_down
 from user.user import initUsers, User, get_user
 from model.model import model, db
 from werkzeug.utils import secure_filename
@@ -36,9 +36,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-print("App started")
+user = None
 
-# Listen for session expiration event
+print("App started")
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])

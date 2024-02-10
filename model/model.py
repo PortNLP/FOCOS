@@ -177,7 +177,7 @@ class model():
             connection.commit()
             cursor.close()
             connection.close()
-        
+
         return True, str("No problemo in saving")
 
     def select_all(self, userid):

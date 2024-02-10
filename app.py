@@ -1,12 +1,13 @@
 """
 FOCOS Flask app
 """
-from flask import Flask, redirect, request, url_for, render_template, session, flash
-from user.user import initUsers, User, get_user
-from model.model import model, db
 import time
 import os
 import shutil
+from files.files import delete_files_and_directories
+from flask import Flask, redirect, request, url_for, render_template, session, flash
+from user.user import initUsers, User, get_user
+from model.model import model, db
 from werkzeug.utils import secure_filename
 from util.util import allowed_file
 from datetime import timedelta
@@ -18,22 +19,26 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 app = Flask(__name__)
 f_type = "tanh"
 app.secret_key = b'y\x10\xbe\x01Pq\x1b7\x16f\xe2\xf9\x03\x12\x1aH'  # python -c 'import os; print(os.urandom(16))'
+app.config["SESSION_PERMANENT"] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)  # clear session after five minutes of inactivity
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@mysql/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = "/app/temp"
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_THRESHOLD'] = 5
 
 db.init_app(app)
 migrate = Migrate(app, db)
 initUsers()
 model = model()
 
-
-print("App started")
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+print("App started")
+
+# Listen for session expiration event
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -57,12 +62,16 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+
     logout_user()
+    
     if session.get('userid'):
+        # if session has expired we delete the user files with CRON job or other such tools
+        directory_to_delete = os.path.join(app.config['UPLOAD_FOLDER'],session['userid'])
+        delete_files_and_directories(directory_to_delete)
         del session['userid']
     flash('You have successfully logged yourself out.')
     return redirect('/login')
-
 
 @app.route('/planning.html')
 @login_required

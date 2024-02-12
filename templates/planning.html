@@ -354,6 +354,69 @@
                         }
                     </script>
 
+                    <script>
+                       let sessionExpirationInterval;
+
+                        // Function to check if session has expired, deafult use case is true in my case
+                        function isSessionExpired() {
+                            return true; // Return true if session has expired, false otherwise
+                        }
+
+                        // Function to send request to server when session expires
+                        function sendSessionExpirationRequest() {
+                            // Create data to send in the request body
+                            const requestData = {
+                            };
+
+                            // Send request to server using Fetch API
+                            fetch('/session-expired', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(requestData)
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to notify server about session expiration');
+                                }
+                                // Handle successful response if needed
+                                window.location.href = '/login';
+                            })
+                            .catch(error => {
+                                console.error('Error notifying server about session expiration:', error);
+                            });
+                        }
+
+                        // Function to continuously check for session expiration and send request to server
+                        function checkSessionAndNotifyServer() {
+                            if (isSessionExpired()) {
+                                sendSessionExpirationRequest();
+                            }
+                        }
+
+                        // Function to start session expiration interval
+                        function startSessionExpirationInterval() {
+                            sessionExpirationInterval = setInterval(checkSessionAndNotifyServer, 60000); // 60000 milliseconds = 1 minute
+                        }
+
+                        // Function to stop session expiration interval
+                        function stopSessionExpirationInterval() {
+                            clearInterval(sessionExpirationInterval);
+                        }
+
+                        // Function to reset the session expiration timer
+                        function resetSessionExpirationTimer() {
+                            clearInterval(sessionExpirationInterval);
+                            startSessionExpirationInterval(); // Restart the session expiration interval
+                        }
+
+                        // Start checking for session expiration when the page loads
+                        startSessionExpirationInterval();
+
+                        document.addEventListener('mousemove', resetSessionExpirationTimer);
+                        document.addEventListener('keydown', resetSessionExpirationTimer);
+                    </script>
                 </div>
             </div>
 

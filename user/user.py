@@ -1,5 +1,6 @@
 import os
 from flask import session
+from datetime import datetime, timezone
 import mysql.connector as MySQLConnector
 
 # Access environment variables for database connection
@@ -97,12 +98,35 @@ def initUsers():
             cursor.execute("SELECT COUNT(id) FROM users")
             cursor.fetchall() # this is a MySQL oddity
         except MySQLConnector.errors.ProgrammingError as e:
-            definition = "CREATE TABLE users (id VARCHAR(50) NOT NULL PRIMARY KEY, password text)"
+            definition = "CREATE TABLE users (id VARCHAR(50) NOT NULL PRIMARY KEY, password text, last_active datetime)"
             cursor.execute(definition)
             cursor.fetchall() # this is a MySQL oddity
-            adminQuery = f"INSERT INTO users (id,password) values(%s,%s)"
-            cursor.execute(adminQuery, (db_user,db_password))
+            adminQuery = f"INSERT INTO users (id,password,last_active) values(%s,%s,%s)"
+            now = datetime.now(timezone.utc)
+            cursor.execute(adminQuery, (db_user,db_password, now))
             cursor.fetchall() # this is a MySQL oddity
+        finally:
+            connection.commit()
+            cursor.close()
+            connection.close()
+
+def update_last_active(user,now):
+        
+        connection = MySQLConnector.connect(host=db_host,
+        user=db_user,
+        password=db_password,
+        database=db_database)
+
+        cursor = connection.cursor()
+
+        # Check if our database exists
+        try:
+            UpdateQuery = f"update users set last_active = %s where id = %s"
+            now = datetime.now(timezone.utc)
+            cursor.execute(UpdateQuery, (now, user))
+            cursor.fetchall() # this is a MySQL oddity
+        except MySQLConnector.errors.ProgrammingError as e:
+            raise e
         finally:
             connection.commit()
             cursor.close()

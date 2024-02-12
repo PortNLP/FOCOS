@@ -1,12 +1,13 @@
 """
 FOCOS Flask app
 """
-import time
+from datetime import datetime, timezone
 import os
 import shutil
+import time
 from files.files import delete_files_and_directories
 from flask import Flask, redirect, request, url_for, render_template, session, flash, appcontext_tearing_down
-from user.user import initUsers, User, get_user
+from user.user import initUsers, User, get_user, update_last_active
 from model.model import model, db
 from werkzeug.utils import secure_filename
 from util.util import allowed_file
@@ -40,6 +41,28 @@ user = None
 
 print("App started")
 
+@app.before_request
+def before_request():
+
+    now = datetime.now(timezone.utc)
+
+    if 'userid' in session:
+        userid = session['userid']
+        
+        if 'last_active' in session:
+            last_active = session['last_active']
+            delta = now - last_active
+            five_seconds = timedelta(seconds=5)
+            session['last_active'] = now
+
+            # no need to stress the DB with constant updates when the user is active every 5 seconds or lesser
+            if delta > five_seconds:
+                update_last_active(userid, now)
+        
+        else:
+            session['last_active'] = now
+
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -70,8 +93,16 @@ def logout():
         directory_to_delete = os.path.join(app.config['UPLOAD_FOLDER'],session['userid'])
         delete_files_and_directories(directory_to_delete)
         del session['userid']
-    flash('You have successfully logged yourself out.')
+
+    if session.get('FCM_FILE'):
+        del session['FCM_FILE']
+
+    flash('You have successfully logged yourself out OR your session has expired.')
     return redirect('/login')
+
+@app.route('/session-expired', methods=['POST'])
+def session_expired_handler():
+    return redirect(url_for('logout'))
 
 @app.route('/planning.html')
 @login_required

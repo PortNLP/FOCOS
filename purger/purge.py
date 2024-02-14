@@ -30,7 +30,7 @@ if __name__ == '__main__':
             path = os.path.join("/app/temp/",username)
 
             if os.path.isdir(path):
-                print("purging file at path ", path)
+                print("purging directory at path ", path)
                 shutil.rmtree(path)
 
     except MySQLConnector.errors.ProgrammingError as e:

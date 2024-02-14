@@ -11,6 +11,8 @@ db_database = os.environ.get('DB_DATABASE', 'default_database')
 
 if __name__ == '__main__':
 
+    print("Purger started .....")
+
     connection = MySQLConnector.connect(host=db_host,
         user=db_user,
         password=db_password,
@@ -28,11 +30,13 @@ if __name__ == '__main__':
             path = os.path.join("/app/temp/",username)
 
             if os.path.isdir(path):
+                print("purging file at path ", path)
                 shutil.rmtree(path)
 
     except MySQLConnector.errors.ProgrammingError as e:
-        print("Something is wrong")
+        print("Something is wrong with the purger")
     finally:
+        print("Purger ended")
         connection.commit()
         cursor.close()
         connection.close()

@@ -9,3 +9,4 @@ cryptography
 Flask-Login
 Flask-WTF
 WTForms
+mysql-connector-python

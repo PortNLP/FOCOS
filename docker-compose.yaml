@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: xxxxxx
+      MYSQL_DATABASE: mydatabase
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./FOCOS:/app
+    depends_on:
+      mysql:
+        condition: service_started
+    environment:
+      - DB_DATABASE=mydatabase
+      - DB_HOST=mysql
+      - DB_PASSWORD=xxxxxx
+      - DB_USER=root

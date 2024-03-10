@@ -3,6 +3,4 @@ __pycache__
 .vscode
 entries.db
 focos.db
-FCM-HROT_InterventionsIncluded.csv
-temp/root
-flask_session
+mysql-data
